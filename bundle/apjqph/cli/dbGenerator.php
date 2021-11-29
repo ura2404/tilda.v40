@@ -74,11 +74,11 @@ $_script = function($target,$url) use($_help){
     $ProviderName = strAfter($target,'/');
     $Target = strBefore($target,'/');
     
-    $ProviderName = $ProviderName ? $ProviderName : \Cmatrix\Hash::getFile(CM_TOP.'/config.json')->getValue('db/type');
+    $ProviderName = $ProviderName ? $ProviderName : \Cmatrix\Kernel\Config::instance()->getValue('db/type');
     
     switch($target){
         //case 'dm' : return \Cmatrix\Structure::instance($url,$Provider)->Script;
-        case 'dm' : return \CmatrixDb\Structure\Datamodel::instance($url,$ProviderName)->SqlInitScript;
+        case 'dm' : return \Cmatrix\Db\Structure\Datamodel::instance($url,$ProviderName)->SqlInitScript;
         
         //case 'datamodel' : return \cmKernel\Structure\Datamodel::get($url)->getScript($Provider,false);
         //case 'datasource' : return \cmKernel\Structure\Datasource::get($url)->getScript($Provider,true);

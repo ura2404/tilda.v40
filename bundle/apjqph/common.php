@@ -25,15 +25,19 @@ spl_autoload_register(function($className){
     $Arr = explode("\\",$className);
     $Module = array_shift($Arr);
     $Section = array_shift($Arr);
-    if(!count($Arr)) return;
     
-    $Folder = CM_ROOT .'/modules/'. $Module .'/'. $Section;
-    
-    //dump('------------------------------------');
+    //dump('======================================================================');
+    //dump('======================================================================');
+    //dump('======================================================================');
     //dump($className,'className');
     //dump($Arr);
     //dump($Module,'Module');
     //dump($Section,'Section');
+    
+    if(!count($Arr)) return;
+    
+    $Folder = CM_ROOT .'/modules/'. $Module .'/'. $Section;
+    
     //dump($Folder,'Folder');
     
     if($Arr[0] === 'Models'){

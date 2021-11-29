@@ -1,0 +1,141 @@
+html {
+    font-size: 18px;
+    font-family: Arsenal, Arial;
+}
+
+::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  opacity: 0.6;
+  filter: invert(0.8);
+}
+
+::-webkit-calendar-picker-indicator:hover {
+  opacity: 1
+}
+
+
+.cm-noselect {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.cm-noscroll { overflow: hidden; }
+.cm-x-noscroll { overflow-x: hidden; }
+.cm-y-noscroll { overflow-y: hidden; }
+
+.cm-hidden {
+    display: none;
+}
+
+.cm-novisible {
+    opacity: 0;
+}
+
+.cm-hover {
+    transition: .03s linear;
+    
+    &:hover {
+        opacity: 0.5;
+    }
+}
+
+.cm-behind {
+    z-index : -100;
+}
+
+button:focus, a:focus {
+    outline: none;
+}
+
+input:focus {
+    outline: 1px solid gray;
+}
+
+body {
+    background : white;
+}
+
+/* подложка на весь экран */
+.cm-back {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    transition: .10s; 
+    
+    &:not(.cm-opend) {
+        opacity: 0;
+    }
+}
+
+/* горизонтальный разделитель */
+.cm-h-devider {
+    border-top : 1px solid;
+}
+
+
+.cm-menu {
+    .cm-menu-item {
+        span {
+            position : relative;
+            top : -0.125rem;
+        }
+    }
+}
+
+@keyframes win-show {
+      0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/*
+.cm-alert-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(100,100,100,0.5);
+    z-index: 100;
+    
+    &.cm-behind {
+        z-index : -100;
+    }
+    
+    &:not(.cm-show) {
+        display: none;
+    }
+    
+    .cm-alert {
+        box-shadow: 1 25px 60px rgba(0,0,0,0.5);
+        animation: alert-show .15s ease-out forwards;
+        opacity: 0;
+        
+    }
+}
+*/
+
+@keyframes alert-show {
+      0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+
+input[required="required"] {
+    background-color : #ffffde;
+    
+    &.cm-invalid{
+        outline: 2px solid red;
+        background-color: #ffecec
+    }
+}
+
+/*input:invalid {
+    outline: 2px solid red;
+}*/

@@ -19,6 +19,7 @@ class Template {
     // --- --- --- --- ---
     function __construct($url){
         $this->Url = $url;
+        $this->Path;
     }
 
     // --- --- --- --- ---

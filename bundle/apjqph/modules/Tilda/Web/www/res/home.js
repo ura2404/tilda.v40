@@ -1,0 +1,1 @@
+ window.location.href = '/tilda40/tool';

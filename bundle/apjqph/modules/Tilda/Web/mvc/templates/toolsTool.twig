@@ -1,0 +1,83 @@
+{% extends "/Tilda/Web/mvc/templates/common.twig" %}
+
+{% block style %}
+    {{ parent() }}
+    {# <link rel="stylesheet/less" type="text/css" href="res/CmatrixWeb/adminDataEntityView.less"/> #}
+    <link rel="stylesheet/less" type="text/css" href="res/cmatrix/lib/table.less"/>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+     <script type="module" src="res/tilda/toolsTool.js"></script>
+{% endblock %}
+
+
+{% block main %}
+    {% import "/Cmatrix/Web/mvc/templates/lib/table.twig" as _table %}
+    
+    <div class="h-full bg-gray-300 flex flex-col">
+        <div class="bg-gray-400 h-10 p-2 flex">
+            <input class="my-auto px-1" placeholder="...поиск"/>
+            <i class="my-auto ml-2 text-white cursor-pointer _text-2xl far fa-search"></i>
+            <i class="my-auto ml-2 text-white cursor-pointer fal fa-angle-double-left"></i>
+        </div>
+        <div class="px-2 overflow-y-auto">
+            <ul>
+                <li>First</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq </li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>qwdqdqqwddwqwq</li>
+                <li>Last</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="bg-yellow-50 ml-1 w-full overflow-auto">
+        {{ _table.table('wi-table-tool',table) }}
+    </div>
+{% endblock %}

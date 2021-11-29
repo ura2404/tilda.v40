@@ -82,6 +82,14 @@ class Page {
     // --- --- --- --- ---
     // --- --- --- --- ---
     // --- --- --- --- ---
+    public function getParam($name=null){
+        $Params = $this->Params;
+        return ($name && array_key_exists($name,$this->Params)) ? $this->Params[$name] : null;
+    }
+    
+    // --- --- --- --- ---
+    // --- --- --- --- ---
+    // --- --- --- --- ---
     static function instance($url=null){
         $Key = $url;
         if(array_key_exists($Key,self::$INSTANCES)) return self::$INSTANCES[$Key];

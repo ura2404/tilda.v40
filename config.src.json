@@ -1,0 +1,26 @@
+{
+    "project" : {
+        "code" : "cmatrix",
+        "name" : "Cmatrix",
+        "version" : "1.0",
+        "author" : "ura@itx.ru",
+        "lang" : "ru"
+    },
+    "www": {
+        "root": "/cmatrix"
+    },
+    "db" : {
+        "enable" : true,
+        "type"   : "pgsql",
+        "driver" : "pdo",
+        "host"   : "localhost",
+        "port"   : 5432,
+        "name"   : "ru.cmatrix",
+        "user"   : "ru.cmatrix",
+        "pass"   : "pass",
+        "_prefix" : "cm_"
+    },
+    "session" : {
+        "enable" : true
+    }
+}

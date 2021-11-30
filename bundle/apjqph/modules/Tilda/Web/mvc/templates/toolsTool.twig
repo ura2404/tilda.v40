@@ -14,70 +14,15 @@
 
 {% block main %}
     {% import "/Cmatrix/Web/mvc/templates/lib/table.twig" as _table %}
+    {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %}
     
-    <div class="h-full bg-gray-300 flex flex-col">
-        <div class="bg-gray-400 h-10 p-2 flex">
-            <input class="my-auto px-1" placeholder="...поиск"/>
-            <i class="my-auto ml-2 text-white cursor-pointer _text-2xl far fa-search"></i>
-            <i class="my-auto ml-2 text-white cursor-pointer fal fa-angle-double-left"></i>
-        </div>
-        <div class="px-2 overflow-y-auto">
-            <ul>
-                <li>First</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq </li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>qwdqdqqwddwqwq</li>
-                <li>Last</li>
-            </ul>
-        </div>
+    <div class="h-full bg-gray-300 overflow-auto flex-shrink-0 flex-grow-0" style="flex-basis:15rem">
+        {{ _tree.tree('wi-tree-tool',tree) }}
     </div>
     
-    <div class="bg-yellow-50 ml-1 w-full overflow-auto">
+    <div class="w-1" style="cursor:ew-resize"></div>
+    
+    <div class="bg-yellow-50 ml-1 w-full overflow-auto flex-shrink flex-grow">
         {{ _table.table('wi-table-tool',table) }}
     </div>
 {% endblock %}

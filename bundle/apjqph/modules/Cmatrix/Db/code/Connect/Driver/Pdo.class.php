@@ -37,12 +37,34 @@ class Pdo extends db\Connect\Driver implements db\Connect\iDriver{
     // --- --- --- --- ---
     // --- --- --- --- ---
     private function prepareQuery($query){
-        $Query = $query instanceof db\Cql ? $query->Query : $query;
+        if(is_array($query)){
+            $Query = array_map(function($query){
+                return $query instanceof db\Cql ? $query->Query : $query;
+            },$query);
+        }
+        else {
+            $Query = $query instanceof db\Cql ? $query->Query : $query;
+            $Query = [$Query];
+        }
+        
+        $Query = array_filter($Query,function($query){ return $query; });
+        if(!count($Query)) return null;
+        
+        $Query = array2line($Query);
+        $Query = implode(";\n",$Query).';';
+        $Query = preg_replace("#( |\r) *#i"," ",$Query);
+        return $Query;
+        
+        /*
+        $Query = $Query instanceof db\Cql ? $Query->Query : $Query;
         $Query = is_array($Query) ? array2line($Query) : [$Query];
         $Query = implode(";\n",$Query).';';
         //$Query = preg_replace("#( |\s) *#i"," ",$Query);
         $Query = preg_replace("#( |\r) *#i"," ",$Query);
+        //dump($query);
+        
         return $Query;
+        */
     }
     
     // --- --- --- --- ---

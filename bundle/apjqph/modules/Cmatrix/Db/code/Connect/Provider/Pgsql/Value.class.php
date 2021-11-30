@@ -32,7 +32,8 @@ class Value{
 
     // --- --- --- --- ---
     private function getMySqlQuery(){
-        if($this->Value instanceof \CmatrixDb\Cql) return '('.$this->Value->Query.')';
+        if($this->Value instanceof \Cmatrix\Db\Cql) return '('.$this->Value->Query.')';
+        elseif(strStart($this->Value,'(SELECT ')&& strEnd($this->Value,')')) return $this->Value;
         
         $ValType = gettype($this->Value);
         if($ValType === 'string' && strStart($this->Value,'raw::')) return strAfter($this->Value,'raw::');

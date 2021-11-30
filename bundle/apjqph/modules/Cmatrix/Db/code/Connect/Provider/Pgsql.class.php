@@ -63,7 +63,6 @@ class Pgsql extends db\Connect\Provider implements db\Connect\iProvider{
         return 'NOT NULL';
     }
     
-
     // --- --- --- --- ---
     public function getSqlAgg($code){
         if(strpos($code,'::') === false) return $code;
@@ -73,6 +72,18 @@ class Pgsql extends db\Connect\Provider implements db\Connect\iProvider{
             case 'max' : return 'max(' .strAfter($code,'::'). ')';
             case 'count' : return 'count(' .strAfter($code,'::'). ')';
             default : throw new \Exception('Invalid agg function "' .$Agg.'".');
+        }
+    }
+
+    // --- --- --- --- ---
+    public function getSqlOrd($code){
+        if(strpos($code,'::') === false) return $code;
+        
+        $Ord = strBefore($code,'::');
+        switch($Agg){
+            case 'a' : return strAfter($code,'::') . ' ASC';
+            case 'd' : return strAfter($code,'::') . ' DESC';
+            default : throw new \Exception('Invalid order direction "' .$Ord.'".');
         }
     }
 

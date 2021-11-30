@@ -8,28 +8,45 @@
  #
  #}
 
-{% macro tree(data,opts={}) %}
-    {% set opts = {
-    } | merge(opts)%}
-
-    {{ _self.nodes(data.nodes,0,opts) }}
+{% macro tree(id,data) %}
+    {{ _self.nodes(data,0) }}
 {% endmacro %}
 
-{% macro nodes(data,level,opts) %}
+{% macro nodes(data,level) %}
     <ul class="cm-tree-nodes">
         {% for node in data %}
-            {{ _self.node(node,level,opts) }}
+            {{ _self.node(node,level) }}
         {% endfor %}
     </ul>
 {% endmacro %}
 
-{% macro node(data,level,opts) %}
+{% macro node(data,level) %}
     <li class="cm-tree-node">
-        <span class="w-full px-2 py-1 inline-block hover:bg-gray-300" data-level="{{ level }}">
-            {% for i in 1..level if level > 0 %}<span class="cm-tree-node-indent w-4 inline-block"></span>{% endfor %}
-            <span>{{ data.label }}</span>
+        <span class="w-full px-2 inline-block hover:bg-gray-400 hover:bg-opacity-20 cursor-pointer flex" title="{{ data.label }}" data-level="{{ level }}">
+            {% for i in 1..level if level > 0 %}<span class="cm-tree-node-indent w-6 inline-block flex-none"></span>{% endfor %}
+            {% if data.children %}<i class="my-auto w-2 text-gray-600 fas fa-caret-right"></i>{% endif %} <span class="whitespace-nowrap">{{ data.label }}</span>
         </span>
         
-        {% if data.nodes %}{{ _self.nodes(data.nodes,level+1,opts) }}{% endif %}
+        {% if data.children %}{{ _self.nodes(data.children,level+1) }}{% endif %}
     </li>
 {% endmacro %}
+{#
+        
+        <div class="bg-gray-400 h-10 p-2 flex">
+            <input class="my-auto px-1" placeholder="...поиск"/>
+            <i class="my-auto ml-2 text-white cursor-pointer _text-2xl far fa-search"></i>
+            <i class="my-auto ml-2 text-white cursor-pointer fal fa-angle-double-left"></i>
+        </div>
+        <div class="px-2 overflow-y-auto">
+            <ul>
+                {% for node in tree %}
+                    <li>
+                        <span>{{ node.name }}</span>
+                        {% if node.children|length %}
+                        {% endif %}
+                        
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+#}

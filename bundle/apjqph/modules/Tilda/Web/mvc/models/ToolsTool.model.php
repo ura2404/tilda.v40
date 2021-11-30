@@ -13,7 +13,8 @@ class ToolsTool extends Common implements web\Mvc\iModel {
             'app' => [
                 'module' => 'Tilda • Режущий инструмент'
             ],
-            'table' => web\Ide\Datamodel::instance('/Tilda/Tool/Vendor')->Data
+            'table' => web\Ide\Datamodel::instance('/Tilda/Tool/Type')->Table,
+            'tree' => web\Ide\Datamodel::instance('/Tilda/Tool/Type')->Tree,
         ]);
     }
 

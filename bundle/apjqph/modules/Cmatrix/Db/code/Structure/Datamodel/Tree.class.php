@@ -3,21 +3,22 @@ namespace Cmatrix\Db\Structure\Datamodel;
 use \Cmatrix\Kernel as kernel;
 
 class Tree{
-    
+    /*
     // --- --- --- --- ---
     function __get($name){
         switch($name){
             case 'Tree' : return $this->getMyTree();
         }
     }
-    
+    */
     // --- --- --- --- ---
     /**
      * @return \Cmatrix\Tree - 
      */
-    private function getMyTree(){
+    /*private function getMyTree(){
         
     }
+    */
     
     // --- --- --- --- ---
     // --- --- --- --- ---

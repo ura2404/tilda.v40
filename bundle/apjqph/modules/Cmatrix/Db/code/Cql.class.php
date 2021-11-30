@@ -15,7 +15,7 @@ class Cql{
     private $Rules   = [];
     private $Values  = [0=>[]];
     private $Orders  = [];
-    private $Limit   = [100,0];
+    private $Limit   = [];
     
     // --- --- --- --- ---
     /**
@@ -71,15 +71,13 @@ class Cql{
             $Arr = array_map(function($code,$value) use($Props){
                 return $this->StructureProvider->ConnectProvider->sqlPhrase($Props[$code],$value);
             },array_keys($this->Rules),array_values($this->Rules));
-            
             return 'WHERE '. implode(' AND ',$Arr);
         };
         
         $_orders = function(){
-            $Orders = array_map(function($code,$value){
-                return $code .' '. ($value === 'a' ? 'ASC' : 'DESC');
-            },array_keys($this->Orders),array_values($this->Orders));
-            
+            $Orders = array_map(function($code){
+                return $this->StructureProvider->ConnectProvider->getSqlOrd($code);
+            },$this->Orders);
             return 'ORDER BY ' . implode(',',$Orders);
         };
         
@@ -98,8 +96,13 @@ class Cql{
         $Query = $this->Orders ? $_orders() : null;
         $Queries[] = $Query;
         
-        $Query = $this->Limit ? $_limit() : null;
-        $Queries[] = $Query;
+        // кое-какая защита от выборки большим объёмов строк
+        // если задан лимит - хорошо, если нет, то смотрим наличие условый, если они есь - хорошо, иначе устанавливаем принудительный лимит
+        if($this->Limit != -1){
+            $this->Limit = $this->Limit ? $this->Limit : ($this->Rules ? null : [100,0]);
+            $Query = $this->Limit ? $_limit() : null;
+            $Queries[] = $Query;
+        }
         
         $Queries = array_filter($Queries,function($value){ return !!$value; });
         //dump($Queries);die();
@@ -150,9 +153,9 @@ class Cql{
         $_values = function(){
             return array_map(function($code,$value){
                 return $this->StructureProvider->ConnectProvider->sqlPhrase($this->Datamodel->Props[$code],$value,'=',false);
-            },array_keys($this->Values),array_values($this->Values));
+            },array_keys($this->Values[0]),array_values($this->Values[0]));
         };
-
+        
         $_rules = function(){
             return array_map(function($code,$value){
                 return $this->StructureProvider->ConnectProvider->sqlPhrase($this->Datamodel->Props[$code],$value);
@@ -267,9 +270,15 @@ class Cql{
     }
     
     // --- --- --- --- ---
-    public function order($code,$value){
+    /**
+     * @param string $code
+     *     -name - name ASC
+     *     -a::name name ACS
+     *     -d::name name DESC
+     */
+    public function order($code){
         $this->checkProp($code);
-        $this->Orders[$code] = $value;
+        $this->Orders[] = $code;
         return $this;
     }
 
@@ -277,22 +286,33 @@ class Cql{
     public function orders(array $orders=null){
         if(!$orders) return $this;
         
-        array_map(function($code,$value){
-            $this->order($code,$value);
-        },array_keys($orders),array_values($orders));
+        array_map(function($code){
+            $this->order($code);
+        },$orders);
         
         return $this;
     }
 
     // --- --- --- --- ---
-    public function limit(array $limit=null){
+    /**
+     * @param string|array $limit
+     *     -1000 - тысяча стоок, смещение 0
+     *     -[100,0] - сто строк, смещение 0
+     */
+    public function limit($limit=null){
         if(!$limit) return $this;
+        
+        if($limit == -1) $this->Limit = -1;
+        else $this->Limit = is_array($limit) ?  $limit : [$limit,0];
+        
+        /*
+        if(!is_array($limit)) $limit = ['count' => $limit, 'page' =>0 ];
         
         $this->Limit = [
             $limit['count'],
             $limit['page']*$limit['count']
         ];
-        
+        */
         return $this;
     }
 

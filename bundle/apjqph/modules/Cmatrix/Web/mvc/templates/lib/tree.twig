@@ -24,7 +24,7 @@
     <li class="cm-tree-node">
         <span class="w-full px-2 inline-block hover:bg-gray-400 hover:bg-opacity-20 cursor-pointer flex" title="{{ data.label }}" data-level="{{ level }}">
             {% for i in 1..level if level > 0 %}<span class="cm-tree-node-indent w-6 inline-block flex-none"></span>{% endfor %}
-            {% if data.children %}<i class="my-auto w-2 text-gray-600 fas fa-caret-right"></i>{% endif %} <span class="whitespace-nowrap">{{ data.label }}</span>
+            {% if data.children %}<i class="my-auto w-2 mr-1 text-gray-600 fas fa-caret-right"></i>{% endif %} <span class="whitespace-nowrap">{{ data.label }}</span>
         </span>
         
         {% if data.children %}{{ _self.nodes(data.children,level+1) }}{% endif %}

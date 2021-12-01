@@ -52,7 +52,7 @@ class Pdo extends db\Connect\Driver implements db\Connect\iDriver{
         
         $Query = array2line($Query);
         $Query = implode(";\n",$Query).';';
-        $Query = preg_replace("#( |\r) *#i"," ",$Query);
+        //$Query = preg_replace("#( |\r) *#i"," ",$Query); // нельзя, так как в тектовых полях могуть быть переносы строк и двойные пробелы
         return $Query;
         
         /*

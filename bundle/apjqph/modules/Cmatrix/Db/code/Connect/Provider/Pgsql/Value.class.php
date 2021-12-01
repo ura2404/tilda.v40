@@ -37,7 +37,7 @@ class Value{
         
         $ValType = gettype($this->Value);
         if($ValType === 'string' && strStart($this->Value,'raw::')) return strAfter($this->Value,'raw::');
-
+        
         switch($this->Prop['type']){
             case 'bool' :
                 return $this->getBoolValue();
@@ -118,9 +118,8 @@ class Value{
             return 'NULL';
         }
         
-        if(is_float($value) || is_integer($value)) return true;
-        elseif(is_string($value) && is_numeric($value)) return true;
-        return false;
+        if(!self::isReal($this->Value)) throw new \Exception('Invalid real value ['.$this->Value.'].');
+        return floatval($this->Value);
     }
     
     // --- --- --- --- ---
@@ -178,8 +177,9 @@ class Value{
     
     // --- --- --- --- --- --- --- ---
     static function isReal($value){
-        if(!self::isReal($this->Value)) throw new \Eeception('Invalid real value ['.$this->Value.'].');
-        return floatval($this->Value);
+        if(is_float($value) || is_integer($value)) return true;
+        elseif(is_string($value) && is_numeric($value)) return true;
+        return false;
     }
     
 }

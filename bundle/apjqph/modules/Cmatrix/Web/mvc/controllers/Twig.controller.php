@@ -27,6 +27,10 @@ class Twig implements web\Mvc\iController {
             'debug' => true,
             'auto_reload' => true
         ]);
+        
+        $Filter = new \Twig_SimpleFilter('rtrim', 'rtrim');
+        $this->Twig->addFilter($Filter);
+
     }
    
    // --- --- --- --- ---

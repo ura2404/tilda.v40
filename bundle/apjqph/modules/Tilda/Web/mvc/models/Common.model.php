@@ -15,8 +15,7 @@ class Common implements web\Mvc\iModel {
     
     // --- --- --- --- ---
     private function getMyApp(){
-        $Config = kernel\Hash::getFile(CM_TOP.'/config.json');
-        return $Config->getValue('project');
+        return $Config = kernel\Config::instance()->getValue('project');
     }
     
 }

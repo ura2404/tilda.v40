@@ -8,6 +8,7 @@ include '../../../../../../common.php';
 $Connect2 = db\Connect::get('dbv2');
 $Connect4 = db\Connect::get();
 
+// --- описание таблиц v2
 $Arr2 = [
     // Фреза концевая
     'FrMonKonc' => [
@@ -1113,6 +1114,7 @@ $Arr2 = [
         ]
     ],
     
+    // Метчик
     'OsevMet' => [
         'tables' => [
             'mz_tl_OsevMet AS tool' => [ 'mz_tl_Kind AS kind ON kind.id=tool.kind' ],
@@ -1166,6 +1168,8 @@ $Arr2 = [
             'NULL AS orient'
         ]
     ],
+    
+    // Пластина осевая
     'OsevPl' => [
         'tables' => [
             'mz_tl_OsevPl AS tool' => null,
@@ -1227,9 +1231,7 @@ $Arr2 = [
     //'RastOsn' => [
     //],
 
-    // Метчик
-    
-    // Пластина осевая
+    // Пластина расточная
     'RastPl' => [
         'tables' => [
             'mz_tl_RastPl AS tool' => [ 'mz_tl_TurnToolKind AS kind ON kind.id=tool.kind' ],
@@ -1677,6 +1679,7 @@ $Arr2 = [
         ]
     ],
     
+    // Удлинитель
     'OsnFrUdl' => [
         'tables' => [
             'mz_tl_OsnFrUdl AS tool' => null,
@@ -1731,11 +1734,412 @@ $Arr2 = [
         ]
     ],
 
+    // Патрон
+    'OsnFrPatr' => [
+        'tables' => [
+            'mz_tl_OsnFrPatr AS tool' => null,
+            'mz_entity AS e' => null
+        ],
+        'rules'  => [ 'e.id=tool.id', 'e.active IS TRUE' ],
+        'props'  => [
+            'tool.id',
+            'NULL AS d',
+            'NULL AS d1',
+            'tool.d2',
+            'tool.d3',
+            'NULL AS r',
+            'NULL AS cf',
+            'tool.l1',
+            'tool.l2',
+            'NULL AS l3',
+            'NULL AS l4',
+            'NULL AS ap',
+            'NULL AS ar',
+            'NULL AS z',
+            'NULL AS purpose',
+            'NULL AS kind',
+            'NULL AS angle',
+            'NULL AS thread',
+            'NULL AS pitch',
+            'NULL AS pmin',
+            'NULL AS pmax',
+            'tool.adin',
+            'NULL AS adimin',
+            'NULL AS adimax',
+            'tool.adout',
+            'NULL AS tpl',
+            'NULL AS spl',
+            'NULL AS fpl',
+            'NULL AS coolin',
+            'NULL AS t',
+            'NULL AS kr',
+            'NULL AS f1',
+            'NULL AS dmin',
+            'NULL AS purpout',
+            'NULL AS purpin',
+            'NULL AS purptok',
+            'NULL AS inserts',
+            'NULL AS icount',
+            'NULL AS regmin',
+            'NULL AS regmax',
+            'NULL AS tooltype',
+            'NULL AS cooltype',
+            'NULL AS m',
+            'NULL AS orient',
+        ]
+    ],
+    
+    // Базовый держатель
+    'OsnFrBazDer' => [
+        'tables' => [
+            'mz_tl_OsnFrBazDer AS tool' => null,
+            'mz_entity AS e' => null
+        ],
+        'rules'  => [ 'e.id=tool.id', 'e.active IS TRUE' ],
+        'props'  => [
+            'tool.id',
+            'NULL AS d',
+            'NULL AS d1',
+            'tool.d2',
+            'tool.d3',
+            'NULL AS r',
+            'NULL AS cf',
+            'tool.l1',
+            'tool.l2',
+            'NULL AS l3',
+            'NULL AS l4',
+            'NULL AS ap',
+            'NULL AS ar',
+            'NULL AS z',
+            'NULL AS purpose',
+            'NULL AS kind',
+            'NULL AS angle',
+            'NULL AS thread',
+            'NULL AS pitch',
+            'NULL AS pmin',
+            'NULL AS pmax',
+            'tool.adin',
+            'NULL AS adimin',
+            'NULL AS adimax',
+            'tool.adout',
+            'NULL AS tpl',
+            'NULL AS spl',
+            'NULL AS fpl',
+            'NULL AS coolin',
+            'NULL AS t',
+            'NULL AS kr',
+            'NULL AS f1',
+            'NULL AS dmin',
+            'NULL AS purpout',
+            'NULL AS purpin',
+            'NULL AS purptok',
+            'NULL AS inserts',
+            'NULL AS icount',
+            'NULL AS regmin',
+            'NULL AS regmax',
+            'NULL AS tooltype',
+            'NULL AS cooltype',
+            'NULL AS m',
+            'NULL AS orient',
+        ]
+    ],
+    
+    // Переходник
+    'OsnFrPer' => [
+        'tables' => [
+            'mz_tl_OsnFrPer AS tool' => null,
+            'mz_entity AS e' => null
+        ],
+        'rules'  => [ 'e.id=tool.id', 'e.active IS TRUE' ],
+        'props'  => [
+            'tool.id',
+            'NULL AS d',
+            'NULL AS d1',
+            'tool.d2',
+            'tool.d3',
+            'NULL AS r',
+            'NULL AS cf',
+            'tool.l1',
+            'tool.l2',
+            'NULL AS l3',
+            'NULL AS l4',
+            'NULL AS ap',
+            'NULL AS ar',
+            'NULL AS z',
+            'NULL AS purpose',
+            'NULL AS kind',
+            'NULL AS angle',
+            'NULL AS thread',
+            'NULL AS pitch',
+            'NULL AS pmin',
+            'NULL AS pmax',
+            'tool.adin',
+            'NULL AS adimin',
+            'NULL AS adimax',
+            'tool.adout',
+            'NULL AS tpl',
+            'NULL AS spl',
+            'NULL AS fpl',
+            'NULL AS coolin',
+            'NULL AS t',
+            'NULL AS kr',
+            'NULL AS f1',
+            'NULL AS dmin',
+            'NULL AS purpout',
+            'NULL AS purpin',
+            'NULL AS purptok',
+            'NULL AS inserts',
+            'NULL AS icount',
+            'NULL AS regmin',
+            'NULL AS regmax',
+            'NULL AS tooltype',
+            'NULL AS cooltype',
+            'NULL AS m',
+            'NULL AS orient',
+        ]
+    ],
+    
+    // Оправка
+    'OsnFrOpr' => [
+        'tables' => [
+            'mz_tl_OsnFrPer AS tool' => null,
+            'mz_entity AS e' => null
+        ],
+        'rules'  => [ 'e.id=tool.id', 'e.active IS TRUE' ],
+        'props'  => [
+            'tool.id',
+            'NULL AS d',
+            'NULL AS d1',
+            'tool.d2',
+            'tool.d3',
+            'NULL AS r',
+            'NULL AS cf',
+            'tool.l1',
+            'tool.l2',
+            'NULL AS l3',
+            'NULL AS l4',
+            'NULL AS ap',
+            'NULL AS ar',
+            'NULL AS z',
+            'NULL AS purpose',
+            'NULL AS kind',
+            'NULL AS angle',
+            'NULL AS thread',
+            'NULL AS pitch',
+            'NULL AS pmin',
+            'NULL AS pmax',
+            'tool.adin',
+            'NULL AS adimin',
+            'NULL AS adimax',
+            'tool.adout',
+            'NULL AS tpl',
+            'NULL AS spl',
+            'NULL AS fpl',
+            'NULL AS coolin',
+            'NULL AS t',
+            'NULL AS kr',
+            'NULL AS f1',
+            'NULL AS dmin',
+            'NULL AS purpout',
+            'NULL AS purpin',
+            'NULL AS purptok',
+            'NULL AS inserts',
+            'NULL AS icount',
+            'NULL AS regmin',
+            'NULL AS regmax',
+            'NULL AS tooltype',
+            'NULL AS cooltype',
+            'NULL AS m',
+            'NULL AS orient',
+        ]
+    ],
+    
+    // Адаптеры
+    'OsnTokAdap' => [
+        'tables' => [
+            'mz_tl_OsnTokAdap AS tool' => [ 'mz_tl_TurnToolKind AS kind ON kind.id=tool.kind' ],
+            'mz_entity AS e' => null
+        ],
+        'rules'  => [ 'e.id=tool.id', 'e.active IS TRUE' ],
+        'props'  => [
+            'tool.id',
+            'NULL AS d',
+            'NULL AS d1',
+            'tool.d2',
+            'NULL AS d3',
+            'NULL AS r',
+            'NULL AS cf',
+            'tool.l1',
+            'NULL AS l2',
+            'NULL AS l3',
+            'NULL AS l4',
+            'NULL AS ap',
+            'NULL AS ar',
+            'NULL AS z',
+            'NULL AS purpose',
+            'kind.label AS kind',
+            'tool.ang AS angle',
+            'NULL AS thread',
+            'NULL AS pitch',
+            'NULL AS pmin',
+            'NULL AS pmax',
+            'tool.adin',
+            'NULL AS adimin',
+            'NULL AS adimax',
+            'tool.adout',
+            'NULL AS tpl',
+            'NULL AS spl',
+            'NULL AS fpl',
+            'NULL AS coolin',
+            'NULL AS t',
+            'NULL AS kr',
+            'NULL AS f1',
+            'NULL AS dmin',
+            'NULL AS purpout',
+            'NULL AS purpin',
+            'NULL AS purptok',
+            'NULL AS inserts',
+            'NULL AS icount',
+            'NULL AS regmin',
+            'NULL AS regmax',
+            'NULL AS tooltype',
+            'NULL AS cooltype',
+            'NULL AS m',
+            'NULL AS orient',
+        ]
+    ],
+    
+    // Блок QTN
+    'OsnTokQTN' => [
+        'tables' => [
+            'mz_tl_OsnTokQTN AS tool' => [
+                'mz_tl_TurnUnitKind AS kind ON kind.id=tool.kind',
+                'mz_tl_CoolantType AS cool ON cool.id=tool.cool',
+                'mz_tl_TurnUnitType AS type ON type.id=tool.type',
+                'mz_tl_TurnUnitOrient AS orient ON orient.id=tool.orient',
+            ],
+            'mz_entity AS e' => null
+        ],
+        'rules'  => [ 'e.id=tool.id', 'e.active IS TRUE' ],
+        'props'  => [
+            'tool.id',
+            'NULL AS d',
+            'NULL AS d1',
+            'NULL AS d2',
+            'NULL AS d3',
+            'NULL AS r',
+            'NULL AS cf',
+            'NULL AS l1',
+            'NULL AS l2',
+            'NULL AS l3',
+            'NULL AS l4',
+            'NULL AS ap',
+            'NULL AS ar',
+            'NULL AS z',
+            'NULL AS purpose',
+            'kind.name  AS kind',
+            'NULL AS angle',
+            'NULL AS thread',
+            'NULL AS pitch',
+            'NULL AS pmin',
+            'NULL AS pmax',
+            'tool.adin',
+            'NULL AS adimin',
+            'NULL AS adimax',
+            'tool.adout',
+            'NULL AS tpl',
+            'NULL AS spl',
+            'NULL AS fpl',
+            'NULL AS coolin',
+            'NULL AS t',
+            'NULL AS kr',
+            'NULL AS f1',
+            'NULL AS dmin',
+            'NULL AS purpout',
+            'NULL AS purpin',
+            'NULL AS purptok',
+            'NULL AS inserts',
+            'NULL AS icount',
+            'NULL AS regmin',
+            'NULL AS regmax',
+            'type.name AS tooltype',
+            'cool.name AS cooltype',
+            'tool.m AS m',
+            'orient.name AS orient',
+        ]
+    ],
+    
+    // Блок Integrex i-150 // !!! нет параметров
+    //'OsnTok150' => [
+    //], 
+    // Блок Integrex 300 // !!! нет параметров
+    //'OsnTok300' => [
+    //],
+    // Оснастка станочная // !!! нет параметров
+    //'OsnStan' => [
+    //],
+    // Запчасти // !!! нет параметров
+    //'Zap' => [
+    //],
 
+    //  Борфреза
+    'SlesBor' => [
+        'tables' => [
+            'mz_tl_SlesBor AS tool' => [ 'mz_tl_MillBorForm AS form ON form.id=tool.form' ],
+            'mz_entity AS e' => null
+        ],
+        'rules'  => [ 'e.id=tool.id', 'e.active IS TRUE' ],
+        'props'  => [
+            'tool.id',
+            'NULL AS d',
+            'tool.d1 AS d1',
+            'NULL AS d2',
+            'NULL AS d3',
+            'NULL AS r',
+            'NULL AS cf',
+            'NULL AS l1',
+            'NULL AS l2',
+            'NULL AS l3',
+            'NULL AS l4',
+            'NULL AS ap',
+            'NULL AS ar',
+            'NULL AS z',
+            'NULL AS purpose',
+            'NULL AS kind',
+            'NULL AS angle',
+            'NULL AS thread',
+            'NULL AS pitch',
+            'NULL AS pmin',
+            'NULL AS pmax',
+            'NULL AS adin',
+            'NULL AS adimin',
+            'NULL AS adimax',
+            'NULL AS adout',
+            'NULL AS tpl',
+            'NULL AS spl',
+            "form.label || ' • ' || form.name AS fpl",
+            'NULL AS coolin',
+            'NULL AS t',
+            'NULL AS kr',
+            'NULL AS f1',
+            'NULL AS dmin',
+            'NULL AS purpout',
+            'NULL AS purpin',
+            'NULL AS purptok',
+            'NULL AS inserts',
+            'NULL AS icount',
+            'NULL AS regmin',
+            'NULL AS regmax',
+            'NULL AS tooltype',
+            'NULL AS cooltype',
+            'NULL AS m',
+            'NULL AS orient',
+        ]
+    ],
 
 ];
 
-$Query2 = array_map(function($value){
+$QueryPar2 = array_map(function($value){
     $Query = [];
     $Query[] = 'SELECT '. implode(',',$value['props']);
     $Query[] = 'FROM ' . implode(',',array_map(function($table,$joins){
@@ -1750,440 +2154,245 @@ $Query2 = array_map(function($value){
     return implode(' ',$Query);
 },$Arr2);
 
-$Query2 = implode(' UNION ALL ',$Query2);
-dump($Query2);die();
-/*
-$Query2[] = 'SELECT ' . implode(',',$Props2);
-$Query2[] = 'FROM ' . $Table2 . ' as type';
-$Query2[] = 'LEFT JOIN ' . $Table2 . ' as parent ON parent.id=type.entity_parent_id';
-$Query2[] = 'LEFT JOIN ' . $TableType . ' as systype ON systype.id=type.datatype_id';
-$Query2[] = 'WHERE type.active is TRUE';
-$Query2[] = 'ORDER BY type.ordd';
+// --- здесь можно сфорировать запрос и проверить его руками
+$QueryPar2 = implode(' UNION ALL ',$QueryPar2);
+//dump($QueryPar2);die();
+
+// --- формирование запроса списка инструментов v2
+$Query2 = [];
+$Query2[] = 'SELECT ' . implode(',',[
+    //'tool.id',
+    'tool.hid,tool.name,tool.code,tool.code1,tool.ratio,tool.material,tool.info',
+    'vendor.hid AS vendor_id',
+    'tree.hid AS type_id',
+            
+    'params.d',
+    'params.d1',
+    'params.d2',
+    'params.d3',
+    'params.r',
+    'CAST(params.cf AS real)',
+    'params.l1',
+    'params.l2',
+    'params.l3',
+    'params.l4',
+    'params.ap',
+    'params.ar',
+    'params.z',
+    'params.purpose',
+    'params.kind',
+    'params.angle',
+    'params.thread',
+    'params.pitch',
+    'params.pmin',
+    'params.pmax',
+    'params.adin',
+    'params.adimin',
+    'params.adimax',
+    'params.adout',
+    'params.tpl',
+    'params.spl',
+    'params.fpl',
+    'params.coolin',
+    'params.t',
+    'params.kr',
+    'params.f1',
+    'params.dmin',
+    'params.purpout',
+    'params.purpin',
+    'params.purptok',
+    'params.inserts',
+    'params.icount',
+    'params.regmin',
+    'params.regmax',
+    'params.tooltype',
+    'params.cooltype',
+    'params.m',
+    'params.orient',
+]);
+
+$Query2[] = 'FROM mz_view_tl_Catalogue AS tool';
+$Query2[] = 'LEFT JOIN mz_view_tl_Vendor AS vendor ON vendor.id=tool.vendor AND vendor.active=true';
+$Query2[] = 'LEFT JOIN mz_view_Type AS type ON type.id=tool.type_id AND type.active=true';
+$Query2[] = 'LEFT JOIN mz_view_tl_CatalogueTree AS tree ON tree.datatype_id=type.id AND tree.active=true';
+$Query2[] = 'LEFT JOIN ('. $QueryPar2 .') as params ON params.id=tool.id';
+$Query2[] = 'WHERE tool.active=true';
+$Query2[] = 'ORDER BY tool.id';
+
 $Query2 = implode(' ',$Query2);
-*/
+//dump($Query2);die();
+
+// --- полуение списка интсрументов
+$Data2 = $Connect2->query($Query2);
+$Data2 = array_combine(array_column($Data2,'hid'),$Data2);
+
+// --- причесать материал PMKNSH
+$_material = function($material){
+    $Arr = array_map(function($code) use($material){
+        //dump($material);
+        if(strpos($material,$code.'1')!==false) return strtoupper($code);
+        elseif(strpos($material,$code)!==false) return strtolower($code);
+        else return '.';
+    },['P','M','K','N','S','H']);
+    return implode($Arr);
+};
+
+// --- причесать справочник
+$Props = kernel\Ide\Datamodel::instance('/Tilda/Tool/Tool')->Props;
+$Data2 = array_map(function($value) use($_material,$Props){
+    // ---  добавить нули к real
+    array_map(function($code,$val) use(&$value,$Props){
+        if($Props[$code]['type'] === 'real') $value[$code] = $value[$code] ? number_format($val,4,'.','') : $val;
+    },array_keys($value),array_values($value));
+    
+    if($value['material']) $value['material'] = $_material($value['material']);
+    return $value;
+},$Data2);
+//dump($Data2);die();
 
 
 
+// --- --- --- --- ---
+// --- --- --- --- ---
+// --- --- --- --- ---
+$Arr4 = [
+    'tables' => [
+        'Tilda_Tool_Tool AS tool' => [
+            'Tilda_Tool_Type AS type ON type.id=tool.type_id',
+            'Tilda_Tool_Vendor AS vendor ON vendor.id=tool.vendor_id',
+        ],
+    ],
+    'rules'  => [ 'tool.active IS TRUE' ],
+    'props'  => [
+        'tool.hid,tool.name,tool.code,tool.code1,tool.ratio,tool.material,tool.info',
+        'vendor.hid AS vendor_id',
+        'type.hid AS type_id',
+                
+        'tool.d',
+        'tool.d1',
+        'tool.d2',
+        'tool.d3',
+        'tool.r',
+        'tool.cf',
+        'tool.l1',
+        'tool.l2',
+        'tool.l3',
+        'tool.l4',
+        'tool.ap',
+        'tool.ar',
+        'tool.z',
+        'tool.purpose',
+        'tool.kind',
+        'tool.angle',
+        'tool.thread',
+        'tool.pitch',
+        'tool.pmin',
+        'tool.pmax',
+        'tool.adin',
+        'tool.adimin',
+        'tool.adimax',
+        'tool.adout',
+        'tool.tpl',
+        'tool.spl',
+        'tool.fpl',
+        'tool.coolin',
+        'tool.t',
+        'tool.kr',
+        'tool.f1',
+        'tool.dmin',
+        'tool.purpout',
+        'tool.purpin',
+        'tool.purptok',
+        'tool.inserts',
+        'tool.icount',
+        'tool.regmin',
+        'tool.regmax',
+        'tool.tooltype',
+        'tool.cooltype',
+        'tool.m',
+        'tool.orient',
+    ]
+];
+
+$Query4 = array_map(function($value){
+    $Query = [];
+    $Query[] = 'SELECT '. implode(',',$value['props']);
+    $Query[] = 'FROM ' . implode(',',array_map(function($table,$joins){
+        if($joins) $Joins =  implode(' ',array_map(function($join){
+            return 'LEFT JOIN '. $join;
+        },$joins));
+        else $Joins = null;
+        
+        return $table .' '. $Joins;
+    },array_keys($value['tables']),array_values($value['tables'])));
+    $Query[] = 'WHERE ' . implode(' AND ',$value['rules']);
+    $Query[] = 'ORDER BY tool.id';
+    return implode(' ',$Query);
+},[$Arr4]);
+$Query4 = $Query4[0];
+//dump($Query4);die();
+
+$Data4 = $Connect4->query($Query4);
+$Data4 = array_combine(array_column($Data4,'hid'),$Data4);
+//dump($Data4);die();
+
+
+// --- --- --- --- ---
+// --- --- --- --- ---
+// --- --- --- --- ---
+// --- NEW ---
+$New = array_diff_key($Data2,$Data4);
+//dump($New);die();
+
+if(count($New)){
+    $New = array_map(function($value){
+        $value['type_id'] = $value['type_id'] ? '('.db\Cql::select('/Tilda/Tool/Type')->prop('id')->rule('hid',$value['type_id'])->Query.')' : null;
+        $value['vendor_id'] = $value['vendor_id'] ? '('.db\Cql::select('/Tilda/Tool/Vendor')->prop('id')->rule('hid',$value['vendor_id'])->Query.')' : null;
+        return $value;
+    },$New);
+    //dump($New);die();
+    
+    $QueryNew = db\Cql::insert('/Tilda/Tool/Tool')->valuesArr($New);
+    //dump($QueryNew->Query);
+    $Connect4->query($QueryNew);
+}
 
 
 
-        $_funs = [
-            // Удлинитель
-            // Патрон
-            'OsnFrPatr' => function(){
-                return (qu\Query::sql()->from('mz_tl_OsnFrPatr','tool')
-                    ->select('tool.id')
-                    ->select('CAST(NULL AS REAL)','d')
-                    ->select('NULL','d1')
-                    ->select('tool.d2')
-                    ->select('tool.d3')
-                    ->select('NULL','r')
-                    ->select('NULL','cf')
-                    ->select('tool.l1')
-                    ->select('tool.l2')
-                    ->select('NULL','l3')
-                    ->select('NULL','l4')
-                    ->select('NULL','ap')
-                    ->select('NULL','ar')
-                    ->select('NULL','z')
-                    ->select('NULL','purpose')
-                    ->select('NULL','kind')
-                    ->select('NULL','angle')
-                    ->select('NULL','thread')
-                    ->select('NULL','pitch')
-                    ->select('NULL','pmin')
-                    ->select('NULL','pmax')
-                    ->select('tool.adin')
-                    ->select('NULL','adimin')
-                    ->select('NULL','adimax')
-                    ->select('tool.adout')
-                    ->select('NULL','tpl')
-                    ->select('NULL','spl')
-                    ->select('NULL','fpl')
-                    ->select('NULL','coolin')
-                    ->select('NULL','t')
-                    ->select('NULL','kr')
-                    ->select('NULL','f1')
-                    ->select('NULL','dmin')
-                    ->select('NULL','purpout')
-                    ->select('NULL','purpin')
-                    ->select('NULL','purptok')
-                    ->select('NULL','inserts')
-                    ->select('NULL','icount')
-                    ->select('NULL','regmin')
-                    ->select('NULL','regmax')
-                    ->select('NULL','tooltype')
-                    ->select('NULL','cooltype')
-                    ->select('NULL','m')
-                    ->select('NULL','orient')
-                );
-            },
-            // Патрон с регулировкой радиального биения
-            'OsnFrPatrReg' => function(){
-                return (qu\Query::sql()->from('mz_tl_OsnFrPatrReg','tool')
-                    ->select('tool.id')
-                    ->select('CAST(NULL AS REAL)','d')
-                    ->select('NULL','d1')
-                    ->select('tool.d2')
-                    ->select('tool.d3')
-                    ->select('NULL','r')
-                    ->select('NULL','cf')
-                    ->select('tool.l1')
-                    ->select('tool.l2')
-                    ->select('NULL','l3')
-                    ->select('NULL','l4')
-                    ->select('NULL','ap')
-                    ->select('NULL','ar')
-                    ->select('NULL','z')
-                    ->select('NULL','purpose')
-                    ->select('NULL','kind')
-                    ->select('NULL','angle')
-                    ->select('NULL','thread')
-                    ->select('NULL','pitch')
-                    ->select('NULL','pmin')
-                    ->select('NULL','pmax')
-                    ->select('tool.adin')
-                    ->select('NULL','adimin')
-                    ->select('NULL','adimax')
-                    ->select('tool.adout')
-                    ->select('NULL','tpl')
-                    ->select('NULL','spl')
-                    ->select('NULL','fpl')
-                    ->select('NULL','coolin')
-                    ->select('NULL','t')
-                    ->select('NULL','kr')
-                    ->select('NULL','f1')
-                    ->select('NULL','dmin')
-                    ->select('NULL','purpout')
-                    ->select('NULL','purpin')
-                    ->select('NULL','purptok')
-                    ->select('NULL','inserts')
-                    ->select('NULL','icount')
-                    ->select('NULL','regmin')
-                    ->select('NULL','regmax')
-                    ->select('NULL','tooltype')
-                    ->select('NULL','cooltype')
-                    ->select('NULL','m')
-                    ->select('NULL','orient')
-                );
-            },
-            // Базовый держатель
-            'OsnFrBazDer' => function(){
-                return (qu\Query::sql()->from('mz_tl_OsnFrBazDer','tool')
-                    ->select('tool.id')
-                    ->select('CAST(NULL AS REAL)','d')
-                    ->select('NULL','d1')
-                    ->select('tool.d2')
-                    ->select('tool.d3')
-                    ->select('NULL','r')
-                    ->select('NULL','cf')
-                    ->select('tool.l1')
-                    ->select('tool.l2')
-                    ->select('NULL','l3')
-                    ->select('NULL','l4')
-                    ->select('NULL','ap')
-                    ->select('NULL','ar')
-                    ->select('NULL','z')
-                    ->select('NULL','purpose')
-                    ->select('NULL','kind')
-                    ->select('NULL','angle')
-                    ->select('NULL','thread')
-                    ->select('NULL','pitch')
-                    ->select('NULL','pmin')
-                    ->select('NULL','pmax')
-                    ->select('tool.adin')
-                    ->select('NULL','adimin')
-                    ->select('NULL','adimax')
-                    ->select('tool.adout')
-                    ->select('NULL','tpl')
-                    ->select('NULL','spl')
-                    ->select('NULL','fpl')
-                    ->select('NULL','coolin')
-                    ->select('NULL','t')
-                    ->select('NULL','kr')
-                    ->select('NULL','f1')
-                    ->select('NULL','dmin')
-                    ->select('NULL','purpout')
-                    ->select('NULL','purpin')
-                    ->select('NULL','purptok')
-                    ->select('NULL','inserts')
-                    ->select('NULL','icount')
-                    ->select('NULL','regmin')
-                    ->select('NULL','regmax')
-                    ->select('NULL','tooltype')
-                    ->select('NULL','cooltype')
-                    ->select('NULL','m')
-                    ->select('NULL','orient')
-                );
-            },
-            // Переходник
-            'OsnFrPer' => function(){
-                return (qu\Query::sql()->from('mz_tl_OsnFrPer','tool')
-                    ->select('tool.id')
-                    ->select('CAST(NULL AS REAL)','d')
-                    ->select('NULL','d1')
-                    ->select('tool.d2')
-                    ->select('tool.d3')
-                    ->select('NULL','r')
-                    ->select('NULL','cf')
-                    ->select('tool.l1')
-                    ->select('tool.l2')
-                    ->select('NULL','l3')
-                    ->select('NULL','l4')
-                    ->select('NULL','ap')
-                    ->select('NULL','ar')
-                    ->select('NULL','z')
-                    ->select('NULL','purpose')
-                    ->select('NULL','kind')
-                    ->select('NULL','angle')
-                    ->select('NULL','thread')
-                    ->select('NULL','pitch')
-                    ->select('NULL','pmin')
-                    ->select('NULL','pmax')
-                    ->select('tool.adin')
-                    ->select('NULL','adimin')
-                    ->select('NULL','adimax')
-                    ->select('tool.adout')
-                    ->select('NULL','tpl')
-                    ->select('NULL','spl')
-                    ->select('NULL','fpl')
-                    ->select('NULL','coolin')
-                    ->select('NULL','t')
-                    ->select('NULL','kr')
-                    ->select('NULL','f1')
-                    ->select('NULL','dmin')
-                    ->select('NULL','purpout')
-                    ->select('NULL','purpin')
-                    ->select('NULL','purptok')
-                    ->select('NULL','inserts')
-                    ->select('NULL','icount')
-                    ->select('NULL','regmin')
-                    ->select('NULL','regmax')
-                    ->select('NULL','tooltype')
-                    ->select('NULL','cooltype')
-                    ->select('NULL','m')
-                    ->select('NULL','orient')
-                );
-            },
-            // Оправка
-            'OsnFrOpr' => function(){
-                return (qu\Query::sql()->from('mz_tl_OsnFrOpr','tool')
-                    ->select('tool.id')
-                    ->select('CAST(NULL AS REAL)','d')
-                    ->select('NULL','d1')
-                    ->select('tool.d2')
-                    ->select('tool.d3')
-                    ->select('NULL','r')
-                    ->select('NULL','cf')
-                    ->select('tool.l1')
-                    ->select('tool.l2')
-                    ->select('NULL','l3')
-                    ->select('NULL','l4')
-                    ->select('NULL','ap')
-                    ->select('NULL','ar')
-                    ->select('NULL','z')
-                    ->select('NULL','purpose')
-                    ->select('NULL','kind')
-                    ->select('NULL','angle')
-                    ->select('NULL','thread')
-                    ->select('NULL','pitch')
-                    ->select('NULL','pmin')
-                    ->select('NULL','pmax')
-                    ->select('tool.adin')
-                    ->select('NULL','adimin')
-                    ->select('NULL','adimax')
-                    ->select('tool.adout')
-                    ->select('NULL','tpl')
-                    ->select('NULL','spl')
-                    ->select('NULL','fpl')
-                    ->select('NULL','coolin')
-                    ->select('NULL','t')
-                    ->select('NULL','kr')
-                    ->select('NULL','f1')
-                    ->select('NULL','dmin')
-                    ->select('NULL','purpout')
-                    ->select('NULL','purpin')
-                    ->select('NULL','purptok')
-                    ->select('NULL','inserts')
-                    ->select('NULL','icount')
-                    ->select('NULL','regmin')
-                    ->select('NULL','regmax')
-                    ->select('NULL','tooltype')
-                    ->select('NULL','cooltype')
-                    ->select('NULL','m')
-                    ->select('NULL','orient')
-                );
-            },
-            // Адаптеры
-            'OsnTokAdap' => function(){
-                return (qu\Query::sql()->from('mz_tl_OsnTokAdap','tool')
-                    ->select('tool.id')
-                    ->select('NULL','d')
-                    ->select('NULL','d1')
-                    ->select('tool.d2')
-                    ->select('NULL','d3')
-                    ->select('NULL','r')
-                    ->select('NULL','cf')
-                    ->select('tool.l1')
-                    ->select('NULL','l2')
-                    ->select('NULL','l3')
-                    ->select('NULL','l4')
-                    ->select('NULL','ap')
-                    ->select('NULL','ar')
-                    ->select('NULL','z')
-                    ->select('NULL','purpose')
-                    ->select('kind.label','kind')
-                    ->select('tool.ang','angle')
-                    ->select('NULL','thread')
-                    ->select('NULL','pitch')
-                    ->select('NULL','pmin')
-                    ->select('NULL','pmax')
-                    ->select('tool.adin')
-                    ->select('NULL','adimin')
-                    ->select('NULL','adimax')
-                    ->select('tool.adout')
-                    ->select('NULL','tpl')
-                    ->select('NULL','spl')
-                    ->select('NULL','fpl')
-                    ->select('NULL','coolin')
-                    ->select('NULL','t')
-                    ->select('NULL','kr')
-                    ->select('NULL','f1')
-                    ->select('NULL','dmin')
-                    ->select('NULL','purpout')
-                    ->select('NULL','purpin')
-                    ->select('NULL','purptok')
-                    ->select('NULL','inserts')
-                    ->select('NULL','icount')
-                    ->select('NULL','regmin')
-                    ->select('NULL','regmax')
-                    ->select('NULL','tooltype')
-                    ->select('NULL','cooltype')
-                    ->select('NULL','m')
-                    ->select('NULL','orient')
-                    
-                    ->leftJoin('mz_tl_TurnToolKind','kind')->on('kind.id=tool.kind')
-                );
-            },
-            // Блок QTN
-            'OsnTokQTN' => function(){
-                return (qu\Query::sql()->from('mz_tl_OsnTokQTN','tool')
-                    ->select('tool.id')
-                    ->select('NULL','d')
-                    ->select('NULL','d1')
-                    ->select('NULL','d2')
-                    ->select('NULL','d3')
-                    ->select('NULL','r')
-                    ->select('NULL','cf')
-                    ->select('NULL','l1')
-                    ->select('NULL','l2')
-                    ->select('NULL','l3')
-                    ->select('NULL','l4')
-                    ->select('NULL','ap')
-                    ->select('NULL','ar')
-                    ->select('NULL','z')
-                    ->select('NULL','purpose')
-                    ->select('kind.name','kind')
-                    ->select('NULL','angle')
-                    ->select('NULL','thread')
-                    ->select('NULL','pitch')
-                    ->select('NULL','pmin')
-                    ->select('NULL','pmax')
-                    ->select('tool.adin')
-                    ->select('NULL','adimin')
-                    ->select('NULL','adimax')
-                    ->select('tool.adout')
-                    ->select('NULL','tpl')
-                    ->select('NULL','spl')
-                    ->select('NULL','fpl')
-                    ->select('NULL','coolin')
-                    ->select('NULL','t')
-                    ->select('NULL','kr')
-                    ->select('NULL','f1')
-                    ->select('NULL','dmin')
-                    ->select('NULL','purpout')
-                    ->select('NULL','purpin')
-                    ->select('NULL','purptok')
-                    ->select('NULL','inserts')
-                    ->select('NULL','icount')
-                    ->select('NULL','regmin')
-                    ->select('NULL','regmax')
-                    ->select('type.name','tooltype')
-                    ->select('cool.name','cooltype')
-                    ->select('tool.m','m')
-                    ->select('orient.name','orient')
-                    
-                    ->leftJoin('mz_tl_TurnUnitKind','kind')->on('kind.id=tool.kind')
-                    ->leftJoin('mz_tl_CoolantType','cool')->on('cool.id=tool.cool')
-                    
-                    ->leftJoin('mz_tl_TurnUnitType','type')->on('type.id=tool.type')
-                    ->leftJoin('mz_tl_TurnUnitOrient','orient')->on('orient.id=tool.orient')
-                );
-            },
-            // Блок Integrex i-150 // !!! нет параметров
-            'OsnTok150' => function(){
-            }, 
-            // Блок Integrex 300 // !!! нет параметров
-            'OsnTok300' => function(){
-            },
-            // Оснастка станочная // !!! нет параметров
-            'OsnStan' => function(){
-            },
-            // Запчасти // !!! нет параметров
-            'Zap' => function(){
-            },
-            //  Борфреза
-            'SlesBor' => function(){
-                return (qu\Query::sql()->from('mz_tl_SlesBor','tool')
-                    ->select('tool.id')
-                    ->select('NULL','d')
-                    ->select('tool.d1','d1')
-                    ->select('NULL','d2')
-                    ->select('NULL','d3')
-                    ->select('NULL','r')
-                    ->select('NULL','cf')
-                    ->select('NULL','l1')
-                    ->select('NULL','l2')
-                    ->select('NULL','l3')
-                    ->select('NULL','l4')
-                    ->select('NULL','ap')
-                    ->select('NULL','ar')
-                    ->select('NULL','z')
-                    ->select('NULL','purpose')
-                    ->select('NULL','kind')
-                    ->select('NULL','angle')
-                    ->select('NULL','thread')
-                    ->select('NULL','pitch')
-                    ->select('NULL','pmin')
-                    ->select('NULL','pmax')
-                    ->select('NULL','adin')
-                    ->select('NULL','adimin')
-                    ->select('NULL','adimax')
-                    ->select('NULL','adout')
-                    ->select('NULL','tpl')
-                    ->select('NULL','spl')
-                    ->select("form.label || ' • ' || form.name",'fpl')
-                    ->select('NULL','coolin')
-                    ->select('NULL','t')
-                    ->select('NULL','kr')
-                    ->select('NULL','f1')
-                    ->select('NULL','dmin')
-                    ->select('NULL','purpout')
-                    ->select('NULL','purpin')
-                    ->select('NULL','purptok')
-                    ->select('NULL','inserts')
-                    ->select('NULL','icount')
-                    ->select('NULL','regmin')
-                    ->select('NULL','regmax')
-                    ->select('NULL','tooltype')
-                    ->select('NULL','cooltype')
-                    ->select('NULL','m')
-                    ->select('NULL','orient')
-                    
-                    ->leftJoin('mz_tl_MillBorForm','form')->on('form.id=tool.form')
-                );
-            },
+// --- --- --- --- ---
+// --- --- --- --- ---
+// --- --- --- --- ---
+// --- OLD ---
+$Old = array_intersect_key($Data2,$Data4);
+$Old = array_filter($Old,function($value) use($Data4){
+    $Key = $value['hid'];
+    
+    /*if(array_diff($value,$Data4[$Key]) || array_diff($Data4[$Key],$value)){
+        dump(array_diff($value,$Data4[$Key]));
+        dump(array_diff($Data4[$Key],$value));
+        dump($value['info']);
+        dump($Data4[$Key]['info']);
+        dump($value,'data2');
+        dump($Data4[$Key],'data4');
+        die();
+    }*/
+    
+    return array_diff($value,$Data4[$Key]) || array_diff($Data4[$Key],$value);
+});
+//dump($Old);die();
 
-        ];
-
+if(count($Old)){
+    $Old = array_map(function($value){
+        $value['type_id'] = $value['type_id'] ? '('.db\Cql::select('/Tilda/Tool/Type')->prop('id')->rule('hid',$value['type_id'])->Query.')' : null;
+        $value['vendor_id'] = $value['vendor_id'] ? '('.db\Cql::select('/Tilda/Tool/Vendor')->prop('id')->rule('hid',$value['vendor_id'])->Query.')' : null;
+        return $value;
+    },$Old);
+    //dump($Old);die();
+    
+    $QueriesOld = array_map(function($value){
+        return db\Cql::update('/Tilda/Tool/Tool')->values($value)->rule('hid',$value['hid'])->Query;
+    },$Old);
+    //dump($QueriesOld);die();
+    $Connect4->exec($QueriesOld);
+}
 ?>

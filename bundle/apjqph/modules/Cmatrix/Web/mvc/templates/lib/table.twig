@@ -313,7 +313,15 @@
 
 {# --- --- --- --- --- #}
 {% macro td(td,prop) %}
-    <td class="px-1 whitespace-nowrap text-{{ prop.align }}">{{ td|raw }}</td>
+    {% if prop.type == 'real' %}
+        {% if td %}
+            <td class="px-1 whitespace-nowrap text-{{ prop.align }}">{{ td|number_format(2)|rtrim('0')|rtrim('.') }}</td>
+        {% else %}
+            <td class="px-1 whitespace-nowrap text-{{ prop.align }}">{{ td }}</td>
+        {% endif %}
+    {% else %}
+        <td class="px-1 whitespace-nowrap text-{{ prop.align }}">{{ td|raw }}</td>
+    {% endif %}
 {% endmacro %}
 
 

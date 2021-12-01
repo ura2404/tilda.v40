@@ -13,7 +13,7 @@ class Cql{
     private $Props   = [];
     private $Agg     = [];
     private $Rules   = [];
-    private $Values  = [0=>[]];
+    private $Values  = [0=>[]];    // массив массиво значений
     private $Orders  = [];
     private $Limit   = [];
     
@@ -68,9 +68,12 @@ class Cql{
         
         $_rules = function(){
             $Props = $this->Datamodel->Props;
-            $Arr = array_map(function($code,$value) use($Props){
-                return $this->StructureProvider->ConnectProvider->sqlPhrase($Props[$code],$value);
-            },array_keys($this->Rules),array_values($this->Rules));
+            $Arr = array_map(function($rule) use($Props){
+                $Code = $rule[0];
+                $Value = $rule[1];
+                $Cond = $rule[2];
+                return $this->StructureProvider->ConnectProvider->sqlPhrase($Props[$Code],$Value,$Cond);
+            },$this->Rules);
             return 'WHERE '. implode(' AND ',$Arr);
         };
         
@@ -157,16 +160,27 @@ class Cql{
         };
         
         $_rules = function(){
+            $Props = $this->Datamodel->Props;
+            $Arr = array_map(function($rule) use($Props){
+                $Code = $rule[0];
+                $Value = $rule[1];
+                $Cond = $rule[2];
+                return $this->StructureProvider->ConnectProvider->sqlPhrase($Props[$Code],$Value,$Cond);
+            },$this->Rules);
+            return 'WHERE '. implode(' AND ',$Arr);
+        };
+        
+        /*$_rules = function(){
             return array_map(function($code,$value){
                 return $this->StructureProvider->ConnectProvider->sqlPhrase($this->Datamodel->Props[$code],$value);
             },array_keys($this->Rules),array_values($this->Rules));
-        };
+        };*/
         
         $Queries = [];
         $Queries[] = 'UPDATE ' . $this->StructureProvider->sqlTableName();
         
         if($this->Values) $Queries[] = 'SET ' . implode(',',$_values());
-        if($this->Rules) $Queries[] = 'WHERE ' . implode(',',$_rules());
+        if($this->Rules) $Queries[] = $_rules();
         
         return implode(' ',$Queries);
     }
@@ -252,19 +266,39 @@ class Cql{
     }
     
     // --- --- --- --- ---
-    public function rule($code,$value){
+    public function rule($code,$value,$cond='='){
         $this->checkProp($code);
-        $this->Rules[$code] = $value;
+        $this->Rules[] = [$code,$value,$cond];
         return $this;
     }
     
     // --- --- --- --- ---
+    /**
+     * @param array $rules
+     *     [
+     *         [code,value,cond]
+     *     ]
+     *     или
+     *     [
+     *         code1 => $value1,
+     *         code2 => $value2,
+     *         code3 => $value3,
+     *     ]
+     */
     public function rules(array $rules=null){
         if(!$rules) return $this;
-        
-        array_map(function($code,$value){
-            $this->rule($code,$value);
+
+        if(array_key_first($rules) !== 0) $rules = array_map(function($code,$value){
+            return [$code,$value];
         },array_keys($rules),array_values($rules));
+
+        array_map(function($rule){
+            if(!array_key_exists(0,$rule) || !array_key_exists(1,$rule)) throw new ex('Wrong rules format');
+            $Code = $rule[0];
+            $Value = $rule[1];
+            $Cond = isset($rule[2]) ? $rule[2] : '=';
+            $this->rule($Code,$Value,$Cond);
+        },$rules);
         
         return $this;
     }

@@ -92,7 +92,6 @@ class Pgsql extends db\Connect\Provider implements db\Connect\iProvider{
         $Code  = $prop['code'];
         $Value = Pgsql\Value::instance($prop,$value,$cond)->Query;
         $Cond  = Pgsql\Cond::instance($prop,$Value,$cond,$isSelect)->Query;
-        
         return $Code . $Cond . $Value;
     }
     
@@ -102,9 +101,10 @@ class Pgsql extends db\Connect\Provider implements db\Connect\iProvider{
         return Pgsql\Value::instance($prop,$value,$cond='=')->Query;
     }
     
-    public function query($query){
-        return Pgsql\Connect::instance()->query($query);
-    }
+    // --- --- --- --- ---
+    //public function query($query){
+    //    return Pgsql\Connect::instance()->query($query);
+    //}
     
 }
 ?>

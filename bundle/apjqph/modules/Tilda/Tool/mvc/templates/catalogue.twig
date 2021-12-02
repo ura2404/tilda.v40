@@ -1,0 +1,76 @@
+{% extends "/Tilda/Tool/mvc/templates/tool.twig" %}
+
+{% block style %}
+    {{ parent() }}
+    {# <link rel="stylesheet/less" type="text/css" href="res/CmatrixWeb/adminDataEntityView.less"/> #}
+    <link rel="stylesheet/less" type="text/css" href="res/cmatrix/lib/layout1.less"/>
+    <link rel="stylesheet/less" type="text/css" href="res/cmatrix/lib/table.less"/>
+    <link rel="stylesheet/less" type="text/css" href="res/tildatool/lib/filter.less"/>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script type="module" src="res/cmatrix/lib/Layout1.class.js"></script>
+    <script type="module" src="res/tildatool/catalogue.js"></script>
+{% endblock %}
+
+{% block action %}
+    <a href="{{ app.url.document }}" class="cm-hover cursor-pointer mx-3 flex" title="Документооборот">
+        <i class="my-auto text-2xl fad fa-draw-circle"></i>
+    </a>
+    <a href="{{ app.url.report }}" class="cm-hover cursor-pointer mx-3 flex" title="Отчёты">
+        <i class="my-auto text-2xl fad fa-scroll"></i>
+    </a>
+    <a href="{{ app.url.library }}" class="cm-hover cursor-pointer mx-3 flex" title="Каталоги">
+        <i class="my-auto text-2xl fad fa-file-pdf"></i>
+    </a>
+{% endblock %}
+
+{% block direct %}
+    {{ parent() }}
+    {#<a id="wi-message" class="cm-hover cursor-pointer mx-3 flex" title="Карзина">
+        <i class="my-auto text-2xl far fa-shopping-cart"></i>
+    </a>#}
+{% endblock %}
+
+{% block main %}
+    {% import "/Cmatrix/Web/mvc/templates/lib/layout1.twig" as _layout1 %}
+    {% import "/Tilda/Tool/mvc/templates/lib/filter.twig" as _filter %}
+    {% import "/Cmatrix/Web/mvc/templates/lib/table.twig" as _table %}
+    {# {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %} #}
+    
+    {{ _layout1.layout('cm-tool-layout',
+        _filter.filter1('wi-tool-pfilter',filter),
+        _table.table('wi-tool-table',table)
+    ) }}
+
+    {#
+    {% for code,popup in popups %}
+        <div id="cm-filter-popup-{{ code }}" class="cm-windows-container wi-popup py-10 absolute top-0 left-0 h-full w-full flex bg-gray-500 bg-opacity-20">
+            <div class="mx-auto h-full  bg-white pt-4 pb-8 px-8 flex flex-col flex">
+                <div class="ml-auto pb-2 ">
+                    <div class="cm-hover w-5 h-5 cursor-pointer flex"><i class="m-auto fal fa-times"></i></div>
+                </div>
+                <div class="h-full overflow-y-auto">
+                    {{ _tree.tree('cm-filter-popup-tree-'~code,popup) }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    #}
+    
+    {#
+    {% import "/Cmatrix/Web/mvc/templates/lib/table.twig" as _table %}
+    {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %}
+    
+    <div class="h-full bg-gray-300 overflow-auto flex-shrink-0 flex-grow-0" style="flex-basis:15rem">
+        {{ _tree.tree('wi-tree-tool',tree) }}
+    </div>
+    
+    <div class="w-1" style="cursor:ew-resize"></div>
+    
+    <div class="bg-yellow-50 ml-1 w-full overflow-auto flex-shrink flex-grow">
+        {{ _table.table('wi-table-tool',table) }}
+    </div>
+    #}
+{% endblock %}

@@ -13,9 +13,9 @@
 ]);
 */
 
-\Cmatrix\Web\Router::add('/^tool/',[
-    'template' => '/Tilda/Web/toolsTool.twig',
-    'model' => '/Tilda/Web/ToolsTool',
+\Cmatrix\Web\Router::add('/^tool\/catalogue/',[
+    'template' => '/Tilda/Tool/catalogue.twig',
+    'model' => '/Tilda/Tool/Catalogue',
     'controller' => '/Cmatrix/Web/Twig'
 ]);
 ?>

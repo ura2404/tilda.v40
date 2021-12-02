@@ -1,0 +1,44 @@
+{% extends "/Tilda/Web/mvc/templates/common.twig" %}
+
+{% block favicon %}
+    res/tilda/ico/favicon.ico
+{% endblock %}
+
+{% block direct %}
+    {% if session %}
+        <a id="wi-search" class="cm-hover cursor-pointer mx-3 flex">
+            <i class="my-auto text-xl far fa-search"></i>
+        </a>
+        <a id="wi-message" class="cm-hover cursor-pointer mx-3 flex">
+            <i class="my-auto text-xl far fa-comment"></i>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block user %}
+    {% if session %}
+        <a id="wi-session" class="cm-hover flex ml-3 cursor-pointer"  href="{{ url.login }}" onclick="event.preventDefault()"
+            target="{% if sysuser.code == 'guest' %}#cm-login{% else %}#cm-session{% endif %}"
+            title="{{ sysuser.name }}"
+        >
+            {# <span class="cm-name my-auto mr-2">{{ session.user.name }}</span> #}
+            {# <i class="text-3xl my-auto fas fa-user-circle"></i> #}
+            {% if sysuser.code == 'guest' %}
+                <i class="text-3xl my-auto fad fa-user-circle"></i>
+            {% else %}
+                <i class="text-3xl my-auto fas fa-user-circle"></i>
+            {% endif %}
+            {# {% if session.user.code != 'guest'%}<i id="wi-caret-session" class="my-auto mr-2 fas fa-caret-left"></i>{% endif %} #}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block style %}
+    {{ parent() }}
+    {# <link rel="stylesheet/less" type="text/css" href="res/tilda/commonlogin.less"/> #}
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+     <script type="module" src="res/tilda/commonlogin.js"></script>
+{% endblock %}

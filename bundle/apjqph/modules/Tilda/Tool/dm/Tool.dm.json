@@ -108,7 +108,8 @@
             "info": null,
             "association": {
                 "entity": "/Tilda/Tool/Type",
-                "prop": "id"
+                "prop": "id",
+                "label" : "name"
             }
         },
         "vendor_id" : {
@@ -130,7 +131,8 @@
             "info": null,
             "association": {
                 "entity": "/Tilda/Tool/Vendor",
-                "prop": "id"
+                "prop": "id",
+                "label" : "name"
             }
         },
         "ratio" : {

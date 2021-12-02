@@ -15,10 +15,19 @@ class Session {
     static $INSTANCES = [];
     private $CookeiName;
     private $Hid;
+    private $Instance;
     
     // --- --- --- --- ---
     function __construct(){
         $this->check();
+    }
+    
+   // --- --- --- --- ---
+    function __get($name){
+        switch($name){
+            case 'Instance' : return $this->Instance;
+            default : throw new ex\Property($this,$name);
+        }
     }
     
     // --- --- --- --- ---
@@ -56,12 +65,12 @@ class Session {
                     $this->unsetCookie($this->Hid);
                 }
                 else{
-                    $this->Session = $Session;
-                    $this->Sysuser = db\Obbject::instance('/Cmatrix/Core/Sysuser')->get($Session->sysuser_id);
+                    $this->Instance = $Session;
+                    //$this->Sysuser = db\Obbject::instance('/Cmatrix/Core/Sysuser')->get($Session->sysuser_id);
                     
                     // --- touch
                     // через \CmatrixDb нельзя, так как происходит зацикливание
-                    $Query = db\Cql::update('/Cmatrix/Core/Session')->value('touch_ts','current_timestamp')->rule('id',$this->Session->id);
+                    $Query = db\Cql::update('/Cmatrix/Core/Session')->value('touch_ts','current_timestamp')->rule('id',$this->Instance->id);
                     db\Connect::instance()->exec($Query);
                     //$this->Session->value('touch_ts','current_timestamp')->update();
                 }
@@ -130,6 +139,11 @@ class Session {
         if(isset(self::$INSTANCES[$Key])) return self::$INSTANCES[$Key];
         
         return self::$INSTANCES[$Key] = new self;
+    }
+
+    // --- --- --- --- ---
+    static function i(){
+        return self::instance();
     }
 }
 ?>

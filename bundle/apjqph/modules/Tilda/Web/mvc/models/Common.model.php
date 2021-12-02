@@ -9,7 +9,9 @@ class Common implements web\Mvc\iModel {
     public function getData(){
         return [
             'app' => $this->getMyApp(),
-            'url' => CM_WHOME,
+            'url' => [
+                'home' => CM_WHOME,
+            ]
         ];
     }
     

@@ -1,0 +1,20 @@
+.cm-layout1 {
+    .cm-layout-left {
+        &:not(.cm-visible) {
+            display: none;
+        }
+    }
+    
+    .cm-layout-border {
+        &:not(.cm-visible) {
+            display: none;
+        }
+    }
+}
+
+#cm-layout-swap-button {
+    transition: .03s linear;
+    &.cm-open {
+        transform: rotateZ(180deg);
+    }
+}

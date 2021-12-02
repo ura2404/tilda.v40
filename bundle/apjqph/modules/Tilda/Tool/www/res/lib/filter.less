@@ -1,0 +1,19 @@
+.cm-pfilter1 {
+    
+    .cm-filter-container {
+        .cm-filter-code i {
+            transition: .1s linear;
+            transform: rotateZ(90deg);
+        }
+        
+        &:not(.cm-active) {
+            .cm-filter-code i { transform: rotateZ(0deg); }
+            .cm-filter-choice { display: none; }
+        }
+        
+        .cm-combobox-container {
+            &:not(.cm-active) { display: none; }
+        }
+    }
+
+}

@@ -49,7 +49,8 @@
             "info": null,
             "association": {
                 "entity": "/Tilda/Tool/Type",
-                "prop": "id"
+                "prop": "id",
+                "label" : "name"
             }
         },
         "chain_id" : {
@@ -69,7 +70,8 @@
             "info": "id корневого для цепи узла, условно not null поле",
             "association": {
                 "entity": "/Tilda/Tool/Type",
-                "prop": "id"
+                "prop": "id",
+                "label" : "name"
                 }
         },
         "count" : {

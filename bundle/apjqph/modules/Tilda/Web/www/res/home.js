@@ -1,1 +1,1 @@
-//window.location.href = '/tilda40/tool';
+window.location.href = '/tilda40/tool/catalogue';

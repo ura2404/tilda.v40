@@ -1,0 +1,22 @@
+{#
+ # Макрос 'layout1'
+ # Две горизонтальные панели
+ #}
+{% macro layout(id,left,right) %}
+    {#
+    {% import "/Cmatrix/Web/mvc/templates/lib/table.twig" as _table %}
+    {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %}
+    #}
+
+    <div id="{{ id }}" class="cm-layout1 h-full w-full flex">
+        <div class="cm-layout-left cm-visible h-full _bg-blue-100 _overflow-auto flex-shrink-0 flex-grow-0" style="flex-basis:20rem">
+            {{ left|raw }}
+        </div>
+        
+        <div class="cm-layout-border cm-visible w-1 bg-gray-300" style="cursor:ew-resize"></div>
+        
+        <div class="cm-layout-right _bg-yellow-100 w-full overflow-auto flex-shrink flex-grow">
+            {{ right|raw }}
+        </div>
+    </div>
+{% endmacro %}

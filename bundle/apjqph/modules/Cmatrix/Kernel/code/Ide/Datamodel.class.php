@@ -166,6 +166,7 @@ class Datamodel implements iDatamodel{
     // --- --- --- --- ---
     // --- --- --- --- ---
     public function getProp($propName){
+        if($propName === 'NULL') return;
         if(!isset($this->Props[$propName])) throw new \Exception('Wrong entity "' .$this->Url. '" prop "' .$propName. '"');
         return $this->Props[$propName];
     }
@@ -176,6 +177,11 @@ class Datamodel implements iDatamodel{
     static function instance($url){
         $Cl = self::cl($url);
         return new $Cl();
+    }
+    
+    // --- --- --- --- ---
+    static function i($url){
+        return  self::instance($url);
     }
     
     // --- --- --- --- ---

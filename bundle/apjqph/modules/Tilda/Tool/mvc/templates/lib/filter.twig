@@ -1,0 +1,109 @@
+{#
+ # Макрос 'filter1'
+ # Вертикальная панель
+ #}
+{% macro filter1(id,props) %}
+
+    <div id="{{ id }}" class="cm-pfilter1 flex flex-col h-full">
+        <div class="pl-3 h-10 bg-gray-100 text-gray-800 font-bold flex-shrink-0 border-b-1 flex">
+            <span class="my-auto"><i class="far fa-arrow-right"></i><span class="ml-2">Фильтры</span></span>
+            <button type="button" class="cm-filter-commit w-10 hover:bg-green-500 hover:text-white ml-auto" title="Применить"><i class="far fa-check"></i></button>
+            <button type="button" class="cm-filter-reset w-10 hover:bg-red-400 hover:text-white" title="Сбросить"><i class="far fa-redo"></i></button>
+        </div>
+        
+        <div class="py-5 h-full overflow-y-auto">
+            {% for prop in props if prop.code != 'id' and prop.type != '::index::' %}
+                {{ _self.filter1_prop(prop) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro filter1_prop(prop) %}
+    <div class="cm-filter-container mb-2" data-code="{{ prop.code }}">
+        {{ _self.filter1_prop_name(prop) }}
+        {{ _self.filter1_prop_choice(prop) }}
+        <div>
+            
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro filter1_prop_name(prop) %}
+    <div class="cm-filter-code px-3 _text-green-700 cursor-pointer flex" title="{{ prop.baloon }}">
+        <span>
+            {% if prop.name == prop.label %}
+                {{ prop.label|raw }}
+            {% else %}
+                {{ prop.name }}, {{ prop.label|raw }}
+            {% endif %}
+        </span>
+        <i class="my-auto ml-auto text-xs fal fa-chevron-right"></i>
+    </div>
+{% endmacro %}
+
+{% macro filter1_prop_choice(prop) %}
+    <div class="cm-filter-choice pl-3 pr-1 mb-5">
+        {% if prop.type == '::id::' %}        {{ _self.integer(prop,pfilter) }}
+        {% elseif prop.type == '::link::' %}  {{ _self.link(prop,pfilter) }}
+        {% elseif prop.type == 'timestamp' %} {{ _self.datetime(prop,pfilter) }}
+        {% elseif prop.type == 'bool' %}      {{ _self.bool(prop,pfilter) }}
+        {% elseif prop.type == 'date' %}
+        {% elseif prop.type == 'time' %}
+        {% elseif prop.type == 'integer' %}
+        {% elseif prop.type == 'real' %}      {{ _self.real(prop,pfilter) }}
+        {% elseif prop.type == 'string' or prop.type == 'text' %} {{ _self.string(prop,pfilter) }}
+        {% else %} {{ _self.default(prop,pfilter) }}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro integer(prop) %}
+    <div class="cm-active-choice" data-type="=">
+        {{ _self.input(prop) }}
+    </div>
+{% endmacro %}
+
+{% macro real(prop) %}
+    <div class="cm-active-choice" data-type="=">
+        {{ _self.input(prop) }}
+    </div>
+{% endmacro %}
+
+{% macro datetime(prop) %}
+{% endmacro %}
+
+{% macro bool(prop) %}
+{% endmacro %}
+
+{% macro string(prop) %}
+    <div class="cm-active-choice" data-type="=">
+        {{ _self.input(prop) }}
+    </div>
+{% endmacro %}
+
+{% macro default(prop) %}
+    <div class="cm-active-choice" data-type="=">
+        {{ _self.input(prop) }}
+    </div>
+{% endmacro %}
+
+{% macro link(prop) %}
+    {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %}
+
+    <div class="cm-combobox cm-active-choice cursor-pointer w-full px-1 h-7 font-bold bg-gray-500 bg-opacity-10 border border-solid _border-white border-opacity-20 focus:border-opacity-80" data-type="combobox"></div>
+    <div class="cm-combobox-container absolute py-5 top-0 left-0 h-full w-full bg-gray-500 bg-opacity-20 z-50 flex flex-col">
+            <div class="mx-auto h-full bg-white pt-4 pb-8 px-8 flex flex-col flex">
+                <div class="ml-auto pb-2 ">
+                    <div class="cm-close-button cm-hover w-5 h-5 cursor-pointer flex"><i class="m-auto fal fa-times"></i></div>
+                </div>
+                <div class="h-full overflow-y-auto">
+                    {{ _tree.tree(null,prop['_combobox']) }}
+                </div>
+            </div>
+    </div>
+{% endmacro %}
+
+{% macro input(prop) %}
+    <input name="{{ prop.code }}" type="text" class="px-1 h-7 w-full font-bold bg-gray-500 bg-opacity-10 border border-solid _border-white border-opacity-20 focus:border-opacity-80" value="{{ pfilter }}"/>
+{% endmacro %}

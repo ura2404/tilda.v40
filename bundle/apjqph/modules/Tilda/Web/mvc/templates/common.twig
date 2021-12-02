@@ -24,23 +24,31 @@
         <script type="text/javascript" src="res/cmatrix/vendor/lesscss.org/3.7.1/less.min.js"></script>
     </head>
     <body>
-        <header class="fixed inset-x-0 top-0 px-1 h-10 bg-gray-500 text-white flex">
-            <a id="cm-logo" href="{{ url.home }}" class="cm-hover my-auto text-6xl _w-11 flex-shrink-0">
+        
+        <header class="fixed inset-x-0 top-0 px-3 h-12 _bg-gray-100 text-gray-700 flex border-b-2">
+            <a id="cm-logo" href="{{ url.home }}" class="cm-hover my-auto text-6xl text-green-700 _w-11 flex-shrink-0">
                 <span class="_m-auto">~</span>
             </a>
             
-            <div class="cm-name my-auto pl-1 pr-2 _font-bold text-2xl text-green-400 truncate _flex-none" title="{% block nameTitle %}{% endblock %}">
+            <div class="cm-name my-auto pl-1 pr-2 _font-bold text-2xl text-green-700 truncate _flex-none" title="{% block nameTitle %}{% endblock %}">
                 {% block name %}{% if app.module %}{{ app.module }}{% else %}{{ app.name }}{% endif %}{% endblock %}
             </div>
             
+            <div class="mx-auto flex">
+                {% block action %}{% endblock %}
+            </div>
             <div class="ml-auto flex">
-                {% block actions %}{% endblock %}
+                {% block direct %}{% endblock %}
+            </div>
+            <div class="flex">
+                {% block user %}{% endblock %}
             </div>
         </header>
         
-        <div class="pt-10 w-full h-full flex">
+        <div class="pt-12 w-full h-full">
             {% block main %}{% endblock %}
         </div>
+        
     </body>
 
     <script type="text/javascript" src="res/cmatrix/vendor/jquery.com/jquery-3.6.0.min.js"></script>

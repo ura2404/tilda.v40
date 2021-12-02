@@ -56,7 +56,10 @@ class Datamodel {
     private function getMyTree(){
         if($this->P_Tree) return $this->P_Tree;
         
-        $Query = db\Cql::select('/Tilda/Tool/Type')->props(['id','hid','name','parent_id'])->orders(['parent_id','ordd'])->limit(-1);
+        $Props = kernel\Ide\Datamodel::i($this->Url)->Props;
+        if(isset($Props['parent_id'])) $Query = db\Cql::select($this->Url)->props(['id','hid','name','parent_id'])->orders(['parent_id','ordd'])->limit(-1);
+        else $Query = db\Cql::select($this->Url)->props(['id','hid','name',['NULL','parent_id']])->orders(['name'])->limit(-1);
+        
         //dump($Query->Query);die();
         $Res = db\Connect::instance()->query($Query);
         
@@ -83,6 +86,11 @@ class Datamodel {
         
         $Datamodel = kernel\Ide\Datamodel::instance($this->Url);
         
+        $_type = function($code,$prop){
+            if($prop['type'] === "::id::" && $prop['association']) return '::link::';
+            else return $prop['type'];
+        };
+        
         $_align = function($code,$prop){
             if($code === 'status') return 'center';
             
@@ -102,7 +110,8 @@ class Datamodel {
         };        
         
         $Props = [];
-        array_map(function($code,$prop) use($_align,&$Props){
+        array_map(function($code,$prop) use($_type,$_align,&$Props){
+            $prop['type'] = $_type($code,$prop);
             $prop['name'] = $prop['name'] ? kernel\Lang::str($prop['name']) : $prop['code'];
             $prop['label'] = $prop['label'] ? kernel\Lang::str($prop['label']) : ($prop['name'] ? kernel\Lang::str($prop['name']) : $prop['code']);
             $prop['baloon'] = $prop['baloon'] ? kernel\Lang::str($prop['baloon']) : null;
@@ -110,7 +119,7 @@ class Datamodel {
             $prop['align'] = $_align($code,$prop);
             
             $Props[$code] = $prop;
-        },array_keys($Datamodel->Props),array_values($Datamodel->Props));
+        },array_keys($Datamodel->OwnProps),array_values($Datamodel->OwnProps));
         
         return $this->Props = array_merge([
             'row_index'=>[
@@ -177,6 +186,11 @@ class Datamodel {
         $Key = $url;
         if(array_key_exists($Key,self::$INSTANCES)) return self::$INSTANCES[$Key];
         return new self($url);
+    }
+    
+    // --- --- --- --- ---
+    static function i($url){
+        return self::instance($url);
     }
 }
 ?>

@@ -82,9 +82,26 @@ class Page {
     // --- --- --- --- ---
     // --- --- --- --- ---
     // --- --- --- --- ---
-    public function getParam($name=null){
+    /**
+     * @param string $name
+     * @param bool isDecode - декодировать из base64
+     */
+    public function getParam($name=null,$isDecode=false){
         $Params = $this->Params;
-        return ($name && array_key_exists($name,$this->Params)) ? $this->Params[$name] : null;
+        $Param = ($name && array_key_exists($name,$this->Params)) ? $this->Params[$name] : null;
+        
+        if(!$Param) return;
+        if(!$isDecode) return $Param;
+        
+            $Param = strtr($Param, ' ', '+');
+            $Param = json_decode(base64_decode($Param),true);
+            
+            //$Param = strtr($Param, ' ', '+');
+            //$Param = urlencode($Param);
+            //$Param = json_decode(base64_decode($Param),true);
+        
+        //dump($Param,11111);
+        return $Param;
     }
     
     // --- --- --- --- ---

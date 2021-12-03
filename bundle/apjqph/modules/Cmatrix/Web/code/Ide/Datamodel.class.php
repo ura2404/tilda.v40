@@ -42,8 +42,7 @@ class Datamodel {
         if($this->P_Table) return $this->P_Table;
         
         return $this->P_Table = [
-            'rfilter' => $this->getRfilter(),
-            'pfilter' => $this->getPfilter(),
+            'rfilter' => web\Page::instance()->getParam('r'),
             'props' => $this->getMyProps(),
             'lines' => $this->getLines(),
         ];
@@ -109,56 +108,65 @@ class Datamodel {
             }
         };        
         
+        $_filtrable = function($code,$prop){
+            return $code!=='id';
+        };
+        
         $Props = [];
-        array_map(function($code,$prop) use($_type,$_align,&$Props){
+        array_map(function($code,$prop) use($_type,$_align,$_filtrable,&$Props){
             $prop['type'] = $_type($code,$prop);
             $prop['name'] = $prop['name'] ? kernel\Lang::str($prop['name']) : $prop['code'];
             $prop['label'] = $prop['label'] ? kernel\Lang::str($prop['label']) : ($prop['name'] ? kernel\Lang::str($prop['name']) : $prop['code']);
             $prop['baloon'] = $prop['baloon'] ? kernel\Lang::str($prop['baloon']) : null;
             $prop['sortable'] = true;
+            $prop['filtrable'] = $_filtrable($code,$prop);
             $prop['align'] = $_align($code,$prop);
             
             $Props[$code] = $prop;
         },array_keys($Datamodel->OwnProps),array_values($Datamodel->OwnProps));
         
-        return $this->Props = array_merge([
+        // pfilter
+        $Pfilter = web\Page::instance()->getParam('f',true);
+        $Props =  array_map(function($prop) use($Pfilter){
+            //dump($prop);
+            if($prop['type'] === '::link::') $prop['_combobox'] = web\Ide\Datamodel::instance($prop['association']['entity'])->Tree;
+            if(isset($Pfilter[$prop['code']])) $prop['_filter'] = $Pfilter[$prop['code']];
+            return $prop;
+        },$Props);
+        
+        //sort
+        $Sort = web\Page::instance()->getParam('s',true);
+        //dump($Sort);
+        
+        $Props =  array_map(function($prop) use($Sort){
+            if(isset($Sort[$prop['code']])) $prop['_sort'] = $Sort[$prop['code']];
+            return $prop;
+        },$Props);
+        
+        return $this->P_Props = array_merge([
             'row_index'=>[
                 'code' => 'row_index',
                 'type' => '::index::',
                 'baloon' => 'Выбрать все записи',
                 'sortable' => false,
-                'align' => 'center'
+                'align' => 'center',
+                'filtrable' => false
             ]
         ],$Props);
     }
-    
-    // --- --- --- --- ---
-    /**
-     * Получить параметрический фильтр
-     */
-    private function getPfilter(){
-        $Filter = web\Page::instance()->getParam('f');
-        $Clean = strtr($Filter, ' ', '+');
-        $Res = json_decode(base64_decode( $Clean ),true);
-        return $Res;
-    }
-    
-    // --- --- --- --- ---
-    /**
-     * Получить свободный фильтр
-     */
-    private function getRfilter(){
-        $Filtr = web\Page::instance()->getParam('r');
-        return $Filtr;
-    }
-    
+        
     // --- --- --- --- ---
     private function getLines(){
         $Datamodel = kernel\Ide\Datamodel::instance($this->Url);
         $Props = array_flip(array_keys($this->Props));
         array_shift($Props);
         
-        $Query = db\Cql::select($Datamodel)->props(array_keys($Props))->order('id')/*->orders($Sorts)->rules()->limit($Limit)*/;
+        $Sort = web\Page::instance()->getParam('s',true);
+        if($Sort) $Sort = array_map(function($key,$value){ return $value .'::'. $key; },array_keys($Sort),array_values($Sort));
+        else $Sort = ['id'];
+        
+        $Query = db\Cql::select($Datamodel)->props(array_keys($Props))->rule('active',true)->limit(10)->orders($Sort);
+        //dump($Query->Query);
         $Res = db\Connect::instance()->query($Query);
         
         $Iterator = 0;

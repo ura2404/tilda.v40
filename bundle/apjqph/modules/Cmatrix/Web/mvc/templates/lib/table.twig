@@ -18,7 +18,7 @@
         #}
             
         <div class="cm-scroll h-full overflow-auto relative">
-            {{ _self.filter(data) }}
+            {# {{ _self.filter(data) }} #}
             {{ _self.setup(data) }}
             {{ _self.body(data) }}
         </div>
@@ -40,7 +40,7 @@
         </fieldset>
         
         <button type="button" class="cm-setup-button w-10 text-gray-500 hover:text-gray-600 hover:bg-gray-300" title="Настройки"><i class="far fa-cog"></i></button>
-        <button type="button" class="cm-filter-button w-10 text-gray-500 hover:text-gray-600 hover:bg-gray-300" title="Фильтры"><i id="wi-filter-b" class="far fa-filter"></i></button>
+        {# <button type="button" class="cm-filter-button w-10 text-gray-500 hover:text-gray-600 hover:bg-gray-300" title="Фильтры"><i id="wi-filter-b" class="far fa-filter"></i></button> #}
         <button type="button" class="w-10 text-gray-500 hover:text-gray-600 hover:bg-gray-300" title="Плитка"><i class="far fa-th"></i></button>
         <button type="button" class="w-10 text-gray-500 hover:text-gray-600 hover:bg-gray-300" title="Список"><i class="far fa-th-list"></i></button>
         <a href="{{ url.home }}" class="w-10 text-xl text-yellow-600 hover:bg-yellow-600 hover:text-white flex" title="Помощь">
@@ -96,15 +96,15 @@
         
         <span class="my-auto">Строки: </span>
         <span class="ml-2 my-auto flex cursor-pointer">
-            <span class="w-5 text-center hover:bg-gray-300" title="Строк на странице">{{ data.lines|length}}</span>
-            {%if data.lines|length != data.pager.total %}/<span class="w-5 text-center hover:bg-gray-300" title="Всего строк">{{ data.pager.total }}</span>{% endif %}
-            <span></span><span class="cm-count-selected w-5 text-center hover:bg-gray-300" title="Выделено строк"></span>
+            <span class="w-auto text-center hover:bg-gray-300" title="Строк на странице">{{ data.lines|length}}</span>
+            {%if data.lines|length != data.pager.total %}/<span class="w-auto w-min-5 text-center hover:bg-gray-300" title="Всего строк">{{ data.pager.total }}</span>{% endif %}
+            <span></span><span class="cm-count-selected w-auto text-center hover:bg-gray-300" title="Выделено строк"></span>
         </span>
         
         <span class="ml-auto my-auto">Страницы: </span>
         <div class="cm-pager flex cursor-pointer">
             {% if data.pager.hfirst %}
-                <a href="{{ data.pager.hfirst }}" class="w-6 hover:text-white hover:bg-gray-300 flex" title="В начало" disabled="disabled"><i class="m-auto far fa-angle-double-left"></i></a>
+                <a href="{{ data.pager.hfirst }}" class="w-auto hover:text-white hover:bg-gray-300 flex" title="В начало" disabled="disabled"><i class="m-auto far fa-angle-double-left"></i></a>
                 <a href="{{ data.pager.hprev }}" class="w-6 hover:text-white hover:bg-gray-300 flex" title="Предидущая страница" disabled="disabled"><i class="m-auto far fa-angle-left"></i></a>
             {% else %}
                 <button type="button" class="w-6 text-gray-300 hover:text-white hover:bg-gray-300" title="В начало" disabled="disabled"><i class="my-auto far fa-angle-double-left"></i></button>
@@ -287,23 +287,19 @@
 
 {# --- --- --- --- --- #}
 {% macro th(prop,data) %}
-    {% set sort = data[prop['code']] %}
+    {# {% set sort = data[prop['code']] %} #}
 
     {% if prop.code=='row_index' %}
         <th class="cm-full-select px-1 text-center hover:bg-gray-400 hover:bg-opacity-20" title="{{ prop.baloon }}"><i class="far fa-check-square"></i></i></th>
     {% else %}
-        <th class="px-1 {% if data.pfilter[prop.code] %}bg-green-300{% endif %} hover:bg-gray-400 hover:bg-opacity-20 {#{%if prop.sort %}cm-{{ prop.sort }}{% endif %}#}" title="{{ prop.baloon }}">
+        <th class="px-1 {% if prop._filter %}bg-green-200{% endif %} hover:bg-gray-400 hover:bg-opacity-20 {%if prop.sort %}cm-{{ prop.sort }}{% endif %}" data-code="{{ prop.code }}" title="{{ prop.baloon }}">
             <span class="flex">
                 <span class="ml-auto pl-1">{{ prop.label|raw }}</span>
                 {% if prop.sortable %}
                     <span class="cm-sort-container ml-auto pl-1 flex">
-                        {% if data.sorts[prop.code][0] =='s' %}
-                            <a href="{{ data.sorts[prop.code][1] }}"><i class="cm-sort text-gray-400 hover:text-gray-900 fad fa-sort"></i></a>
-                        {% elseif data.sorts[prop.code][0] == 'a'%}
-                            <a href="{{ data.sorts[prop.code][1] }}"><i class="cm-asc text-gray-600 hover:text-gray-900 fad fa-sort-up"></i></a>
-                        {% elseif data.sorts[prop.code][0] == 'd'%}
-                            <a href="{{ data.sorts[prop.code][1] }}"><i class="cm-desc text-gray-600 hover:text-gray-900 fad fa-sort-down"></i></a>
-                        {% endif %}
+                        <i class="cm-sort {% if prop._sort is not defined %}cm-active{% endif %} my-auto text-gray-400 hover:text-gray-900 fad fa-sort" data-ordd="s"></i>
+                        <i class="cm-asc {% if prop._sort == 'a' %}cm-active{% endif %} my-auto text-gray-600 hover:text-gray-900 fad fa-sort-up" data-ordd="a"></i>
+                        <i class="cm-desc {% if prop._sort == 'd' %}cm-active{% endif %} my-auto text-gray-600 hover:text-gray-900 fad fa-sort-down" data-ordd="d"></i>
                     </span>
                 {% endif %}
             </span>

@@ -1,6 +1,7 @@
 /**
  * Class Table
  */
+import Page from './Page.class.js';
 
 export default class Table {
 
@@ -33,11 +34,11 @@ export default class Table {
     init(){
         const Instance = this;
         
-        this.$FilterButton.on('click',e => this.openFilter(this.Mode));
+        //this.$FilterButton.on('click',e => this.openFilter(this.Mode));
         this.$SetupButton.on('click',e => this.openSetup(this.Mode));
         
         // click по строке
-        this.$Body.on('click','tr',function(e){ Instance.selectTr(e,this) });
+        this.$Tr.on('click',function(e){ Instance.selectTr(e,this) });
         
         // поле поиска
         this.$Search
@@ -46,8 +47,7 @@ export default class Table {
             .find('input').on('keydown',function(e){
                 if(e.keyCode !== 13 && e.keyCode !== undefined) return;
                 
-                const Value = $(this).val();
-                Instance.reload('r', Value ? Value : null);
+                new Page().init().setParam('r',$(this).val()).reload();
             })
             .focus().map(function(){                                                            // фокус на поле ввода и курсор в конец
                 $(this)[0].setSelectionRange($(this).val().length,$(this).val().length);
@@ -59,8 +59,23 @@ export default class Table {
         // кнопка full select
         this.$Tag.find('.cm-full-select').on('click',() => this.selectTrAll());
         
+        // клик по иконкам сортировки
+        this.$Body.find('thead').find('.cm-sort-container').each(function(){
+            const $Container = $(this);
+            const $First = $(this).children().eq(0);
+            $(this).children().on('click',function(e){
+                $(this).removeClass('cm-active');
+                const $Next = $(this).next();
+                $Next.length ? $Next.addClass('cm-active') : $First.addClass('cm-active');
+                
+                Instance.sort();
+            });
+        });
+        
+        
+        
         // --- фильтр 
-        this.$Filter
+        /*this.$Filter
         .find('.cm-filter-toolbar')
             // --- кнопка сбросить фильтры
             .find('.cm-filter-reset').on('click',() => {
@@ -122,6 +137,7 @@ export default class Table {
                 
             });
         });
+        */
 
         
         /*setTimeout(()=> {
@@ -140,19 +156,66 @@ export default class Table {
         if(this.$Body.find('tr').length) this.genHead();
         
         return this;
-    }    
+    }
     
+    // перезагрузка сортировки
+    sort(){
+        //console.log('ordd');
+        
+        // --- из строки браузера
+        let Ordd = new Page().init().getParam('s',true);
+        Ordd = Ordd ? Ordd : {};
+        
+        // --- из таблицы
+        let Values = {};
+        this.$Body.find('thead').find('.cm-sort-container').each(function(){
+            const $Container = $(this);
+            const Code = $(this).closest('th').data('code');
+            const Value = $(this).children('.cm-active').data('ordd');
+            if(Value !== 's') Values[Code] = Value;
+        });
+
+        //Ordd = {'_4':4,'_2':2,'_1':1,'_3':3};
+        //Values = {'_1':1,'_3':3,'_4':4,'_5':5,'_6':6,'_7':7};
+        //console.log('0=',Ordd);
+        //console.log('V=',Values);
+        
+        // --- новый массив для сортировок из браузера, для удаления отменённых фильтров
+        let Ordd1 = {};
+        // --- переносятся значения, которые есть в Values и в Values удаляется этот ключ
+        for(let i in Ordd) if(Values[i]!=undefined) { Ordd1[i] = Values[i]; delete(Values[i]); }
+        // --- объеденяются новый Ordd и модифицированный Values
+        let Sorts = Object.assign({},Ordd1,Values);
+        Sorts = Object.keys(Sorts).length ? Sorts : null;
+        //console.log(Sorts);
+        //return;
+        
+        /*
+        let Sorts = {};
+        for(let i in Ordd){
+            console.log('1111=',Values[i]);
+            if(Values[i] !== undefined) { let Tmp = Values[i]; Sorts[i] = Tmp; delete(Values[i]); }
+        }
+        console.log(Sorts);
+        
+        Sorts = Object.assign({},Sorts,Values);
+        Sorts = Object.keys(Sorts).length ? Sorts : null;
+        */
+        new Page().init().setParam('s',Sorts,true).reload();
+    }
+    
+    /*
     reload(key,value){
         console.log('key=',key,'value=',value);
         
         const Page = window.location.href.split('?')[0];
-        /*
-        console.log(11,location.search.substring(1));
-        console.log(22,location.search.substring(1).replace(/&/g, "\",\""));
-        console.log(33,location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g, "\":\""));
-        console.log(44,decodeURI(location.search.substring(1).replace(/=+$/, '').replace(/&/g, "\",\"").replace(/=/g, "\":\"")));
-        console.log(55,decodeURIComponent(location.search.substring(1).replace(/=+$/, '').replace(/&/g, "\",\"").replace(/=/g, "\":\"")));
-        */
+        
+        //console.log(11,location.search.substring(1));
+        //console.log(22,location.search.substring(1).replace(/&/g, "\",\""));
+        //console.log(33,location.search.substring(1).replace(/&/g, "\",\"").replace(/=/g, "\":\""));
+        //console.log(44,decodeURI(location.search.substring(1).replace(/=+$/, '').replace(/&/g, "\",\"").replace(/=/g, "\":\"")));
+        //console.log(55,decodeURIComponent(location.search.substring(1).replace(/=+$/, '').replace(/&/g, "\",\"").replace(/=/g, "\":\"")));
+        
         //const Params = location.search.substring(1) ? JSON.parse('{"' + decodeURIComponent(location.search.substring(1).replace(/=+$/, '').replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}') : {};
         const Params = location.search.substring(1) ? JSON.parse('{"' + decodeURIComponent(location.search.substring(1).replace(/=+$/,"").replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}') : {};
         
@@ -163,6 +226,7 @@ export default class Table {
         console.log('Href=',Href);
         window.location.href = Href;
     }
+    */
     
     // --- --- --- --- ---
     /**
@@ -335,6 +399,7 @@ export default class Table {
     }
     
     // --- --- --- --- ---
+    /*
     getFilter(){
         let Filter = {};
         this.$Filter.find('.cm-filer-prop-container').map((index,element) => {
@@ -373,12 +438,12 @@ export default class Table {
         
         console.log('123==============','123=='.replace(/=+$/, ''));
         
-        /*
-        F = btoa(JSON.stringify(Filter));
-        console.log(111111111111,F);
-        F = F.replace(/=+$/,"");
-        console.log(222222222222,F);
-        */
+        
+        //F = btoa(JSON.stringify(Filter));
+        //console.log(111111111111,F);
+        //F = F.replace(/=+$/,"");
+        //console.log(222222222222,F);
+        
         
         //console.log(Filter,Object.keys(Filter).length ? JSON.stringify(Filter) : null);
         
@@ -387,4 +452,5 @@ export default class Table {
         console.log(Filter);
         return Filter;
     }
+    */
 }

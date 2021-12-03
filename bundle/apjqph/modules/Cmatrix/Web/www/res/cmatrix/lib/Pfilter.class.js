@@ -12,6 +12,7 @@ export default class Pfilter1 {
      */
     constructor($tag){
         this.$Tag = $tag;
+        this.$ActiveButton = this.$Tag.find('.cm-filter-active');
     }
     
     // --- --- --- --- ---
@@ -40,7 +41,9 @@ export default class Pfilter1 {
         // --- кнопка commit
         .end().find('.cm-filter-commit').on('click',() => this.commit())
         // --- кнопка reset
-        .end().find('.cm-filter-reset').on('click',() => this.reset());
+        .end().find('.cm-filter-reset').on('click',() => this.reset())
+        // --- кнопка active
+        .end().find('.cm-filter-active').on('click',() => this.showActive());
         
         // открыть combobox
         this.$Tag.find('.cm-filter-choice').find('.cm-combobox').on('click',function(){
@@ -63,17 +66,20 @@ export default class Pfilter1 {
                     $CloseButton.trigger('click');
                 });
         });
+        
+        // если есть фильтры активировать кнопку active
+        if(this.$Tag.find('.cm-filter-container.cm-active').length) this.$ActiveButton.trigger('click');
     }
     
     // --- --- --- --- ---
     commit(){
         const Values = this.values();
-        const page = new Page().init();
-        page.reload('p',Values);
+        new Page().init().setParam('f',Values).reload();
     }
     
     // --- --- --- --- ---
     reset(){
+        new Page().init().setParam('f').reload();
     }
 
     // --- --- --- --- ---
@@ -91,15 +97,38 @@ export default class Pfilter1 {
             if(Type === '=') Value = $Choice.find('input').val();
             else if(Type === 'combobox'){
                 if(!(Value = $Choice.data('value'))) return;
-                Value += ','+$Choice.text();
+                //Value += ','+$Choice.text();
+                Value = [Value,$Choice.text()];
             }
             
             if(!Value) return;
             
-            Values[Code] = [];
+            Values[Code] = {};
             Values[Code][Type] = Value;
         });
         
-        return Object.keys(Values).length ? btoa(JSON.stringify(Values)).replace(/=+$/,"") : null;
+        if(!Object.keys(Values).length) return null;
+        
+        Values = JSON.stringify(Values);
+            
+            //Values = encodeURIComponent(Values);
+            //Values = unescape(Values);
+            
+            Values = encodeURI(Values);
+            Values = unescape(Values);
+            
+        Values = btoa(Values);
+        Values = Values.replace(/=+$/,"");
+        return Values;
+            
+        //return Object.keys(Values).length ? btoa(JSON.stringify(Values)).replace(/=+$/,"") : null;
+    }
+    
+    // --- --- --- --- ---
+    showActive(){
+        this.$Tag
+        .find('.cm-filter-active').toggleClass('cm-active')
+        .end()
+        .find('.cm-filter-container:not(.cm-active)').toggleClass('cm-hidden');
     }
 }

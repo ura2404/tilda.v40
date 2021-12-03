@@ -80,7 +80,7 @@ class Pgsql extends db\Connect\Provider implements db\Connect\iProvider{
         if(strpos($code,'::') === false) return $code;
         
         $Ord = strBefore($code,'::');
-        switch($Agg){
+        switch($Ord){
             case 'a' : return strAfter($code,'::') . ' ASC';
             case 'd' : return strAfter($code,'::') . ' DESC';
             default : throw new \Exception('Invalid order direction "' .$Ord.'".');

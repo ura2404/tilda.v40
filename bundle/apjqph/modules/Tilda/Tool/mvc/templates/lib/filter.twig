@@ -5,14 +5,17 @@
 {% macro filter1(id,props) %}
 
     <div id="{{ id }}" class="cm-pfilter1 flex flex-col h-full">
-        <div class="pl-3 h-10 bg-gray-100 text-gray-800 font-bold flex-shrink-0 border-b-1 flex">
+        <div class="pl-3 h-10 bg-gray-400 bg-opacity-30 text-gray-800 font-bold flex-shrink-0 border-b-1 flex">
             <span class="my-auto"><i class="far fa-arrow-right"></i><span class="ml-2">Фильтры</span></span>
-            <button type="button" class="cm-filter-commit w-10 hover:bg-green-500 hover:text-white ml-auto" title="Применить"><i class="far fa-check"></i></button>
+            <button type="button" class="cm-filter-tree w-10 hover:bg-gray-300 _hover:text-white ml-auto" title="Дерево типов"><i class="fad fa-folder-tree"></i></button>
+            <button type="button" class="cm-filter-active w-10 hover:bg-gray-300 _hover:text-white" title="Показать активные фильтры"><i class="fad fa-dot-circle"></i></button>
+            <button type="button" class="cm-filter-commit w-10 hover:bg-green-500 hover:text-white " title="Применить"><i class="far fa-check"></i></button>
             <button type="button" class="cm-filter-reset w-10 hover:bg-red-400 hover:text-white" title="Сбросить"><i class="far fa-redo"></i></button>
         </div>
         
         <div class="py-5 h-full overflow-y-auto">
-            {% for prop in props if prop.code != 'id' and prop.type != '::index::' %}
+            {#{% for prop in props if prop.code != 'id' and prop.type != '::index::' %}#}
+            {% for prop in props %}
                 {{ _self.filter1_prop(prop) }}
             {% endfor %}
         </div>
@@ -20,7 +23,7 @@
 {% endmacro %}
 
 {% macro filter1_prop(prop) %}
-    <div class="cm-filter-container mb-2" data-code="{{ prop.code }}">
+    <div class="cm-filter-container mb-2 {% if prop._filter|length%}cm-active{% endif %}" data-code="{{ prop.code }}">
         {{ _self.filter1_prop_name(prop) }}
         {{ _self.filter1_prop_choice(prop) }}
         <div>
@@ -60,13 +63,13 @@
 
 {% macro integer(prop) %}
     <div class="cm-active-choice" data-type="=">
-        {{ _self.input(prop) }}
+        {{ _self.input(prop,prop._filter['=']) }}
     </div>
 {% endmacro %}
 
 {% macro real(prop) %}
     <div class="cm-active-choice" data-type="=">
-        {{ _self.input(prop) }}
+        {{ _self.input(prop,prop._filter['=']) }}
     </div>
 {% endmacro %}
 
@@ -78,20 +81,24 @@
 
 {% macro string(prop) %}
     <div class="cm-active-choice" data-type="=">
-        {{ _self.input(prop) }}
+        {{ _self.input(prop,prop._filter['=']) }}
     </div>
 {% endmacro %}
 
 {% macro default(prop) %}
     <div class="cm-active-choice" data-type="=">
-        {{ _self.input(prop) }}
+        {{ _self.input(prop,prop._filter['=']) }}
     </div>
 {% endmacro %}
 
 {% macro link(prop) %}
     {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %}
 
-    <div class="cm-combobox cm-active-choice cursor-pointer w-full px-1 h-7 font-bold bg-gray-500 bg-opacity-10 border border-solid _border-white border-opacity-20 focus:border-opacity-80" data-type="combobox"></div>
+    <div class="cm-combobox cm-active-choice cursor-pointer w-full px-1 h-7 font-bold bg-gray-500 bg-opacity-10 border border-solid _border-white border-opacity-20 focus:border-opacity-80" 
+        data-type="combobox" 
+        data-value="{{ prop._filter.combobox[0] }}"
+    >{{ prop._filter.combobox[1] }}</div>
+    
     <div class="cm-combobox-container absolute py-5 top-0 left-0 h-full w-full bg-gray-500 bg-opacity-20 z-50 flex flex-col">
             <div class="mx-auto h-full bg-white pt-4 pb-8 px-8 flex flex-col flex">
                 <div class="ml-auto pb-2 ">
@@ -104,6 +111,6 @@
     </div>
 {% endmacro %}
 
-{% macro input(prop) %}
-    <input name="{{ prop.code }}" type="text" class="px-1 h-7 w-full font-bold bg-gray-500 bg-opacity-10 border border-solid _border-white border-opacity-20 focus:border-opacity-80" value="{{ pfilter }}"/>
+{% macro input(prop,value) %}
+    <input name="{{ prop.code }}" type="text" class="px-1 h-7 w-full font-bold bg-gray-500 bg-opacity-10 border border-solid _border-white border-opacity-20 focus:border-opacity-80" value="{{ value }}"/>
 {% endmacro %}

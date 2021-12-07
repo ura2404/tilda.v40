@@ -85,6 +85,9 @@ export default class Page {
     }
     
     reload(){
+        let PreParams = localStorage.getItem('cm_pre_params') || {};
+        console.log(PreParams);
+        
         const Href = this.Page + (Object.keys(this.Params).length ? '?'+ decodeURIComponent($.param(this.Params)) : '');
         window.location.href = Href;
     }

@@ -26,11 +26,20 @@ class Page {
             //case 'Name' : return $this->Pagename;
             case 'Html' : return $this->getMyHtml();
             //case 'Url' : return $this->Url;
-            //case 'Page' : return $this->getMyPage();
+            case 'Page' : return $this->getMyPage();
             case 'Params' : return $this->Params;
             default : throw new ex\Property($this,$name);
         }
     }
+    
+    // --- --- --- --- ---
+    private function getMyPage(){
+        $Url = $this->Url;
+        $Url = strBefore($Url,'?');
+        $Url = strBefore($Url,'&');
+        return $Url;
+    }
+    
     
     // --- --- --- --- ---
     // --- --- --- --- ---
@@ -104,6 +113,15 @@ class Page {
         return $Param;
     }
     
+    // --- --- --- --- ---
+    public function calculateUrl($code,$value){
+        $Params = $this->Params;
+        $Params[$code] = $value;
+        
+        return CM_WHOME. '/' .$this->Page. (count($Params) ? '?'.implode('&',array_map(function($key,$value){
+            return $key .'='. $value;
+        },array_keys($Params),array_values($Params))) : null);
+    }        
     // --- --- --- --- ---
     // --- --- --- --- ---
     // --- --- --- --- ---

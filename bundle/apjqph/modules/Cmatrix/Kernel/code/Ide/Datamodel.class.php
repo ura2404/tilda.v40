@@ -95,21 +95,25 @@ class Datamodel implements iDatamodel{
         
         $ParentProps = $this->Parent ? $this->Parent->Props : [];
         $ParentProps = array_map(function($prop){
-            unset($prop['own']);
+            if($prop['code'] !== 'info') $prop['own'] = false;
             return $prop;
-        } ,$ParentProps);
+        },$ParentProps);
         
-        return $this->P_Props = arrayMergeReplace($ParentProps,$this->OwnProps);
+        $Props = array_map(function($prop){
+            if($prop['code'] !== 'systype') $prop['own'] = true;
+            return $prop;
+        },$this->Json['props']);
+        
+        return $this->P_Props = arrayMergeReplace($ParentProps,$Props);
     }
 
     // --- --- --- --- ---
     protected function getMyOwnProps(){
         if($this->P_OwnProps !== null) return $this->P_OwnProps;
         
-        return $this->P_OwnProps = array_map(function($prop){
-            $prop['own'] = true;
-            return $prop;
-        } ,$this->Json['props']);
+        return $this->P_OwnProps = array_filter($this->Props,function($prop){
+            return $prop['own'] == true;
+        });
     }
     
     // --- --- --- --- ---

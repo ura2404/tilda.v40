@@ -34,6 +34,7 @@ class Value{
     private function getMySqlQuery(){
         if($this->Value instanceof \Cmatrix\Db\Cql) return '('.$this->Value->Query.')';
         elseif(strStart($this->Value,'(SELECT ')&& strEnd($this->Value,')')) return $this->Value;
+        elseif(is_array($this->Value)) return '('.implode(',',array_map(function($rule){ return self::i($this->Prop,$rule)->Query; },$this->Value)).')';
         
         $ValType = gettype($this->Value);
         if($ValType === 'string' && strStart($this->Value,'raw::')) return strAfter($this->Value,'raw::');
@@ -139,6 +140,11 @@ class Value{
     // --- --- --- --- ---
     static function instance(array $prop,$value,$cond='='){
         return new self($prop,$value,$cond);
+    }
+    
+    // --- --- --- --- ---
+    static function i(array $prop,$value,$cond='='){
+        return self::instance($prop,$value,$cond);
     }
     
     // --- --- --- --- --- --- --- ---

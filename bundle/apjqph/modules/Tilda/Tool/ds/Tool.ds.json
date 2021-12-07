@@ -1,0 +1,93 @@
+{
+    "code" : "/Tilda/Tool/Tool",
+    "props" : [
+        ["t","id"],
+        ["t","name"],
+        ["t","code"],
+        ["t","code1"],
+        ["tp","name","type"],
+        ["v","name","vendor"],
+        ["t","ratio"],
+        ["t","material"],
+        ["t","analog"],
+        
+        ["t","d"],
+        ["t","d1"],
+        ["t","d2"],
+        ["t","d3"],
+        ["t","r"],
+        ["t","cf"],
+        ["t","l1"],
+        ["t","l2"],
+        ["t","l3"],
+        ["t","l4"],
+        ["t","ap"],
+        ["t","ar"],
+        ["t","z"],
+        ["t","purpose"],
+        ["t","kind"],
+        ["t","angle"],
+        ["t","thread"],
+        ["t","pitch"],
+        ["t","pmin"],
+        ["t","pmax"],
+        ["t","adin"],
+        ["t","adimin"],
+        ["t","adimax"],
+        ["t","adout"],
+        ["t","tpl"],
+        ["t","spl"],
+        ["t","fpl"],
+        ["t","coolin"],
+        ["t","t"],
+        ["t","kr"],
+        ["t","f1"],
+        ["t","dmin"],
+        ["t","purpout"],
+        ["t","purpin"],
+        ["t","purptok"],
+        ["t","inserts"],
+        ["t","icount"],
+        ["t","regmin"],
+        ["t","regmax"],
+        ["t","tooltype"],
+        ["t","cooltype"],
+        ["t","m"],
+        ["t","orient"]
+    ],
+    "sources" : [
+        {
+            "type" : "datamodel",
+            "code" : "/Tilda/Tool/Tool",
+            "alias" : "t",
+            "links" : [
+                {
+                    "typw" : "datamodel",
+                    "code"  : "/Tilda/Tool/Vendor",
+                    "alaias" : "v",
+                    "rules" : [
+                        {
+                            "left" : "vendor_id",
+                            "right" : "id",
+                            "cond" : "="
+                        }
+                    ]
+                },
+                {
+                    "type" : "datamodel",
+                    "code" : "/Tilda/Tool/Vendor",
+                    "alias" : "tp",
+                    "rules" : [
+                        {
+                            "left" : "type_id",
+                            "right" : "id",
+                            "cond" : "="
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "rules" : [
+    ]
+}

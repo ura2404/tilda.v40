@@ -38,6 +38,10 @@ class Connect{
     }
 
     // --- --- --- --- ---
+    static function i(array $config=null){
+        return self::instance($config);
+    }
+    // --- --- --- --- ---
     static function get($name='db'){
         $Config = kernel\Config::instance()->getValue($name);
         if(!$Config) throw new ex('Connect config is not defined.');

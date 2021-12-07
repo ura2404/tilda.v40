@@ -24,7 +24,7 @@
 
 {% macro node(data,level) %}
     <li class="cm-tree-node" data-code="{{ data.id }}" data-label="{{ data.label }}">
-        <span class="cm-tree-node-label w-full px-10 inline-block hover:bg-gray-400 hover:bg-opacity-20 cursor-pointer flex" title="{{ data.label }}" data-level="{{ level }}">
+        <span class="cm-tree-node-label w-full px-5 inline-block hover:bg-gray-400 hover:bg-opacity-20 cursor-pointer flex" title="{{ data.label }}" data-level="{{ level }}">
             {% for i in 1..level if level > 0 %}<span class="cm-tree-node-indent w-6 inline-block flex-none"></span>{% endfor %}
             {% if data.children %}<i class="my-auto w-2 mr-1 text-gray-600 fas fa-caret-right"></i>{% endif %} <span class="whitespace-nowrap">{{ data.label }}</span>
         </span>

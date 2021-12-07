@@ -5,7 +5,9 @@
     {# <link rel="stylesheet/less" type="text/css" href="res/CmatrixWeb/adminDataEntityView.less"/> #}
     <link rel="stylesheet/less" type="text/css" href="res/cmatrix/lib/layout1.less"/>
     <link rel="stylesheet/less" type="text/css" href="res/cmatrix/lib/table.less"/>
+    <link rel="stylesheet/less" type="text/css" href="res/cmatrix/lib/tree.less"/>
     <link rel="stylesheet/less" type="text/css" href="res/tildatool/lib/filter.less"/>
+    <link rel="stylesheet/less" type="text/css" href="res/tildatool/catalogue.less"/>
 {% endblock %}
 
 {% block js %}
@@ -40,7 +42,7 @@
     {# {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %} #}
     
     {{ _layout1.layout('cm-tool-layout',
-        _filter.filter1('wi-tool-pfilter',filter),
+        _filter.filter1('wi-tool-pfilter',table.props,filterTabIndex),
         _table.table('wi-tool-table',table)
     ) }}
 

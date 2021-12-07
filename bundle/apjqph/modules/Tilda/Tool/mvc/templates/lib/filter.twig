@@ -2,23 +2,42 @@
  # Макрос 'filter1'
  # Вертикальная панель
  #}
-{% macro filter1(id,props) %}
-
-    <div id="{{ id }}" class="cm-pfilter1 flex flex-col h-full">
-        <div class="pl-3 h-10 bg-gray-400 bg-opacity-30 text-gray-800 font-bold flex-shrink-0 border-b-1 flex">
-            <span class="my-auto"><i class="far fa-arrow-right"></i><span class="ml-2">Фильтры</span></span>
-            <button type="button" class="cm-filter-tree w-10 hover:bg-gray-300 _hover:text-white ml-auto" title="Дерево типов"><i class="fad fa-folder-tree"></i></button>
-            <button type="button" class="cm-filter-active w-10 hover:bg-gray-300 _hover:text-white" title="Показать активные фильтры"><i class="fad fa-dot-circle"></i></button>
-            <button type="button" class="cm-filter-commit w-10 hover:bg-green-500 hover:text-white " title="Применить"><i class="far fa-check"></i></button>
-            <button type="button" class="cm-filter-reset w-10 hover:bg-red-400 hover:text-white" title="Сбросить"><i class="far fa-redo"></i></button>
+{% macro filter1(id,props,filterTabIndex) %}
+    {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %}
+    
+    <div id="{{ id }}" class="cm-pfilter1">
+        
+        <div class="{% if filterTabIndex == 1 %}cm-active{% endif %} flex flex-col h-full" data-tab="1">
+            <div class="pl-3 h-10 bg-gray-400 bg-opacity-30 text-gray-800 font-bold flex-shrink-0 border-b-1 flex">
+                <span class="my-auto"><i class="far fa-arrow-right"></i><span class="ml-2">Тип инструмента</span></span>
+                <button type="button" class="cm-flip-panel w-10 hover:bg-gray-300 _hover:text-white ml-auto" title="Фильтры"><i class="far fa-filter"></i></button>
+            </div>
+                
+            <div class="py-3 h-full overflow-y-auto">
+                {{ _tree.tree('wi-tool-types',props['type_id']['_combobox']) }}
+            </div>
         </div>
         
-        <div class="py-5 h-full overflow-y-auto">
-            {#{% for prop in props if prop.code != 'id' and prop.type != '::index::' %}#}
-            {% for prop in props %}
-                {{ _self.filter1_prop(prop) }}
-            {% endfor %}
+        <div class="{% if filterTabIndex == 2 %}cm-active{% endif %} flex flex-col h-full" data-tab="2">
+            <div class="pl-3 h-10 bg-gray-400 bg-opacity-30 text-gray-800 font-bold flex-shrink-0 border-b-1 flex">
+                <span class="my-auto"><i class="far fa-arrow-right"></i><span class="ml-2">Фильтры</span></span>
+                <button type="button" class="cm-flip-panel w-10 hover:bg-gray-300 _hover:text-white ml-auto" title="Дерево типов"><i class="fad fa-folder-tree"></i></button>
+                <button type="button" class="cm-filter-active w-10 hover:bg-gray-300 _hover:text-white" title="Показать активные фильтры"><i class="fad fa-dot-circle"></i></button>
+                <button type="button" class="cm-filter-commit w-10 hover:bg-green-500 hover:text-white " title="Применить"><i class="far fa-check"></i></button>
+                <button type="button" class="cm-filter-reset w-10 hover:bg-red-400 hover:text-white" title="Сбросить"><i class="far fa-redo"></i></button>
+            </div>
+            
+            <div class="py-5 h-full overflow-y-auto">
+                {#{% for prop in props if prop.code != 'id' and prop.type != '::index::' %}#}
+                {% for prop in props if prop.type != '::index::' %}
+                    {% if prop.hidden is not defined or prop.hidden == false %}
+                        {{ _self.filter1_prop(prop) }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
         </div>
+        
     </div>
 {% endmacro %}
 

@@ -74,12 +74,12 @@ export default class Pfilter1 {
     // --- --- --- --- ---
     commit(){
         const Values = this.values();
-        new Page().init().setParam('f',Values).reload();
+        new Page().init().setParam('f',Values).setParam('rs','pfilter').reload();
     }
     
     // --- --- --- --- ---
     reset(){
-        new Page().init().setParam('f').reload();
+        new Page().init().setParam('f').setParam('rs','pfilter').reload();
     }
 
     // --- --- --- --- ---

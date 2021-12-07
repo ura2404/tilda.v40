@@ -1,0 +1,67 @@
+@tildaMaterialColorP2 : #2FAAF0; 
+@tildaMaterialColorP1 : #8CCCF0;
+
+@tildaMaterialColorM2 : #FAF215;
+@tildaMaterialColorM1 : #F9F48E;
+
+@tildaMaterialColorK2 : #CF0022;
+@tildaMaterialColorK1 : #D38390;
+
+@tildaMaterialColorN2 : #298985;
+@tildaMaterialColorN1 : #80BEBB;
+
+@tildaMaterialColorS2 : #ECA94F;
+@tildaMaterialColorS1 : #E8BD84;
+
+@tildaMaterialColorH2 : #929493;
+@tildaMaterialColorH1 : #C2C2C2;
+
+/*.fa.fa-fw.fa-check {
+    color : grey;
+}*/
+
+.tilda-tool-material { 
+    /* запрет выделения мышкой */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;        
+    
+    display : flex;
+    text-align : center;
+    height: 1.4rem;
+    width: 1.4rem;
+    color: white;
+    background-color: transparent;
+    border: 2px solid #efefef;
+    margin : 0 1px 0 1px;
+    
+    &[color=c1][material=p] { color: white; background-color: @tildaMaterialColorP1; border: 2px solid @tildaMaterialColorP1; }
+    &[color=c2][material=p] { color: white; background-color: @tildaMaterialColorP2; border: 2px solid black; }
+    
+    &[color=c1][material=m] { color: black; background-color: @tildaMaterialColorM1; border: 2px solid @tildaMaterialColorM1; }
+    &[color=c2][material=m] { color: black; background-color: @tildaMaterialColorM2; border: 2px solid black; }
+    
+    &[color=c1][material=k] { color: white; background-color: @tildaMaterialColorK1; border: 2px solid @tildaMaterialColorK1; }
+    &[color=c2][material=k] { color: white; background-color: @tildaMaterialColorK2; border: 2px solid black; }
+    
+    &[color=c1][material=n] { color: white; background-color: @tildaMaterialColorN1; border: 2px solid @tildaMaterialColorN1; }
+    &[color=c2][material=n] { color: white; background-color: @tildaMaterialColorN2; border: 2px solid black; }
+    
+    &[color=c1][material=s] { color: white; background-color: @tildaMaterialColorS1; border: 2px solid @tildaMaterialColorS1; }
+    &[color=c2][material=s] { color: white; background-color: @tildaMaterialColorS2; border: 2px solid black; }
+    
+    &[color=c1][material=h] { color: white; background-color: @tildaMaterialColorH1; border: 2px solid @tildaMaterialColorH1; }
+    &[color=c2][material=h] { color: white; background-color: @tildaMaterialColorH2; border: 2px solid black; }
+    
+    span {
+        margin : auto;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+}
+
+.cm-pfilter1 {
+    & > *:not(.cm-active) {
+        display : none;
+    }
+}

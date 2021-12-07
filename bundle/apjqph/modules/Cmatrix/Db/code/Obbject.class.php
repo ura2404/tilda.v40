@@ -255,5 +255,10 @@ class Obbject{
         else $Datamodel = kernel\Ide\Datamodel::instance($datamodel);
         return new self($Datamodel);
     }
+    
+    // --- --- --- --- ---
+    static function i($datamodel){
+        return self::instance($datamodel);
+    }
 }
 ?>

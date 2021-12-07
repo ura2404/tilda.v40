@@ -91,7 +91,7 @@ class Cql{
         
         $Queries = [];
         $Queries[] = 'SELECT ' . ($this->Props ? implode(',',$_props()) : '*');
-        $Queries[] = 'FROM '. $this->StructureProvider->sqlTableName();
+        $Queries[] = 'FROM '. $this->StructureProvider->sqlTableName() .' AS t1';
         
         $Query = $this->Rules ? $_rules() : null;
         $Queries[] = $Query;        
@@ -100,7 +100,7 @@ class Cql{
         $Queries[] = $Query;
         
         // кое-какая защита от выборки большим объёмов строк
-        // если задан лимит - хорошо, если нет, то смотрим наличие условый, если они есь - хорошо, иначе устанавливаем принудительный лимит
+        // если задан лимит - хорошо, если нет, то смотрим наличие условый, если они есть - хорошо, иначе устанавливаем принудительный лимит
         if($this->Limit != -1){
             $this->Limit = $this->Limit ? $this->Limit : ($this->Rules ? null : [100,0]);
             $Query = $this->Limit ? $_limit() : null;
@@ -203,6 +203,7 @@ class Cql{
         return implode(' ',$Queries) .';';
     }
     
+    // --- --- --- --- ---
     private function checkProp($code){
         if(is_array($code)) $this->Datamodel->getProp($code[0]);
         elseif(strpos($code,'::')!==false) $this->Datamodel->getProp(strAfter($code,'::'));

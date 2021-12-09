@@ -23,32 +23,12 @@
 {% endmacro %}
 
 {% macro node(data,level) %}
-    <li class="cm-tree-node" data-code="{{ data.id }}" data-label="{{ data.label }}">
+    <li class="cm-tree-node {% if data._active %}cm-active{% endif %}" data-code="{{ data.id }}" data-label="{{ data.label }}">
         <span class="cm-tree-node-label w-full px-5 inline-block hover:bg-gray-400 hover:bg-opacity-20 cursor-pointer flex" title="{{ data.label }}" data-level="{{ level }}">
             {% for i in 1..level if level > 0 %}<span class="cm-tree-node-indent w-6 inline-block flex-none"></span>{% endfor %}
-            {% if data.children %}<i class="my-auto w-2 mr-1 text-gray-600 fas fa-caret-right"></i>{% endif %} <span class="whitespace-nowrap">{{ data.label }}</span>
+            {% if data._children %}<i class="my-auto w-2 mr-1 text-gray-600 fas fa-caret-right"></i>{% endif %} <span class="whitespace-nowrap">{{ data.label }}</span>
         </span>
         
-        {% if data.children %}{{ _self.nodes(data.children,level+1) }}{% endif %}
+        {% if data._children %}{{ _self.nodes(data._children,level+1) }}{% endif %}
     </li>
 {% endmacro %}
-{#
-        
-        <div class="bg-gray-400 h-10 p-2 flex">
-            <input class="my-auto px-1" placeholder="...поиск"/>
-            <i class="my-auto ml-2 text-white cursor-pointer _text-2xl far fa-search"></i>
-            <i class="my-auto ml-2 text-white cursor-pointer fal fa-angle-double-left"></i>
-        </div>
-        <div class="px-2 overflow-y-auto">
-            <ul>
-                {% for node in tree %}
-                    <li>
-                        <span>{{ node.name }}</span>
-                        {% if node.children|length %}
-                        {% endif %}
-                        
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-#}

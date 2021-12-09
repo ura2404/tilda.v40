@@ -8,9 +8,12 @@ use \Tilda as tilda;
 
 class Catalogue extends Tool implements web\Mvc\iModel {
     
-    private $Entity = '/Tilda/Tool/Tool';
-    private $Datamodel;
+    private $Tree;
+    private $Table;
     private $TypeId;
+    
+    //private $Entity = '/Tilda/Tool/Tool';
+    //private $Datamodel;
     
     private $P_Props;
     private $P_Lines;
@@ -18,23 +21,36 @@ class Catalogue extends Tool implements web\Mvc\iModel {
     // --- --- --- --- ---
     public function getData(){
         
-        $this->Datamodel = web\Ide\Datamodel::i($this->Entity);
-        if($this->ToolTypeId = web\Page::instance()->getParam('tp')){
+        $this->Tree = web\Ide\Datamodel::i('/Tilda/Tool/Type')->setProps(['id','name']);
+        $this->Table = web\Ide\Datamodel::i('/Tilda/Tool/Tool');
+        $this->TypeId = web\Page::instance()->getParam('tp');
+        
+        if($this->TypeId) $this->Table->setRule('type_id',$this->TypeId);
+        //dump($this->Tree->Tree);die();
+        
+        return arrayMergeReplace(parent::getData(),[
+            'left' => [
+                'tree' => $this->getMyTree(),
+                'table' => $this->getMyTable(),
+            ]
+        ]);
+        
+        /*if($this->ToolTypeId = web\Page::instance()->getParam('tp')){
             $this->Datamodel
                 //->setRule('type_id',$this->ToolTypeId)
                 ->setRule('type_id',\Tilda\Tool\Type::i($this->ToolTypeId)->Types)
                 ->setProps(\Tilda\Tool\Type::i($this->ToolTypeId)->Props);
-        }
+        }*/
         
         return arrayMergeReplace(parent::getData(),[
-            'table' => [
+            /*'table' => [
                 'props' => $this->getMyProps(),
                 'lines' => $this->getMyLines(),
                 'pager' => $this->Datamodel->Pager,
                 'rfilter' => $this->Datamodel->Rfilter,
                 //'pfilter' => $Datamodel->Pfilter,
                 //'sort' => $Datamodel->Sort,
-            ],
+            ],*/
             'filterTabIndex' => $this->getFilterTabIndex(),
             
             //'table' => $this->getMyTable(),
@@ -42,6 +58,21 @@ class Catalogue extends Tool implements web\Mvc\iModel {
             //'filter' => $this->getMyfilters(),
         ]);
     }
+
+    // --- --- --- --- ---
+    private function getMyTree(){
+        return $this->Tree->getTree(function($node){
+            if($node['id'] == $this->TypeId) $node['_active'] = true;
+            return $node;
+        });
+    }
+    
+    // --- --- --- --- ---
+    private function getMyTable(){
+        
+    }
+    
+    
     
     // --- --- --- --- ---
     private function getFilterTabIndex(){

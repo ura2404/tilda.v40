@@ -1,5 +1,9 @@
 {% extends "/Tilda/Tool/mvc/templates/tool.twig" %}
 
+
+{% block title %}{{ parent() }} | Режущий инструмент{% endblock %}
+
+
 {% block style %}
     {{ parent() }}
     {# <link rel="stylesheet/less" type="text/css" href="res/CmatrixWeb/adminDataEntityView.less"/> #}
@@ -10,11 +14,13 @@
     <link rel="stylesheet/less" type="text/css" href="res/tildatool/catalogue.less"/>
 {% endblock %}
 
+
 {% block js %}
     {{ parent() }}
     <script type="module" src="res/cmatrix/lib/Layout1.class.js"></script>
     <script type="module" src="res/tildatool/catalogue.js"></script>
 {% endblock %}
+
 
 {% block action %}
     <a href="{{ app.url.document }}" class="cm-hover cursor-pointer mx-3 flex" title="Документооборот">
@@ -28,23 +34,37 @@
     </a>
 {% endblock %}
 
+
 {% block direct %}
     {{ parent() }}
-    {#<a id="wi-message" class="cm-hover cursor-pointer mx-3 flex" title="Карзина">
+    
+    {#
+    <a id="wi-message" class="cm-hover cursor-pointer mx-3 flex" title="Корзина">
         <i class="my-auto text-2xl far fa-shopping-cart"></i>
-    </a>#}
+    </a>
+    #}
 {% endblock %}
 
+
 {% block main %}
+    {% import "/Tilda/Tool/mvc/templates/catalogue.twig" as _own %}
     {% import "/Cmatrix/Web/mvc/templates/lib/layout1.twig" as _layout1 %}
     {% import "/Tilda/Tool/mvc/templates/lib/filter.twig" as _filter %}
     {% import "/Cmatrix/Web/mvc/templates/lib/table.twig" as _table %}
     {# {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %} #}
     
+    {#
     {{ _layout1.layout('cm-tool-layout',
         _filter.filter1('wi-tool-pfilter',table.props,filterTabIndex),
         _table.table('wi-tool-table',table)
     ) }}
+    #}
+    {{ _layout1.layout('cm-tool-layout',
+        _own.left(null,left),
+        _table.table('wi-tool-table',table)
+    ) }}
+
+
 
     {#
     {% for code,popup in popups %}
@@ -76,3 +96,27 @@
     </div>
     #}
 {% endblock %}
+
+
+{% macro left(id,data) %}
+    {% import "/Cmatrix/Web/mvc/templates/lib/tree.twig" as _tree %}
+    
+    <div id="{{ id }}">
+        <div class="flex flex-col h-full">
+            <div class="pl-3 h-10 bg-gray-400 bg-opacity-30 text-gray-800 font-bold flex-shrink-0 border-b-1 flex">
+                <span class="my-auto"><i class="far fa-arrow-right"></i><span class="ml-2">Тип инструмента</span></span>
+                <button type="button" class="cm-flip-panel w-10 hover:bg-gray-300 _hover:text-white ml-auto" title="Фильтры"><i class="far fa-filter"></i></button>
+            </div>
+            
+            <div class="py-3 h-full overflow-y-auto">
+                {{ _tree.tree('tilda-tool-typestree',data.tree) }}
+            </div>
+        </div>
+        
+        <div id="cm-tool-pfilter">
+            {{ data.pfilter|raw }}
+        </div>
+    </div>
+{% endmacro %}
+
+

@@ -13,7 +13,7 @@
     <head>
         <link rel="icon" href="{% block favicon %}res/cmatrix/ico/honeycomb.ico{% endblock %}" type="image/x-icon"/> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <title>{{ app.name }} v{{ app.version }}</title>
+        <title>{% block title %}{{ app.name }} v{{ app.version }}{% endblock %}</title>
         <link rel="stylesheet" type="text/css" href="res/cmatrix/vendor/tailwindcss.com/tailwind.min.css"/>
         <link rel="stylesheet" type="text/css" href="res/cmatrix/vendor/fontawesome.com/5.15.3/css/all.css"/>
         <link rel="stylesheet" type="text/css" href="res/cmatrix/vendor/google.com/fonts/Arsenal/font.less"/>

@@ -339,12 +339,41 @@ class Datamodel {
     /**
      * Дерево для twig-шаблона
      */
-    private function getMyTree(){
+    private function getMyTree(\Closure $_callback=null){
         if($this->P_Tree) return $this->P_Tree;
         
+        if(!$_callback) $_callback = function($key,$node){};
+        
+        $Query = db\Cql::select($this->Url)->props(array_keys($this->Props))->prop('id')->prop('parent_id')->order('ordd');
+        $Res = db\Connect::instance()->query($Query);
+        $Res = array_combine(array_column($Res,'id'),$Res);
+        //dump($Res);die();
+        
+        $_rec = function($root=null,$level=0) use($Res,$_callback,&$_rec){
+            $Arr = array_filter($Res,function($value) use($root){
+                return $value['parent_id'] == $root;
+            });
+            
+            $Arr = array_map(function($value) use($level,$_callback,&$_rec){
+                $value['label'] = $value['name'];
+                $value['_level'] = $level;
+                $value['_children'] = $_rec($value['id'],++$level);
+                
+                $value = $_callback($value);
+                
+                return $value;
+            },$Arr);
+            return $Arr;
+        };
+        $Res = $_rec();
+        //dump($Res);die();
+        
+        return $this->P_Tree = $Res;
+        
+        /*
         $Props = kernel\Ide\Datamodel::i($this->Url)->Props;
         if(isset($Props['parent_id'])) $Query = db\Cql::select($this->Url)->props(['id','hid','name','parent_id'])->orders(['parent_id','ordd'])->limit(-1);
-        else $Query = db\Cql::select($this->Url)->props(['id','hid','name',['NULL','parent_id']])->orders(['name'])->limit(-1);
+        else $Query = db\Cql::select($this->Url)->props(['id','hid','name',['NULL','parent_id']])->order('ordd')->limit(-1);
         
         //dump($Query->Query);die();
         $Res = db\Connect::instance()->query($Query);
@@ -363,7 +392,9 @@ class Datamodel {
             return $Arr;
         };
         $Res = $_rec();
-        return $Res;
+        
+        return $this->P_Tree = $Res;
+        */
     }
     
     /*
@@ -485,6 +516,31 @@ class Datamodel {
         return $this->P_Pager = $Arr;
     }
     */
+
+    // --- --- --- --- ---
+    // --- --- --- --- ---
+    // --- --- --- --- ---
+    public function getTree(\Closure $_callback=null){
+        return $this->getMyTree($_callback);
+        
+        
+        
+        if(!$_callback) $_callback = function($key,$node){};
+        
+        $Arr = [];
+        $_rec = function($node) use($_callback,&$_rec){
+            
+        };
+        
+        
+        
+        array_map(function($key,$node) use($_callback,&$Arr){
+            if($node['_children'])
+            $Arr[$key] = $_callback($key,$node);
+        },array_keys($this->Tree),array_values($this->Tree));
+        
+        return $Arr;
+    }
     
     // --- --- --- --- ---
     // --- --- --- --- ---

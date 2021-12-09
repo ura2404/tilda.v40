@@ -6,12 +6,7 @@ export default class Page {
     
     // --- --- --- --- ---
     constructor(){
-        this.Page;
-        this.Params;
-    }
-    
-    init(){
-        this.Page = window.location.href.split('?')[0];
+        this.Page  = window.location.href.split('?')[0];
         
         /*
         console.log(11,location.search.substring(1));
@@ -22,8 +17,6 @@ export default class Page {
         */
         //const Params = location.search.substring(1) ? JSON.parse('{"' + decodeURIComponent(location.search.substring(1).replace(/=+$/, '').replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}') : {};
         this.Params = location.search.substring(1) ? JSON.parse('{"' + decodeURIComponent(location.search.substring(1).replace(/=+$/,"").replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}') : {};
-        
-        return this;   
     }
     
     setParam(key,value,isCode){
@@ -84,12 +77,16 @@ export default class Page {
         //return this.Params[key];
     }
     
+    getUrl(){
+        return this.Page + (Object.keys(this.Params).length ? '?'+ decodeURIComponent($.param(this.Params)) : '');
+    }
+    
     reload(){
         let PreParams = localStorage.getItem('cm_pre_params') || {};
-        console.log(PreParams);
+        //console.log(PreParams);
         
-        const Href = this.Page + (Object.keys(this.Params).length ? '?'+ decodeURIComponent($.param(this.Params)) : '');
-        window.location.href = Href;
+        //const Href = this.Page + (Object.keys(this.Params).length ? '?'+ decodeURIComponent($.param(this.Params)) : '');
+        //window.location.href = this.getUrl;
     }
 
 }

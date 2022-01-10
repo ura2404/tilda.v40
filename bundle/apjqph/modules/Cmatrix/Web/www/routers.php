@@ -1,5 +1,11 @@
 <?php
 
+\Cmatrix\Web\Router::add('/^admin/',[
+    'template' => '/Cmatrix/Web/admin.twig',
+    'model' => '/Cmatrix/Web/Admin',
+    'controller' => '/Cmatrix/Web/Twig'
+]);
+
 \Cmatrix\Web\Router::add(['/','home'],[
     'template' => '/Tilda/Web/home.twig',
     'model' => '/Tilda/Web/Home',

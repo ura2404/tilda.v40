@@ -130,5 +130,11 @@ class Page {
         if(array_key_exists($Key,self::$INSTANCES)) return self::$INSTANCES[$Key];
         return new self($url);
     }
+
+    // --- --- --- --- ---
+    static function i($url=null){
+        return self::instance($url);
+    }
+
 }
 ?>

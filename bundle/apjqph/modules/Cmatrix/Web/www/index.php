@@ -3,7 +3,7 @@ include '../../../../defs.php';
 include '../../../../common.php';
 include 'routers.php';
 
-\Cmatrix\Core\Session::instance();
+\Cmatrix\Core\Session::i();
 
-echo \Cmatrix\Web\Page::instance()->Html;
+echo \Cmatrix\Web\Page::i()->Html;
 ?>

@@ -9,10 +9,11 @@ export default class Tree {
         this.$Tag = $tag;
         
         this.Opts = opts || {};
-        this.Opts.onClickNode = this.Opts.onClickNode || function(node){};
         
-        // --- текущий узел (по клику)
-        this.$CurrentNode;
+        // @param tree - instance класса
+        // @param $node - кликнутый узел
+        this.Opts.onClickNode = this.Opts.onClickNode || function(tree,$node){};
+        this.Opts.onSelectAll = this.Opts.onSelectAll || function(tree,$node){};
         
         // --- узлы
         this.$Nodes = this.$Tag.find('.cm-tree-node');
@@ -22,36 +23,55 @@ export default class Tree {
         
         // --- клик по ветке дерева
         this.$Tag.find('.cm-tree-node-label').on('click',function(e){
-            console.log(e.ctrlKey);
+            const $Current = $(this).parent();
             
-            Instance.$CurrentNode = $(this).parent();
-            //if(Instance.$CurrentNode.hasClass('cm-active')) return;
-            
-            Instance.activeNode();
-            Instance.Opts.onClickNode(Instance.$CurrentNode);
+            Instance.selectNode($Current,e);
+            Instance.Opts.onClickNode(Instance,$Current);
         });
+        
+        // кнопка выделить всё
+        if(this.Opts.buttonSelectAll) this.Opts.buttonSelectAll.on('click',()=>{
+            Instance.selectAllNodes();
+            Instance.Opts.onSelectAll(Instance,Instance.getSelectedNodes);
+        });
+
     }
     
-    // --- --- --- --- ---
-    getNode(code){
-        this.$CurrentNode = this.$Tag.find('.cm-tree-node[data-code='+code+']');
-        return this;
+    /**
+     * Выбрать узел 
+     * 
+     * @param $node
+     * @param e
+     */
+    selectNode($node,e){
+        if(e.ctrlKey){
+            if($node.hasClass('cm-selected')){
+                $node.removeClass('cm-selected');
+                this.CountSelected--;
+            }
+            else{
+                $node.addClass('cm-selected');
+                this.CountSelected++;
+            }
+        }
+        else{
+            this.selectAllNodes(false);
+            $node.addClass('cm-selected');
+            this.CountSelected = 1;
+        }
     }
-
+    
+            
     // --- --- --- --- ---
-    activeNode(){
-        if(!this.$CurrentNode) return this;
-        
-        this.$Tag.find('.cm-tree-node').removeClass('cm-active');
-        this.$CurrentNode.addClass('cm-active');
+    /**
+     * Выбрать узлы по массиву кодов
+     * 
+     * @param array codes
+     */
+    selectNodes(codes){
+        this.selectAllNodes(false);
         
         return this;
-    }
-
-    // --- --- --- --- ---
-    unactiveNode(){
-        if(!this.$CurrentNode) return this;
-        this.$CurrentNode.removeClass('cm-active');
     }
 
     // --- --- --- --- ---
@@ -60,23 +80,55 @@ export default class Tree {
      *      -true выделить все
      *      -false освободить все
      */
-    activeAllNodes(select){
-        if(select === false || (select === undefined && this.CountSelected == this.$Nodes.length)){
+    selectAllNodes(isSelect){
+        if(isSelect === false || (isSelect === undefined && this.CountSelected == this.$Nodes.length)){
             this.$Nodes.removeClass('cm-selected');
             this.CountSelected = 0;
         }
-        else if(select === true || (select === undefined && this.CountSelected != this.Count)){
+        else if(isSelect === true || (isSelect === undefined && this.CountSelected != this.Count)){
             this.$Nodes.addClass('cm-selected');
-            this.CountSelected = this.Count;
+            this.CountSelected = this.$Nodes.length;
         }
         
+    }
+
+    // --- --- --- --- ---
+    /**
+     * Получить node по code
+     */
+    getNodeByCode(code){
+        return this.$Tag.find('.cm-tree-node[data-code='+code+']');
+    }
+
+    // --- --- --- --- ---
+    /**
+     * Получить первый выбранный узел
+     * 
+     * return $node
+     */
+    getSelectedNode(){
+        return this.$Tag.find('.cm-tree-node.cm-selected').eq(0);
+    }
+
+    // --- --- --- --- ---
+    /**
+     * Получить все выбранные узлы
+     * 
+     * return array - массив выбранных узлов
+     */
+    getSelectedNodes(){
+        return this.$Tag.find('.cm-tree-node.cm-selected');
+        //.map((index,element) => { return $(element).data('code') }).get();
     }
     
     // --- --- --- --- ---
     scrollToNode(){
+        console.log('scrollToNode',this);
+        /*
         if(!this.$CurrentNode) return this;
         this.$CurrentNode[0].scrollIntoView();
         return this;
+        */
     }
 
     /*
@@ -102,6 +154,7 @@ export default class Tree {
     }
     */
     
+    /*
     // --- --- --- --- ---
     getNodeCode(){
         if(!this.$CurrentNode) return;
@@ -113,5 +166,6 @@ export default class Tree {
         if(!this.$CurrentNode) return;
         return this.$CurrentNode.data('label');
     }
+    */
     
 }

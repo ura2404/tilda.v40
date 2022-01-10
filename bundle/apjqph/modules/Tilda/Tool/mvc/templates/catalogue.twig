@@ -105,11 +105,12 @@
         <div class="flex flex-col h-full">
             <div class="pl-3 h-10 bg-gray-400 bg-opacity-30 text-gray-800 font-bold flex-shrink-0 border-b-1 flex">
                 <span class="my-auto"><i class="far fa-arrow-right"></i><span class="ml-2">Тип инструмента</span></span>
-                <button type="button" class="cm-flip-panel w-10 hover:bg-gray-300 _hover:text-white ml-auto" title="Фильтры"><i class="far fa-filter"></i></button>
+                <button id="tilda-tool-tree-selectall-button" type="button" class="cm-flip-panel w-10 hover:bg-gray-300 _hover:text-white ml-auto" title="Выделить всё"><i class="fal fa-check-square"></i></button>
+                <button type="button" class="cm-flip-panel w-10 hover:bg-gray-300 _hover:text-white" title="Фильтры"><i class="fal fa-filter"></i></button>
             </div>
             
             <div class="py-3 h-full overflow-y-auto">
-                {{ _tree.tree('tilda-tool-typestree',data.tree) }}
+                {{ _tree.tree('tilda-tool-tree',data.tree) }}
             </div>
         </div>
         

@@ -25,17 +25,17 @@
 
     # --- --- --- --- --- --- --- ---
     # RAW
-    RewriteCond %{REQUEST_URI} (raw)$
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^(raw)/$ - [L]
+    # RewriteCond %{REQUEST_URI} (raw)$
+    # RewriteCond %{REQUEST_FILENAME} -d
+    # RewriteRule ^(raw)/$ - [L]
 
-    RewriteCond %{REQUEST_URI} (raw)/$
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^(raw)/$ - [L]
+    # RewriteCond %{REQUEST_URI} (raw)/$
+    # RewriteCond %{REQUEST_FILENAME} -d
+    # RewriteRule ^(raw)/$ - [L]
 
-    RewriteCond %{REQUEST_URI} raw/.*$
-    RewriteCond %{REQUEST_FILENAME} -f
-    RewriteRule .* - [L]
+    # RewriteCond %{REQUEST_URI} raw/.*$
+    # RewriteCond %{REQUEST_FILENAME} -f
+    # RewriteRule .* - [L]
 
     # --- --- --- --- --- --- --- ---
     # Resources

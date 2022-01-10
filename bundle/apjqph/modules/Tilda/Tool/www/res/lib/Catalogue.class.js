@@ -12,16 +12,10 @@ export default class Catalogue {
         
         this.TitleSrc = $('title').text();
         
-        this.Tree = new Tree($('#tilda-tool-typestree'),{
-            isHistory : true,
-            onClickNode : function($node){
-                const Code = Instance.Tree.getNodeCode();
-                const Label = Instance.Tree.getNodeLabel();
-                const Url = new Page().setParam('tp',Code).getUrl();                
-                
-                history.pushState({ Code : Code }, null, Url);
-                document.title = Instance.TitleSrc + ' | ' + Label;
-            }
+        this.Tree = new Tree($('#tilda-tool-tree'),{
+            buttonSelectAll : $('#tilda-tool-tree-selectall-button'),
+            onClickNode : function(tree,$node){ Instance.setHistory(tree) },
+            onSelectAll : function(tree,$nodes){ Instance.setHistory(tree) },
         });
         
         // --- --- --- --- ---
@@ -29,9 +23,26 @@ export default class Catalogue {
             const State = e.state;
             console.log('State',State);
             
+            Instance.Tree.selectNodes(e.state.Codes.split(',')).getFirstSelected().scrollToNode();
+            
             const $Node = Instance.Tree.getNode(State.Code).activeNode().scrollToNode();
         }, false);
         
+    }
+    
+    // --- --- --- --- ---
+    /**
+     * Формирование history, url, title
+     */
+    setHistory(tree){
+        const Instance = this;
+        
+        const Codes = tree.getSelectedNodes().map((index,element) => { return $(element).data('code') }).get().join(',') || null;
+        const Url = new Page().setParam('tp',Codes).getUrl();                
+        const Label = (!Codes || (Codes && Codes.split(',').length > 1)) ? '*' : tree.getSelectedNode().data('label');
+        
+        history.pushState({ Codes : Codes }, null, Url);
+        document.title = Instance.TitleSrc + ' | ' + Label;
     }
     
 }

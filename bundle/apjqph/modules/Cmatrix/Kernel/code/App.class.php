@@ -39,5 +39,10 @@ class App {
     static function instance(){
         return new self();
     }
+    
+    // --- --- --- --- ---
+    static function i(){
+        return new self();
+    }
 }
 ?>

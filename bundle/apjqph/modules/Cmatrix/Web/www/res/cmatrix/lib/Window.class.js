@@ -8,6 +8,39 @@
 import Esc from './Esc.class.js';
 
 export default class Window {
+    // --- --- --- --- ---
+    /**
+     * @param $tag - tag окна
+     */
+    constructor($tag){
+        this.TC = 0;
+        this.$Tag = $tag;
+        this.$Back = this.$Tag.closest('.cm-back');
+        
+        this.Timeout = 0;
+        this.isHidable = true;
+        
+        this.init();
+    }
+    
+    // --- --- --- --- ---
+    init(){
+        const Timeout = this.$Tag.data('timeout');
+        if(Timeout) this.Timeout = Timeout;
+    }
+    
+    // --- --- --- --- ---
+    show(isHidable){
+        const Instance = this;
+        this.isHidable = isHidable;
+        
+        // если форма не закрывемая, удалить кнопку закрытия
+        if(this.isHidable === false) this.$Tag.find('.cm-a-close').hide();
+
+    }    
+}
+
+class Window123 {
     
     // --- --- --- --- ---
     /**

@@ -1,28 +1,21 @@
-{% extends "/Cmatrix/Web/mvc/templates/common.twig" %}
+{% extends "/Cmatrix/Web/mvc/templates/commonLogin.twig" %}
 
 {% block logo %}
-<span class="text-6xl leading-4 text-green-700 my-auto flex-shrink-0">~</span>
+    <span class="text-6xl leading-4 text-green-700 my-auto flex-shrink-0">~</span>
 {% endblock %}
 
 {% block name %}
-<span class="text-2xl text-green-700 my-auto">name</span>
+    {{ parent() }}<span class="px-1 text-6xl leading-4 my-auto">•</span><span class="text-2xl text-green-700 my-auto">Admin`ка</span>
 {% endblock %}
 
-{% block nameTitle %}nameTitle{% endblock %}
-
 {% block action %}
-<span>action</span>
+    <span>action</span>
 {% endblock %}
 
 {% block direct %}
-<span>direct</span>
+    {{ parent() }}
 {% endblock %}
-
-{% block user %}
-<span>user</span>
-{% endblock %}
-
 
 {% block main %}
-<h1>QAZ1</h1>
+    {{ parent() }}
 {% endblock %}

@@ -16,26 +16,20 @@ html {
 }
 
 
-.cm-noselect {
+.wi-noselect {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
 
-.cm-noscroll { overflow: hidden; }
-.cm-x-noscroll { overflow-x: hidden; }
-.cm-y-noscroll { overflow-y: hidden; }
+.wi-noscroll { overflow: hidden; }
+.wi-x-noscroll { overflow-x: hidden; }
+.wi-y-noscroll { overflow-y: hidden; }
+.wi-hidden { display: none; }
+.wi-novisible { opacity: 0; }
 
-.cm-hidden {
-    display: none;
-}
-
-.cm-novisible {
-    opacity: 0;
-}
-
-.cm-hover {
+.wi-hover {
     transition: .03s linear;
     
     &:hover {
@@ -43,9 +37,11 @@ html {
     }
 }
 
-.cm-behind {
+/*
+.wi-behind {
     z-index : -100;
 }
+*/
 
 /*
 .cm-error {
@@ -66,7 +62,7 @@ body {
 }
 
 /* подложка на весь экран */
-.cm-back {
+.wi-back {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -77,11 +73,12 @@ body {
     
     &:not(.cm-opend) {
         opacity: 0;
+        z-index: -100;
     }
 }
 
 /* горизонтальный разделитель */
-.cm-h-devider {
+.wi-h-devider {
     border-top : 1px solid;
 }
 

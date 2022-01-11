@@ -10,6 +10,20 @@ import Window from './Window.class.js';
 export default class Form extends Window {
     
     // --- --- --- --- ---
+    constructor($tag,onSubmit){
+        super($tag);
+    }
+    
+    // --- --- --- --- ---
+    show(isHidable){
+        const Instance = this;
+        super.show(isHidable);
+    }    
+}
+
+class Form123 extends Window {
+    
+    // --- --- --- --- ---
     /**
      * @param $tag - tag контейфнера формы, tag фона на весь экран
      */

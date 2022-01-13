@@ -38,12 +38,6 @@ html {
 }
 
 /*
-.wi-behind {
-    z-index : -100;
-}
-*/
-
-/*
 .cm-error {
     display: none;
 }
@@ -69,11 +63,20 @@ body {
     left: 0;
     right: 0;
     opacity: 1;
-    transition: .10s; 
+    transition: .20s; 
     
-    &:not(.cm-opend) {
+    & > * {
+        transition: .20s;
+        //transform: translate(0,-100px);
+    }
+    
+    &:not(.wi-opend) {
         opacity: 0;
         z-index: -100;
+        
+        & > * {
+            transform: translate(0,100px);
+        }
     }
 }
 
@@ -130,10 +133,13 @@ body {
 }
 
 
+input:not([required="required"]) {
+    background-color : #bbe6ff
+}
 input[required="required"] {
-    background-color : #ffffde;
+    //background-color : #ffffde;
     
-    &.cm-invalid{
+    &.wi-invalid{
         outline: 2px solid red;
         background-color: #ffecec
     }

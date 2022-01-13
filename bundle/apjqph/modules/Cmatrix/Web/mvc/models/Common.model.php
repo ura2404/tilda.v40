@@ -11,6 +11,7 @@ class Common implements web\Mvc\iModel {
             'url' => [
                 'home' => CM_WHOME,
                 'search' => CM_WHOME .'/search',
+                'post' => CM_WHOME .'/res/cmatrix/post.php'
             ]
         ];
     }

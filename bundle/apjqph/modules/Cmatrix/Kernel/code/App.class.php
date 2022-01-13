@@ -18,6 +18,7 @@ class App {
         if(!self::$SAPI){
             self::$SAPI = $this->sapi();
             self::$ISDB = $this->isDb();
+            self::$ISSESSION = $this->isSession();
         }
     }
     
@@ -33,6 +34,11 @@ class App {
     // --- --- --- --- ---
     private function isDb(){
         return Config::instance()->getValue('db',false) && Config::instance()->getValue('session/enable');
+    }
+    
+    // --- --- --- --- ---
+    private function isSession(){
+        return self::isDb();
     }
     
     // --- --- --- --- ---

@@ -1,0 +1,49 @@
+{% extends "/Cmatrix/Web/mvc/templates/commonLogin.twig" %}
+
+{% block style %}
+    {{ parent() }}
+    {#<style>
+        #cm-session{
+            display: grid;
+        }
+    </style>#}
+{% endblock %}
+
+{% block main %}
+    <div class="flex flex-col mt-3">
+        {% if isSession %}
+            <div class="mx-auto text-3xl mb-4">Сессия</div>
+
+            <div id="cm-session" class="grid grid-cols-2 auto-cols-auto _table-auto mx-auto">
+                <div class="bg-gray-100 py-1 px-3">ID</div>
+                <div class="bg-gray-100 py-1 px-3">{{ session.id }}</div>
+                
+                <div class="py-1 px-3">HID</div>
+                <div class="py-1 px-3 truncate" title="{{ session.hid }}">{{ session.hid }}</div>
+                
+                <div class="bg-gray-100 py-1 px-3">IP4</div>
+                <div class="bg-gray-100 py-1 px-3">{{ session.ip4 }}</div>
+                
+                <div class="py-1 px-3">IP4x</div>
+                <div class="py-1 px-3">{{ session.ip4x }}</div>
+                
+                <div class="bg-gray-100 py-1 px-3">Proxy</div>
+                <div class="bg-gray-100 py-1 px-3">{{ session.proxt }}</div>
+                
+                <div class="py-1 px-3">Sysuser</div>
+                <div class="py-1 px-3">{{ sysuser.code}} // {{ sysuser.name }} // {{ sysuser.id}}</div>
+
+                <div class="bg-gray-100 py-1 px-3" title="create timestamp">CTS</div>
+                <div class="bg-gray-100 py-1 px-3">{{ session.ts|before('.') }} // {{ session.cts }}</div>
+                
+                <div class="py-1 px-3" title="touch timestamp">TTS</div>
+                <div class="py-1 px-3">{{ session.touch_ts|before('.') }} // {{ session.tts }}</div>
+            </div>
+        {% else %}
+            <div class="m-auto text-4xl">
+                <i class="far fa-exclamation-circle"></i>
+                <span>Сессии не активны</span>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

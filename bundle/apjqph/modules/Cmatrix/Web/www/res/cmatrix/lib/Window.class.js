@@ -2,121 +2,87 @@
  * Class Window
  * 
  * Необходимые элементы
- *  - .cm-a-close - кнопка закрытия окна
+ *  - .wi-back - подложка окна
+ *  - .wi-a-close - кнопка закрытия окна
  */
 
+import Common from './Common.class.js';
 import Esc from './Esc.class.js';
 
-export default class Window {
+export default class Window extends Common {
     // --- --- --- --- ---
     /**
      * @param $tag - tag окна
      */
     constructor($tag){
-        this.TC = 0;
+        super();
+        
         this.$Tag = $tag;
-        this.$Back = this.$Tag.closest('.cm-back');
+        this.$Back = this.$Tag.closest('.wi-back');
+        this.$CloseButton = this.$Tag.find('.wi-a-close');
         
         this.Timeout = 0;
         this.isHidable = true;
         
-        this.init();
-    }
-    
-    // --- --- --- --- ---
-    init(){
-        const Timeout = this.$Tag.data('timeout');
-        if(Timeout) this.Timeout = Timeout;
-    }
-    
-    // --- --- --- --- ---
-    show(isHidable){
-        const Instance = this;
-        this.isHidable = isHidable;
-        
-        // если форма не закрывемая, удалить кнопку закрытия
-        if(this.isHidable === false) this.$Tag.find('.cm-a-close').hide();
-
-    }    
-}
-
-class Window123 {
-    
-    // --- --- --- --- ---
-    /**
-     * @param $tag - tag окна
-     */
-    constructor($tag){
-        this.TC = 0;
-        this.$Tag = $tag;
-        
-        this.$Back = this.$Tag.closest('.cm-back');
-        
-        this.Timeout = 0;
-        
         this.onShow = undefined;
         this.onHide = undefined;
-    }
-    
-    // --- --- --- --- ---
-    init(opts){
-        const Instance = this;
         
-        //console.log(this.$Tag.find('.cm-a-close'));
+        // --- init --- --- --- ---
+        const Timeout = this.$Tag.data('timeout');
+        if(Timeout) this.Timeout = Timeout;
         
-        this.$Tag.find('.cm-a-close').on('click',function(e){
-            Instance.hide();
-        });
-        
-        this.TC++;
-        return this;
-    }
-    
-    // --- --- --- --- ---
-    isExists(){
-        return this.$Tag.length;
+        this.$CloseButton.on('click',() => this.hide());
     }
     
     // --- --- --- --- ---
     show(isHidable){
+        //console.log('windows.show()',this.Timeout);
         const Instance = this;
         
         this.isHidable = isHidable;
         
+        // --- --- --- --- ---        
         // если форма не закрывемая, удалить кнопку закрытия
-        if(this.isHidable === false) this.$Tag.find('.cm-a-close').remove();
-        
-        Esc.push(function(){ Instance.hide() });
+        if(this.isHidable === false) this.$CloseButton.hide();
         
         this.$Back
             .on('click',() => Instance.hide())
+            .addClass('wi-opend');
             //.removeClass('cm-behind').delay(0).queue(function(){ $(this).addClass('cm-opend'); $(this).dequeue(); });
-            .removeClass('cm-behind').addClass('cm-opend');
             
+        // --- --- --- --- ---
         // если обозначет timeout, то закрыть отреагировать на это
         if(this.Timeout) setTimeout(function(){
             Instance.hide();
         },this.Timeout);
         
+        // --- --- --- --- ---        
         // не передавать click на форме нижестоящим элементам
         this.$Tag.on('click',e => e.stopPropagation());
         
+        // --- --- --- --- ---        
+        Esc.push(function(){ Instance.hide() });
         if(typeof this.onShow === 'function') this.onShow();
-    }
+        return this;
+    }    
     
     // --- --- --- --- ---
     hide(){
-        if(this.isHidable === false) return;
-        
+        //console.log('windows.hide()');
         const Instance = this;
         
+        // если форма не закрывемая, не закрывать
+        if(this.isHidable === false) return;
+        
+        // --- --- --- --- ---
         this.$Back
             .off()
+            .removeClass('wi-opend');
             //.removeClass('cm-opend').delay(0).queue(function(){ $(this).addClass('cm-behind'); $(this).dequeue(); });
-            .removeClass('cm-opend').addClass('cm-behind');
             
+        // --- --- --- --- ---        
         Esc.pop();
-        
         if(typeof this.onHide === 'function') this.onHide();
+        return this;
     }
 }

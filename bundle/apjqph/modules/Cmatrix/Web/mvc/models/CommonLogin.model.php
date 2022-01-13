@@ -6,10 +6,11 @@ use \Cmatrix\Kernel\Exception as ex;
 
 class CommonLogin extends Common {
     public function getData(){
-        kernel\App::i();        
+        kernel\App::i();
         
         return arrayMergeReplace(parent::getData(),[
-            'session' => true,
+            'isSession' => kernel\App::$ISSESSION,
+            'session' => co\Session::i()->Instance->Data,
             'sysuser' => $this->getMySysuser(),
             'url' => [
                 'login'   => CM_WHOME. '/login',
@@ -22,7 +23,7 @@ class CommonLogin extends Common {
     private function getMySysuser(){
         if(!kernel\App::$ISDB) return [];
         
-        return array_intersect_key(co\Sysuser::i()->Instance->Data,array_flip(['code','name','lk']));
+        return array_intersect_key(co\Sysuser::i()->Instance->Data,array_flip(['id','hid','code','name','lk']));
     }
 }
 ?>

@@ -16,6 +16,7 @@ export default class Esc {
     
     // --- --- --- --- ---
     static push(callback){
+        console.log('Esc push');
         if(!Esc.INSTANCES.length){
             $(document).on('keyup',e => Esc.event(e));
         }
@@ -25,6 +26,7 @@ export default class Esc {
     
     // --- --- --- --- ---
     static pop(key){
+        console.log('Esc pop');
         if(Esc.INSTANCES.length) Esc.INSTANCES.pop();
         if(!Esc.INSTANCES.length) $(document).off('keyup');
     }

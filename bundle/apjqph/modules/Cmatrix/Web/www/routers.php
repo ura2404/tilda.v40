@@ -11,6 +11,13 @@
     'model' => '/Tilda/Web/Home',
     'controller' => '/Cmatrix/Web/Twig'
 ]);
+
+\Cmatrix\Web\Router::add('session',[
+    'template' => '/Cmatrix/Web/session.twig',
+    'model' => '/Cmatrix/Web/Session',
+    'controller' => '/Cmatrix/Web/Twig'
+]);
+
 /*
 \Cmatrix\Web\Router::add('404',[
     'template' => '/Cmatrix/Web/404.twig',

@@ -31,6 +31,11 @@ class Twig implements web\Mvc\iController {
         $Filter = new \Twig_SimpleFilter('rtrim', 'rtrim');
         $this->Twig->addFilter($Filter);
 
+        $Filter = new \Twig_SimpleFilter('before', function($value,$cond){
+            $Pos = strpos($value,$cond);
+            return $Pos === false ? $value : substr($value,0,$Pos);
+        });
+        $this->Twig->addFilter($Filter);
     }
    
    // --- --- --- --- ---

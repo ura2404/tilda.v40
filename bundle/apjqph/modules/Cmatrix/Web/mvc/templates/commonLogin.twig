@@ -1,20 +1,21 @@
 {% extends "/Cmatrix/Web/mvc/templates/common.twig" %}
 
 {% block js %}
+    {{ parent() }}
     <script type="module" src="res/cmatrix/commonLogin.js"></script>
 {% endblock %}
 
 {% block direct %}
     {{ parent() }}
-    {% if session %}
-        <a id="cm-message" href="{{ url.message }}" class="wi-hover cursor-pointer mx-3 flex" target="#cm-total-message" onclick="event.preventDefault()">
-            <i class="my-auto text-xl far fa-comment"></i>
+    {% if isSession %}
+        <a id="cm-message" href="{{ url.message }}" class="wi-hover cursor-pointer w-10 flex" target="#cm-total-message" onclick="event.preventDefault()">
+            <i class="m-auto text-xl far fa-comment"></i>
         </a>
     {% endif %}
 {% endblock %}
 
 {% block user %}
-    {% if session %}
+    {% if isSession %}
         <a id="cm-user" class="wi-hover flex ml-3 cursor-pointer"  href="{{ url.login }}" onclick="event.preventDefault()"
             target="{% if sysuser.code == 'guest' %}#cm-login{% else %}#cm-session{% endif %}"
             title="{{ sysuser.name }}"
@@ -33,12 +34,13 @@
 
 {% block main %}
     {{ parent() }}
-    <div class="wi-back _cm-win-container _wi-behind wi-noselect flex z-40 bg-gray-800 bg-opacity-50">
-        <form id="cm-user" class="relative rounded w-10/12 sm:w-96 mx-auto my-auto flex flex-col pt-10 pb-3 px-8 sm:px-12 bg-blue-400 bg-opacity-90 shadow-2xl"
-            data-timeout="3000"
+    
+    <div class="wi-back wi-noselect flex z-40 bg-gray-800 bg-opacity-50">    
+        <form id="cm-form-login" class="relative rounded w-10/12 sm:w-96 mx-auto my-auto flex flex-col pt-10 pb-3 px-8 sm:px-12 bg-blue-400 bg-opacity-90 shadow-2xl"
+            _data-timeout="3000"
             method="post" action="{{ url.post }}"
         >
-            <span class="cm-a-close wi-hover absolute p-3 top-0 right-0 cursor-pointer"><i class="text-white fas fa-times"></i></span>
+            <span class="wi-a-close wi-hover absolute p-3 top-0 right-0 cursor-pointer"><i class="text-white fas fa-times"></i></span>
             
             <span class="text-white font-bold relative -top-3 text-xl truncate ">Представтесь, пожалуйста</span>
             
@@ -47,14 +49,17 @@
             <input class="w-full px-3 py-1 _w-52 _sm:w-72 mt-5" type="text" name="u" placeholder="Логин" required="required" maxlength="10"
                 {#oninvalid="this.setCustomValidity('обязательное поле')" oninput="this.setCustomValidity('')"#}
             />
-            <span class="cm-err mb-3 h-4 text-red-600 text-sm"></span>
+            <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
             
             <input class="w-full px-3 py-1 _w-52 _sm:w-72" type="password" name="p" placeholder="Пароль" required="required"
                 {#oninvalid="this.setCustomValidity('обязательное поле')" oninput="this.setCustomValidity('')"#}
             />
-            <span class="cm-err mb-2 h-4 text-red-600 text-sm"></span>
+            <span class="wi-err mb-2 h-4 text-red-600 text-sm"></span>
             
-            <button type="button" class="cm-a-submit rounded mb-1 wi-hover mt-1 w-20 mx-auto px-3 py-1.5 text-white bg-blue-500">Войти</button>
+            <button type="button" class="wi-a-submit rounded mb-1 wi-hover mt-1 w-20 mx-auto px-3 py-1.5 text-white bg-blue-500">Войти</button>
         </from>
     </div>
+    
+    
+    {# {{ _window.window('#cm-form-login') }} #}
 {% endblock %}

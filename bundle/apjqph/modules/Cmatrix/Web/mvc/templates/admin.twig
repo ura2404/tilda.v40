@@ -1,7 +1,8 @@
 {% extends "/Cmatrix/Web/mvc/templates/commonLogin.twig" %}
 
-{% block logo %}
-    <span class="text-6xl leading-4 text-green-700 my-auto flex-shrink-0">~</span>
+{% block js %}
+    {{ parent() }}
+    <script type="module" src="res/cmatrix/admin.js"></script>
 {% endblock %}
 
 {% block name %}
@@ -17,5 +18,8 @@
 {% endblock %}
 
 {% block main %}
+    {% if sysuser.code == 'guest' %}
+        <div id="cm-need-login"></div>
+    {% endif %}
     {{ parent() }}
 {% endblock %}

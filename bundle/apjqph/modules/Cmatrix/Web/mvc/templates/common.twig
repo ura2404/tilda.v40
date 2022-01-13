@@ -36,8 +36,8 @@
     <body>
         <header class="mx-auto fixed inset-x-0 top-0 text-gray-700 _border-b-2 shadow-xl">
             <div class="container h-10 mx-auto flex">
-                <a href="{{ url.home }}" class="truncate flex" title="{% block nameTitle %}{{ app.info }}{% endblock %}">
-                    {% block logo %}{% endblock %}{% block name %}<span class="text-2xl text-green-700 ml-2 my-auto">{{ app.name }}</span>{% endblock %}
+                <a href="{{ url.home }}" class="truncate flex" title="{% block nameTitle %}{{ app.name }} - {{ app.info|lower }}{% endblock %}">
+                    {% block logo %}{{ _self.logo() }}{% endblock %}{% block name %}<span class="text-2xl text-green-700 ml-2 my-auto">{{ app.name }}</span>{% endblock %}
                 </a>
                 
                 <div class="ml-3 mr-auto flex">
@@ -45,8 +45,8 @@
                 </div>
                 <div class="flex">
                     {% block direct %}
-                        <a id="wi-search" href="{{ url.search }}" class="wi-hover cursor-pointer mx-3 flex" target="#cm-total-search" onclick="event.preventDefault()">
-                            <i class="my-auto text-xl far fa-search"></i>
+                        <a id="wi-search" href="{{ url.search }}" class="wi-hover cursor-pointer w-10 flex" target="#cm-total-search" onclick="event.preventDefault()">
+                            <i class="m-auto text-xl far fa-search"></i>
                         </a>
                     {% endblock %}
                 </div>
@@ -66,6 +66,10 @@
     <script type="text/javascript" src="res/cmatrix/vendor/jquery.com/jquery.md5.js"></script>
     <script type="text/javascript" src="res/cmatrix/vendor/jquery.js"></script>
     {% block js %}
-        {#<script type="module" src="res/cmatrix/common.js"></script>#}
+        <script type="module" src="res/cmatrix/common.js"></script>
     {% endblock js %}
 </html>
+
+{% macro logo() %}
+    <span id="cm-logo" class="px-2 text-6xl leading-4 text-green-700 my-auto flex-shrink-0">~</span>
+{% endmacro %}

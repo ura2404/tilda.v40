@@ -1,0 +1,26 @@
+{% extends "/Cmatrix/Web/mvc/templates/commonLogin.twig" %}
+
+{% block js %}
+    {{ parent() }}
+    <script type="module" src="res/cmatrix/adminStructure.js"></script>
+{% endblock %}
+
+{% block name %}
+    {{ parent() }}<span class="px-1 text-6xl leading-4 my-auto text-green-700">•</span><span class="text-2xl text-green-700 my-auto">Модули</span>
+{% endblock %}
+
+{% block main %}
+    {% if sysuser.code == 'guest' %}
+        <div id="cm-need-login"></div>
+    {% else %}
+        <div class="container mx-auto flex flex-wrap">
+            {% for block in blocks %}
+                <a class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex m-2 flex-col border-2 border-white hover:border-2 hover:border-green-400 " href="{{ block.url }}">
+                    <span class="text-center font-bold bg-gray-400 p-2 text-white">{{ block.name }}</span>
+                    <i class="p-1 text-center fa-3x text-gray-700 {{ block.icon }}"></i>
+                    <span class="text-center mb-1 mt-auto mx-2 h-20 overflow-y-auto">{{ block.info }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

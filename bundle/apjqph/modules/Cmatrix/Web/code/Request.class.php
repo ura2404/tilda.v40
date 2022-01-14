@@ -28,7 +28,7 @@ class Request {
     
     // --- --- --- --- ---
     private function getMyJson(){
-        return cm\Json::create($this->Data)->Encode;
+        return kernel\Json::create($this->Data)->Encode;
     }
     
     // --- --- --- --- ---

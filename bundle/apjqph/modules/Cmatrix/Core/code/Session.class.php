@@ -19,6 +19,7 @@ class Session {
     
     // --- --- --- --- ---
     function __construct(){
+        kernel\App::i();
         $this->check();
     }
     
@@ -129,6 +130,45 @@ class Session {
 		// --- перегрузить страницу
 		header("Refresh:0");
 		exit();
+    }
+    
+    // --- --- --- --- ---
+    protected function dbLogin($user,$pass){
+        if(($User = db\Obbject::i('/Cmatrix/Core/Sysuser')->get([
+            'code' => $user,
+            'pass' => $pass
+        ]))->IsEmpty) throw new ex('Неверная комбинация имени и пароля.');
+        
+        if(kernel\App::$SAPI === 'CLI'){
+        }
+        else{
+            $this->Instance->history(true)->value('sysuser_id',$User->id)->update();
+        }
+    }
+
+    // --- --- --- --- ---
+    protected function dbLogout(){
+        $Guest = db\Obbject::i('/CmatrixCore/Sysuser')->get(['code' => 'guest']);
+        if($Guest->IsEmpty) throw new ex('Невозможно закрыть сессию.');
+        
+        if(kernel\App::$SAPI === 'CLI'){
+        }
+        else{
+            $this->Instance->history(true)->value('sysuser_id',$Guest->id)->update();
+        }
+    }
+    // --- --- --- --- ---
+    // --- --- --- --- ---
+    // --- --- --- --- ---
+    public function login($user,$pass){
+        if(kernel\App::$ISDB) $this->dbLogin($user,$pass);
+        else throw new \Exception('Система авторизации неактивна.');
+    }
+
+    // --- --- --- --- ---
+    public function logout(){
+        if(kernel\App::$ISDB) $this->dbLogout();
+        else throw new \Exception('Система авторизации неактивна.');
     }
     
     // --- --- --- --- ---

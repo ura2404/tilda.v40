@@ -9,22 +9,31 @@ class Session extends CommonLogin {
         kernel\App::i();
         
         $ParentData = parent::getData();
+
+        $Arr = $ParentData['isSession'] ? [
+            'ID'      => $ParentData['session']['id'],
+            'HID'     => $ParentData['session']['hid'],
+            'IP4'     => $ParentData['session']['ip4'],
+            'IP4x'    => $ParentData['session']['ip4x'],
+            'Proxy'   => $ParentData['session']['proxy'],
+            'Sysuser' => $ParentData['sysuser']['id'] .' // '. $ParentData['sysuser']['code'] .' // '. $ParentData['sysuser']['name'],
+            'CTS'     => $this->getMyCts($ParentData['session']),
+            'TTS'     => $this->getMyTts($ParentData['session'])
+        ] : [];
         
-        return arrayMergeReplace($ParentData,[
-            'session' => [
-                'cts' => $this->getMyCts($ParentData['session']),
-                'tts' => $this->getMyTts($ParentData['session']),
-            ]
+        
+        return arrayMergeReplace(parent::getData(),[
+            'data' => $Arr
         ]);
     }
-    
+
     // --- --- --- --- ---
     private function getMyCts($session){
         $Now = new \DateTime('now');
         $Ts = new \DateTime($session['ts']);
         //$Ts = new \DateTime(date('Y-m-d H:i:s',$session['ts']));
         $Interval = $Ts->diff($Now);
-        return $Interval->format('дней:%R%a, часов:%H, минут:%I');
+        return strBefore($session['ts'],'.') .' // '. $Interval->format('дней:%R%a, часов:%H, минут:%I');
     }
     
     // --- --- --- --- ---
@@ -33,7 +42,7 @@ class Session extends CommonLogin {
         $Ts = new \DateTime($session['touch_ts']);
         //$Ts = new \DateTime(date('Y-m-d H:i:s',$session['touch_ts']));
         $Interval = $Ts->diff($Now);
-        return $Interval->format('дней:%R%a, часов:%H, минут:%I');
+        return strBefore($session['touch_ts'],'.') .' // '. $Interval->format('дней:%R%a, часов:%H, минут:%I');
     }
 }
 ?>

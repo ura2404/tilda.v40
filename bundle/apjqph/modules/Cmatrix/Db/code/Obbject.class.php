@@ -203,7 +203,7 @@ class Obbject{
             $this->Queries[] = Cql::update($this->Datamodel)
                 ->rule('id',$this->Id)
                 ->values($this->getChanged())
-                ->value('session_upd_id',core\Session::instance()->Session->id)
+                ->value('session_upd_id',core\Session::i()->Instance->id)
                 ->value('ts_upd','now')
                 ->Query;
         }
@@ -211,7 +211,7 @@ class Obbject{
             $this->Queries[] = Cql::update($this->Datamodel)
                 ->rule('id',$this->Id)
                 ->values($this->getChanged())
-                ->value('session_upd_id',core\Session::instance()->Session->id)
+                ->value('session_upd_id',core\Session::i()->Instance->id)
                 ->value('ts_upd','now')
                 ->Query;
         }

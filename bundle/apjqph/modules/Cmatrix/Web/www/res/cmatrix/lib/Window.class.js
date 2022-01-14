@@ -35,6 +35,12 @@ export default class Window extends Common {
     }
     
     // --- --- --- --- ---
+    content(value){
+        this.$Tag.find('.wi-content').html(value);
+        return this;
+    }
+    
+    // --- --- --- --- ---
     show(isHidable){
         //console.log('windows.show()',this.Timeout);
         const Instance = this;
@@ -47,8 +53,8 @@ export default class Window extends Common {
         
         this.$Back
             .on('click',() => Instance.hide())
-            .addClass('wi-opend');
-            //.removeClass('cm-behind').delay(0).queue(function(){ $(this).addClass('cm-opend'); $(this).dequeue(); });
+            //.removeClass('wi-behind').addClass('wi-opend');
+            .removeClass('wi-behind').delay(0).queue(function(){ $(this).addClass('wi-opend'); $(this).dequeue(); });
             
         // --- --- --- --- ---
         // если обозначет timeout, то закрыть отреагировать на это
@@ -62,7 +68,7 @@ export default class Window extends Common {
         
         // --- --- --- --- ---        
         Esc.push(function(){ Instance.hide() });
-        if(typeof this.onShow === 'function') this.onShow();
+        if(typeof this.onShow === 'function') this.onShow(Instance);
         return this;
     }    
     
@@ -77,12 +83,12 @@ export default class Window extends Common {
         // --- --- --- --- ---
         this.$Back
             .off()
-            .removeClass('wi-opend');
+            .removeClass('wi-opend').addClass('wi-behind');
             //.removeClass('cm-opend').delay(0).queue(function(){ $(this).addClass('cm-behind'); $(this).dequeue(); });
             
         // --- --- --- --- ---        
         Esc.pop();
-        if(typeof this.onHide === 'function') this.onHide();
+        if(typeof this.onHide === 'function') this.onHide(Instance);
         return this;
     }
 }

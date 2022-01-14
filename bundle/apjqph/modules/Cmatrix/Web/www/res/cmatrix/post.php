@@ -11,25 +11,25 @@ $Data = \Cmatrix\Web\Request::get()->Array;
 $Messgae;
 try{
     switch($Data['m']){
-        case 'li' : \CmatrixCore\Session::instance()->login($Data['u'],$Data['p']);
+        case 'li' : \Cmatrix\Core\Session::instance()->login($Data['u'],$Data['p']);
                     $Message = 'Вы успешно зарегистрированы.';
                     break;
                     
-        case 'lo' : \CmatrixCore\Session::instance()->logout();
+        case 'lo' : \Cmatrix\Core\Session::instance()->logout();
                     $Message = 'Ваш сеанс успешно завершён.';
                     break;
                     
         default : throw new \Exception('Bad mode "' .$Data['m']. '"');
     }
     
-    echo \CmatrixWeb\Request::create([
+    echo \Cmatrix\Web\Request::create([
         'status' => 1,
         'message' => $Message
     ])->Json;
 }
 
 catch(\Throwable $e){
-    echo \CmatrixWeb\Request::create([
+    echo \Cmatrix\Web\Request::create([
         'status' => -1,
         'message' => $e->getMessage()
     ])->Json;

@@ -1,0 +1,17 @@
+{
+    "module" : {
+        "code" : "/Tilda/Tool",
+        "name" : "/Tilda/Tool",
+        "prefix" : "tdTool",
+        "baloon" : "Режущий инструмент",
+        "author" : "ura@itx.ru",
+        "url" : null,
+        "since" : 2012,
+        "major" : 0,
+        "minor" : 1,
+        "build" : 1,
+        "info" : null
+    },
+	"dependences" : [
+	]
+}

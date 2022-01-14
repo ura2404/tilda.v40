@@ -1,6 +1,5 @@
 <?php
 namespace Cmatrix\Web\Models;
-use \Cmatrix as cm;
 use \Cmatrix\Kernel as kernel;
 use \Cmatrix\Kernel\Exception as ex;
 

@@ -1,0 +1,19 @@
+{
+    "module" : {
+        "code" : "/Cmatrix/Kernel",
+        "name" : "/Cmatrix/Kernel",
+        "prefix" : "cmKernel",
+        "baloon" : {
+            "_def" : "Ядро системы"
+        },
+        "author" : "ura@itx.ru",
+        "url" : null,
+        "since" : 2012,
+        "major" : 0,
+        "minor" : 1,
+        "build" : 1,
+        "info" : null
+    },
+	"dependences" : [
+	]
+}

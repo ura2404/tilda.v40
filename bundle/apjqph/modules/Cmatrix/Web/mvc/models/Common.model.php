@@ -10,9 +10,16 @@ class Common implements web\Mvc\iModel {
             'app' => $this->getMyApp(),
             'url' => [
                 'home' => CM_WHOME,
+                'post' => CM_WHOME .'/res/cmatrix/post.php',
                 'search' => CM_WHOME .'/search',
-                'post' => CM_WHOME .'/res/cmatrix/post.php'
-            ]
+                'message' => CM_WHOME .'/message',
+                'browser' => CM_WHOME .'/browser',
+                'session' => CM_WHOME .'/session',
+                'admin' => CM_WHOME .'/admin',
+                'profile' => CM_WHOME .'/profile',
+                'api' => CM_WHOME .'/api',
+            ],
+            'now' => date('Y-m-d')
         ];
     }
     

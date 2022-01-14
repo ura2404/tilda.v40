@@ -37,6 +37,9 @@ html {
     }
 }
 
+.wi-behind {
+    z-index : -100 !important;
+}
 /*
 .cm-error {
     display: none;
@@ -67,12 +70,11 @@ body {
     
     & > * {
         transition: .20s;
-        //transform: translate(0,-100px);
     }
     
     &:not(.wi-opend) {
         opacity: 0;
-        z-index: -100;
+        //z-index: -100;
         
         & > * {
             transform: translate(0,100px);
@@ -81,7 +83,7 @@ body {
 }
 
 /* горизонтальный разделитель */
-.wi-h-devider {
+.wi-h-devider-1 {
     border-top : 1px solid;
 }
 

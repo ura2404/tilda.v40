@@ -33,8 +33,8 @@
         {% endblock style %}
         <script type="text/javascript" src="res/cmatrix/vendor/lesscss.org/3.7.1/less.min.js"></script>
     </head>
-    <body>
-        <header class="mx-auto fixed inset-x-0 top-0 text-gray-700 _border-b-2 shadow-xl">
+    <body class="flex flex-col h-full">
+        <header class="mx-auto fixed inset-x-0 top-0 text-gray-700 bg-white _border-b-2 shadow-xl z-10">
             <div class="container h-10 mx-auto flex">
                 <a href="{{ url.home }}" class="truncate flex" title="{% block nameTitle %}{{ app.name }} - {{ app.info|lower }}{% endblock %}">
                     {% block logo %}{{ _self.logo() }}{% endblock %}{% block name %}<span class="text-2xl text-green-700 ml-2 my-auto">{{ app.name }}</span>{% endblock %}
@@ -56,10 +56,46 @@
             </div>
         </header>
         
-        <div class="container mx-auto pt-10 w-full h-full">
+        <div class="container mx-auto pt-10 _mb-20 w-full _min-h-full _h-full flex-auto grow-1 shrink-0">
             {% block main %}{% endblock %}
         </div>
         
+        <footer class="_mx-auto mt-5 bg-neutral-500 text-white flex-auto grow-0 shrink-0">
+            <div class="container mx-auto px-1 flex flex-col">
+                {% block footer %}
+                    <div class="text-center">
+                        <a class="underline" href="{{ url.search }}" title="Поискова система">Поиск</a> •
+                        <a class="underline" href="{{ url.message }}" title="Форум/Чат/Блог">Сообщения</a> •
+                        <a class="underline" href="{{ url.session }}" title="Текущая сессия">Сессия</span></a> •
+                        <a class="underline" href="{{ url.browser }}" title="Проверка браузера на совместимость">Browser</a> •
+                        <a class="underline" href="{{ url.api }}"title="">API</a> •
+                        <a class="underline" href="{{ url.admin }}" title="Панель управления">Admin`ка</a> •
+                        <a class="underline" href="{{ url.profile }}" title="Профиль пользователя">Профиль</a>
+                    </div>
+                    <div class="text-center mt-1">{{ app.name }} &copy; v{{ app.version }} // {{ app.since}}-{{ now|before('-') }}</div>
+                {% endblock %}
+            </div>
+        </footer>
+        
+        {% block popup %}
+            <div class="wi-back wi-behind wi-noselect z-50 bg-gray-800 bg-opacity-50 flex flex-col">
+                <div id="cm-alert-success" class="relative my-auto bg-green-400 bg-opacity-90 flex flex-col p-4">
+                    <div class="wi-content container mx-auto text-white text-center"></div>
+                    {#<div class="mx-auto flex">
+                        <button type="button" class="wi-a-close wi-hover focus:ring-4 focus:ring-red-400 focus:ring-opacity-50 rounded mx-auto mt-5 px-3 py-1.5 bg-red-400">Закрыть</button>
+                    </div>#}
+                </div>
+            </div>
+                    
+            <div class="wi-back wi-behind wi-noselect z-50 bg-gray-800 bg-opacity-50 flex flex-col">
+                <div id="cm-alert-error" class="relative my-auto bg-red-300 bg-opacity-95 flex flex-col p-4">
+                    <div class="wi-content container mx-auto text-white text-center"></div>
+                    <div class="mx-auto flex">
+                        <button type="button" class="wi-a-close wi-hover focus:ring-4 focus:ring-red-400 focus:ring-opacity-50 rounded mx-auto mt-5 px-3 py-1.5 bg-red-400">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
     </body>
 
     <script type="text/javascript" src="res/cmatrix/vendor/jquery.com/jquery-3.6.0.min.js"></script>

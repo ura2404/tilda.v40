@@ -1,8 +1,14 @@
 <?php
 
-\Cmatrix\Web\Router::add('/^admin/',[
+\Cmatrix\Web\Router::add('/^admin$/',[
     'template' => '/Cmatrix/Web/admin.twig',
     'model' => '/Cmatrix/Web/Admin',
+    'controller' => '/Cmatrix/Web/Twig'
+]);
+
+\Cmatrix\Web\Router::add('/^admin\/modules/',[
+    'template' => '/Cmatrix/Web/adminModules.twig',
+    'model' => '/Cmatrix/Web/AdminModules',
     'controller' => '/Cmatrix/Web/Twig'
 ]);
 

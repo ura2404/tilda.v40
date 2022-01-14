@@ -16,8 +16,8 @@
 
 {% block user %}
     {% if isSession %}
-        <a id="cm-user" class="wi-hover flex ml-3 cursor-pointer"  href="{{ url.login }}" onclick="event.preventDefault()"
-            target="{% if sysuser.code == 'guest' %}#cm-login{% else %}#cm-session{% endif %}"
+        <a id="cm-user" class="wi-hover flex ml-3 mr-1 cursor-pointer"  href="{{ url.login }}" onclick="event.preventDefault()"
+            target="{% if sysuser.code == 'guest' %}login{% else %}session{% endif %}"
             title="{{ sysuser.name }}"
         >
             {# <span class="cm-name my-auto mr-2">{{ session.user.name }}</span> #}
@@ -32,10 +32,8 @@
     {% endif %}
 {% endblock %}
 
-{% block main %}
-    {{ parent() }}
-    
-    <div class="wi-back wi-noselect flex z-40 bg-gray-800 bg-opacity-50">    
+{% block popup %}
+    <div class="wi-back wi-behind wi-noselect z-40 bg-gray-800 bg-opacity-50 flex">
         <form id="cm-form-login" class="relative rounded w-10/12 sm:w-96 mx-auto my-auto flex flex-col pt-10 pb-3 px-8 sm:px-12 bg-blue-400 bg-opacity-90 shadow-2xl"
             _data-timeout="3000"
             method="post" action="{{ url.post }}"
@@ -56,10 +54,22 @@
             />
             <span class="wi-err mb-2 h-4 text-red-600 text-sm"></span>
             
-            <button type="button" class="wi-a-submit rounded mb-1 wi-hover mt-1 w-20 mx-auto px-3 py-1.5 text-white bg-blue-500">Войти</button>
+            <button type="button" class="wi-a-submit rounded focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 mb-1 wi-hover mt-1 w-20 mx-auto px-3 py-1.5 text-white bg-blue-500">Войти</button>
         </from>
     </div>
     
-    
-    {# {{ _window.window('#cm-form-login') }} #}
+    <div class="wi-back wi-behind wi-noselect z-40 bg-white bg-transparent flex">
+        <div class="container mx-auto flex">
+            <div class="ml-auto mt-8 mb-0 overflow-y-auto border-t-2">
+                <ul id="cm-form-session" class="cursor-pointer bg-white border-2 border-t-0 flex flex-col">
+                    <li class="cm-menu-item flex"><a class="w-full p-2 hover:bg-gray-300" href="{{ url.profile }}"><i class="text-gray-700 w-7 far fa-user"></i><span>Профиль</span></a></li>
+                    <li class="cm-menu-item flex"><a class="w-full p-2 hover:bg-gray-300" href="{{ url.session }}"><i class="text-gray-700 w-7 far fa-paper-plane"></i><span>Сеанс</span></a></li>
+                    <li class="cm-menu-item flex"><a class="w-full p-2 hover:bg-gray-300" href="{{ url.admin }}"><i class="text-gray-700 w-7 far fa-desktop"></i><span>Admin`ка</span></a></li>
+                    <li class="wi-h-devider-1 text-gray-200"></li>
+                    <li class="cm-menu-item wi-logout flex"><a class="w-full p-2 hover:bg-gray-300"><i class="text-gray-700 w-7 far fa-sign-out-alt"></i><span>Завершение сеанса</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {{ parent() }}
 {% endblock %}

@@ -33,6 +33,11 @@ class Lang {
     static function instance(){
         return new self();
     }
+    
+    // --- --- --- --- ---
+    static function i(){
+        return self::instance();
+    }
 
     // --- --- --- --- ---
     static function str($str){

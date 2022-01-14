@@ -65,6 +65,11 @@ export default class Form extends Window {
     }
     
     // --- --- --- --- ---
+    focus(){
+        this.$Tag.find('input[required="required"]:not(:hidden):first').focus();
+    }
+    
+    // --- --- --- --- ---
     isRequired(){
         return this.$Tag.find(':input').map(function(index, element){
             if(!$(element).hasAttr('required')) return;

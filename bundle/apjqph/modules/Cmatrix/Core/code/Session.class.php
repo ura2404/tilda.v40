@@ -148,7 +148,7 @@ class Session {
 
     // --- --- --- --- ---
     protected function dbLogout(){
-        $Guest = db\Obbject::i('/CmatrixCore/Sysuser')->get(['code' => 'guest']);
+        $Guest = db\Obbject::i('/Cmatrix/Core/Sysuser')->get(['code' => 'guest']);
         if($Guest->IsEmpty) throw new ex('Невозможно закрыть сессию.');
         
         if(kernel\App::$SAPI === 'CLI'){

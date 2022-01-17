@@ -14,6 +14,7 @@ class CommonLogin extends Common {
             'sysuser' => $this->getMySysuser(),
             'url' => [
                 'login'   => CM_WHOME. '/login',
+                'logout'  => CM_WHOME. '/logout',
                 'message' => CM_WHOME. '/message',
             ]
         ]);

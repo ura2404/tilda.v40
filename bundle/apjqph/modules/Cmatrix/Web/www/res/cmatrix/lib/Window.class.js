@@ -58,7 +58,7 @@ export default class Window extends Common {
             
         // --- --- --- --- ---
         // если обозначет timeout, то закрыть отреагировать на это
-        if(this.Timeout) setTimeout(function(){
+        if(this.Timeout) this.Timer = setTimeout(function(){
             Instance.hide();
         },this.Timeout);
         
@@ -79,6 +79,8 @@ export default class Window extends Common {
         
         // если форма не закрывемая, не закрывать
         if(this.isHidable === false) return;
+        
+        clearTimeout(this.Timer);
         
         // --- --- --- --- ---
         this.$Back

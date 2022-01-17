@@ -1,10 +1,12 @@
 import Window from './lib/Window.class.js';
 import Form from './lib/Form.class.js';
+import Menu from './lib/Menu.class.js';
 import Ajax from './lib/Ajax.class.js';
 
 // --- --- --- --- ---
 const onSuccess = function(data){
-    document.cm.formSuccess.content(data.message).show();
+    //document.cm.formSuccess.content(data.message).show();
+    window.location.reload();
 };
 
 // --- --- --- --- ---
@@ -32,10 +34,13 @@ document.cm.formError.onHide = function(win){
 };
 
 document.cm.formLogin = new Form($('#cm-form-login'),onSubmit);
-document.cm.formSession = new Form($('#cm-form-session'),onSubmit);
+document.cm.formLogout = new Form($('#cm-form-logout'),onSubmit);
+document.cm.menuSession = new Menu($('#cm-menu-session'),{
+    '.cm-a-logout' : e => document.cm.formLogout.show()
+});
 
 // 2. click по иконке пользователя
 $('#cm-user').on('click',function(){
     if($(this).attr('target') === 'login')document.cm.formLogin.show();
-    else document.cm.formSession.show();
+    else document.cm.menuSession.show();
 });

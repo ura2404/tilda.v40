@@ -10,14 +10,14 @@
 {% endblock %}
 
 {% block main %}
-    <div class="flex flex-col mt-3">
+    <div class="flex flex-col mt-3 bg-transparent">
         {% if isSession %}
             <div class="mx-auto text-3xl mb-4">Сессия</div>
             
             <div id="cm-session" class="cursor-pointer grid grid-cols-2 auto-cols-auto _table-auto mx-auto">
                 {% for code,value in data %}
-                    <div class="{% if loop.index is odd %}bg-gray-100{% endif %} py-1 px-3">{{ code }}</div>
-                    <div class="{% if loop.index is odd %}bg-gray-100{% endif %} py-1 px-3 truncate" title="{{ value }}">{{ value }}</div>
+                    <div class="{% if loop.index is odd %}bg-gray-100{% else %}bg-white{% endif %} py-1 px-3">{{ code }}</div>
+                    <div class="{% if loop.index is odd %}bg-gray-100{% else %}bg-white{% endif %} py-1 px-3 truncate" title="{{ value }}">{{ value }}</div>
                 {% endfor %}
             </div>
             {#

@@ -12,6 +12,12 @@
     'controller' => '/Cmatrix/Web/Twig'
 ]);
 
+\Cmatrix\Web\Router::add('/^admin\/module/',[
+    'template' => '/Cmatrix/Web/adminModule.twig',
+    'model' => '/Cmatrix/Web/AdminModule',
+    'controller' => '/Cmatrix/Web/Twig'
+]);
+
 \Cmatrix\Web\Router::add(['/','home'],[
     'template' => '/Tilda/Web/home.twig',
     'model' => '/Tilda/Web/Home',

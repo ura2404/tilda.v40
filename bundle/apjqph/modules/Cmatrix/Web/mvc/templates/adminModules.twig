@@ -2,23 +2,38 @@
 
 {% block js %}
     {{ parent() }}
-    {# <script type="module" src="res/cmatrix/adminStructure.js"></script> #}
+    <script type="module" src="res/cmatrix/adminModule.js"></script>
 {% endblock %}
+
+{% block title %}{{ parent() }} | Модули{% endblock %}
 
 {% block name %}
     {{ parent() }}<span class="px-1 text-6xl leading-4 my-auto text-green-700">•</span><span class="text-2xl text-green-700 my-auto">Модули</span>
 {% endblock %}
+
+{% block action %}
+    {% if sysuser.code == 'admin' %}
+        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 cursor-pointer my-auto bg-gray-200 flex" title="Новый модуль">
+            <i class="m-auto fal fa-plus"></i>
+        </a>
+    {% endif %}
+{% endblock %}
+
 
 {% block main %}
     {% if sysuser.code == 'guest' %}
         <div id="cm-need-login"></div>
     {% else %}
         <div class="container mx-auto flex flex-wrap">
-            {% for block in blocks %}
-                <a class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex m-2 flex-col border-2 border-white hover:border-2 hover:border-green-400 " href="{{ block.url }}">
-                    <span class="text-center font-bold bg-gray-400 p-2 text-white">{{ block.info }}</span>
-                    <i class="p-1 text-center fa-3x text-gray-700 {{ block.icon }}"></i>
-                    <span class="text-center mb-1 mt-auto mx-2 h-20 overflow-y-auto">{{ block.name }}</span>
+            {% for b in blocks %}
+                <a class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex m-2 flex-col border-2 border-white hover:border-2 hover:border-green-400 " href="{{ b.url }}">
+                    <span class="text-center font-bold bg-gray-400 p-2 text-white">{{ b.info }}</span>
+                    <div class="grid grid-cols-2 px-2">
+                        <div>Code</div>
+                        <div class="text-gray-700">{{ b.name }}</div>
+                        <div>Datamodels</div>
+                        <div class="text-gray-700">{{ b.datamodels }}</div>
+                    </div>
                 </a>
             {% endfor %}
         </div>

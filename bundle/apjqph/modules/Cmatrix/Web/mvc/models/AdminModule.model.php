@@ -3,7 +3,7 @@ namespace Cmatrix\Web\Models;
 use \Cmatrix\Kernel as kernel;
 use \Cmatrix\Kernel\Exception as ex;
 
-class AdminModules extends CommonLogin {
+class AdminModule extends CommonLogin {
     public function getData(){
         
         return arrayMergeReplace(parent::getData(),[

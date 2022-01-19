@@ -58,6 +58,8 @@ export default class Form extends Window {
         const Instance = this;
         super.hide();
         
+        if(this.isHidable === false) return this;
+        
         // 1.отменить enter на все поля
         this.$Tag.find(':input:not(:hidden)').off('keyup');
         

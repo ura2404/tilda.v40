@@ -2,7 +2,7 @@
 
 
 {% block title %}{{ parent() }} | Режущий инструмент{% endblock %}
-
+{% block name %}<span class="text-2xl text-blue-700 my-auto">{{ name }}</span>{% endblock %}
 
 {% block style %}
     {{ parent() }}
@@ -14,15 +14,13 @@
     <link rel="stylesheet/less" type="text/css" href="res/tildatool/catalogue.less"/>
 {% endblock %}
 
-
 {% block js %}
     {{ parent() }}
     <script type="module" src="res/cmatrix/lib/Layout1.class.js"></script>
     <script type="module" src="res/tildatool/catalogue.js"></script>
 {% endblock %}
 
-
-{% block action %}
+{#{% block action %}
     <a href="{{ app.url.document }}" class="cm-hover cursor-pointer mx-3 flex" title="Документооборот">
         <i class="my-auto text-2xl fad fa-draw-circle"></i>
     </a>
@@ -32,7 +30,19 @@
     <a href="{{ app.url.library }}" class="cm-hover cursor-pointer mx-3 flex" title="Каталоги">
         <i class="my-auto text-2xl fad fa-file-pdf"></i>
     </a>
+{% endblock %}#}
+
+{% block actions %}
+    {% if sysuser.code == 'admin' %}
+        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-200 flex" title="Изменить модуль">
+            <i class="m-auto fal fa-edit"></i>
+        </a>
+        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-red-200 flex" title="Удалить модуль">
+            <i class="m-auto fal fa-trash-alt"></i>
+        </a>
+    {% endif %}
 {% endblock %}
+
 
 
 {% block direct %}

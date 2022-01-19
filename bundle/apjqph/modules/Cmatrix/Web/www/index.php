@@ -1,6 +1,6 @@
 <?php
-include '../../../../defs.php';
-include '../../../../common.php';
+include 'defs.php';
+include 'common.php';
 include 'routers.php';
 
 \Cmatrix\Core\Session::i();

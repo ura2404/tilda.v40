@@ -1,7 +1,7 @@
 <?php
 namespace Cmatrix\Web;
 use Cmatrix\Kernel as kernel;
-
+use \Cmatrix\Kernel\Exception as ex;
 /**
  * Class \Cmatrix\Web\Page
  * 

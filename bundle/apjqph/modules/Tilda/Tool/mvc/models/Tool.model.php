@@ -5,7 +5,7 @@ use \Cmatrix\Kernel as kernel;
 use \Cmatrix\Kernel\Exception as ex;
 use \Tilda as tilda;
 
-class Tool extends tilda\Web\Models\CommonLogin implements web\Mvc\iModel {
+class Tool extends web\Models\CommonLogin implements web\Mvc\iModel {
     
     public function getData(){
         //dump(web\Ide\Datamodel::instance('/Tilda/Tool/Tool')->Data);die();

@@ -7,17 +7,7 @@
 
 {% block title %}{{ parent() }} | Admin`ка{% endblock %}
 
-{% block name %}
-    {{ parent() }}<span class="px-1 text-6xl leading-4 my-auto text-green-700">•</span><span class="text-2xl text-green-700 my-auto">Admin`ка</span>
-{% endblock %}
-
-{% block action %}
-    {{ parent() }}
-{% endblock %}
-
-{% block direct %}
-    {{ parent() }}
-{% endblock %}
+{% block logo2 %}</span><span class="text-2xl ml-2 text-green-700 my-auto">• Admin`ка</span>{% endblock %}
 
 {% block main %}
     {% if sysuser.code == 'guest' %}

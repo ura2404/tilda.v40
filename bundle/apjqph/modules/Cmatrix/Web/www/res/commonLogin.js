@@ -1,7 +1,7 @@
-import Window from './lib/Window.class.js';
-import Form from './lib/Form.class.js';
-import Menu from './lib/Menu.class.js';
-import Ajax from './lib/Ajax.class.js';
+import Window from '../vendor/wi.cmatrix.ru/Window.class.js';
+import Form from '../vendor/wi.cmatrix.ru/Form.class.js';
+import Menu from '../vendor/wi.cmatrix.ru/Menu.class.js';
+import Ajax from '../vendor/wi.cmatrix.ru/Ajax.class.js';
 
 // --- --- --- --- ---
 const onSuccess = function(data){

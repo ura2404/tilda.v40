@@ -1,3 +1,31 @@
 {% extends "/Cmatrix/Web/mvc/templates/commonLogin.twig" %}
 
-{% block title %}{{ parent() }} | {{ title }}{% endblock %}
+{% block title %}{{ parent() }} | Admin`ка | Модуль | {{ module.url }}{% endblock %}
+
+{% block logo2 %}</span><span class="text-2xl ml-2 text-green-700 my-auto">• Admin`ка</span>{% endblock %}
+
+{% block name %}<span class="text-2xl text-blue-700 my-auto">{{ name }}</span>{% endblock %}
+
+{% block actions %}
+    {% if sysuser.code == 'admin' %}
+        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-200 flex" title="Изменить модуль">
+            <i class="m-auto fal fa-edit"></i>
+        </a>
+        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-red-200 flex" title="Удалить модуль">
+            <i class="m-auto fal fa-trash-alt"></i>
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    {% if sysuser.code == 'guest' %}
+        <div id="cm-need-login"></div>
+    {% else %}
+        <div>
+            <ul>
+                <li>Datamodels</li>
+                <li>Datamodels</li>
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}

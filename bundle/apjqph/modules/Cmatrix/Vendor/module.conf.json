@@ -1,0 +1,19 @@
+{
+    "module" : {
+        "code" : "/Cmatrix/Vendor",
+        "name" : "/Cmatrix/Vendor",
+        "prefix" : "cmVendor",
+        "baloon" : {
+            "_def" : "Набор сторонних продуктов"
+        },
+        "author" : "ura@itx.ru",
+        "url" : null,
+        "since" : 2012,
+        "major" : 0,
+        "minor" : 1,
+        "build" : 1,
+        "info" : null
+    },
+	"dependences" : [
+	]
+}

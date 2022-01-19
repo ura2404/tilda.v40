@@ -12,7 +12,7 @@
 {% block main %}
     <div class="flex flex-col mt-3 bg-transparent">
         {% if isSession %}
-            <div class="mx-auto text-3xl mb-4">Сессия</div>
+            <div class="mx-auto text-3xl mb-4">Текущая сессия</div>
             
             <div id="cm-session" class="cursor-pointer grid grid-cols-2 auto-cols-auto _table-auto mx-auto">
                 {% for code,value in data %}

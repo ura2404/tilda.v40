@@ -2,8 +2,8 @@
 header("Content-type: application/json");
 //header("Content-type: application/octet-stream");
 
-require_once('../../../../../../defs.php');
-require_once('../../../../../../common.php');
+require_once('../defs.php');
+require_once('../common.php');
 
 $Data = \Cmatrix\Web\Request::get()->Array;
 

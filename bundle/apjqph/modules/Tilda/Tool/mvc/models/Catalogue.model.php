@@ -29,6 +29,9 @@ class Catalogue extends Tool implements web\Mvc\iModel {
         //dump($this->Tree->Tree);die();
         
         return arrayMergeReplace(parent::getData(),[
+            'name' => 'Режущий инструмент',
+            
+            
             'left' => [
                 'tree' => $this->getMyTree(),
                 'table' => $this->getMyTable(),

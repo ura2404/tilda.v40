@@ -16,7 +16,7 @@
 
 {% block user %}
     {% if isSession %}
-        <a id="cm-user" class="wi-hover flex ml-3 mr-1 cursor-pointer"  href="{{ url.login }}" onclick="event.preventDefault()"
+        <a id="cm-user" class="wi-hover flex ml-3 cursor-pointer"  href="{{ url.login }}" onclick="event.preventDefault()"
             target="{% if sysuser.code == 'guest' %}login{% else %}session{% endif %}"
             title="{{ sysuser.name }}"
         >
@@ -66,7 +66,7 @@
                         <a class="w-full p-2 hover:bg-gray-300" href="{{ url.profile }}"><i class="text-gray-700 w-7 far fa-user"></i><span>Профиль</span></a>
                     </li>
                     <li class="wi-menu-item flex">
-                        <a class="w-full p-2 hover:bg-gray-300" href="{{ url.session }}"><i class="text-gray-700 w-7 far fa-paper-plane"></i><span>Сеанс</span></a>
+                        <a class="w-full p-2 hover:bg-gray-300" href="{{ url.session }}"><i class="text-gray-700 w-7 far fa-paper-plane"></i><span>Сессия</span></a>
                     </li>
                     <li class="wi-menu-item flex">
                         <a class="w-full p-2 hover:bg-gray-300" href="{{ url.admin }}"><i class="text-gray-700 w-7 far fa-desktop"></i><span>Admin`ка</span></a>

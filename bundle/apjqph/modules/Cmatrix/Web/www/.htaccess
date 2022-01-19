@@ -48,6 +48,11 @@
     RewriteRule ^(.*)(res/.*\..*)$ $2 [QSA,L]
 
     # --- --- --- --- --- --- --- ---
+    # Actions 
+    RewriteCond %{REQUEST_URI} (view|add|edit|remove|copy)$
+    RewriteRule ^(.*)/(.*)$ $1?action=$2 [QSA,L]
+
+    # --- --- --- --- --- --- --- ---
     # Global
     # Так не работает из-за невозможности запретить ресурсы, кроме вышеуказанных
     # RewriteCond %{REQUEST_URI} (.*)/$

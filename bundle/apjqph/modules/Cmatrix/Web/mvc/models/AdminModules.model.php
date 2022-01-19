@@ -10,6 +10,7 @@ class AdminModules extends CommonLogin {
             'url' => [
                 'addmodule' => CM_WHOME .'/admin/module/add'
             ],
+            'name' => 'Модули',
             'blocks' => $this->getMyBlocks(),
         ]);
     }
@@ -19,7 +20,7 @@ class AdminModules extends CommonLogin {
         return array_map(function($url){
             $Model = kernel\Ide\Module::i($url);
             return [
-                'url' => CM_WHOME .'/admin/module/'. str_replace('/','',$Model->Code). '/view',
+                'url' => CM_WHOME .'/admin/module/'. str_replace('/','_',ltrim($Model->Code,'/')). '/view',
                 'code' => $Model->Code,
                 'name' => $Model->Name,
                 'info'=> $Model->Baloon,

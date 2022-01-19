@@ -22,26 +22,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <title>{% block title %}{{ app.name }} v{{ app.version }}{% endblock %}</title>
         
-        <script src="res/cmatrix/vendor/tailwindcss.com/3.0.12/tailwindcss.js"></script>
-        {# <link rel="stylesheet" type="text/css" href="res/cmatrix/vendor/tailwindcss.com/2.0.4/tailwind.min.css"/> #}
+        <script src="res/vendor/tailwindcss.com/3.0.12/tailwindcss.js"></script>
+        {# <link rel="stylesheet" type="text/css" href="res/vendor/tailwindcss.com/2.0.4/tailwind.min.css"/> #}
         
-        <link rel="stylesheet" type="text/css" href="res/cmatrix/vendor/fontawesome.com/5.15.3/css/all.css"/>
-        <link rel="stylesheet" type="text/css" href="res/cmatrix/vendor/google.com/fonts/Arsenal/font.less"/>
+        <link rel="stylesheet" type="text/css" href="res/vendor/fontawesome.com/5.15.3/css/all.css"/>
+        <link rel="stylesheet" type="text/css" href="res/vendor/google.com/fonts/Arsenal/font.less"/>
         <link rel="stylesheet/less" type="text/css" href="res/cmatrix/html.less"/>
         {% block style %}
             <link rel="stylesheet/less" type="text/css" href="res/cmatrix/common.less"/>
         {% endblock style %}
-        <script type="text/javascript" src="res/cmatrix/vendor/lesscss.org/3.7.1/less.min.js"></script>
+        <script type="text/javascript" src="res/vendor/lesscss.org/3.7.1/less.min.js"></script>
     </head>
     <body class="flex flex-col h-full">
         <header class="mx-auto fixed inset-x-0 top-0 text-gray-700 bg-white _border-b-2 shadow-xl z-10">
-            <div class="container h-10 mx-auto flex">
+            <div class="container px-2 h-10 mx-auto flex">
                 <a href="{{ url.home }}" class="truncate flex" title="{% block nameTitle %}{{ app.name }} - {{ app.info|lower }}{% endblock %}">
-                    {% block logo %}{{ _self.logo() }}{% endblock %}{% block name %}<span class="text-2xl text-green-700 ml-2 my-auto">{{ app.name }}</span>{% endblock %}
+                    {% block logo %}{{ _self.logo() }}{% endblock %}<span class="text-2xl text-green-700 ml-2 my-auto">{{ app.name }}{% block logo2 %}{% endblock %}</span>
                 </a>
                 
                 <div class="ml-3 mr-auto flex">
-                    {% block action %}{% endblock %}
+                    {% block links %}{% endblock %}
                 </div>
                 <div class="flex">
                     {% block direct %}
@@ -56,11 +56,16 @@
             </div>
         </header>
         
-        <div class="container mx-auto pt-10 _mb-20 w-full _min-h-full _h-full flex-auto grow-1 shrink-0">
+        <div class="container mx-auto px-2 mt-11 mb-1 flex">
+            <div class="_pl-2">{% block name %}{% endblock %}</div>
+            <div class="ml-auto my-auto flex">{% block actions %}{% endblock %}</div>
+        </div>
+        
+        <div class="container mx-auto px-2 _pt-10 _mb-20 w-full _min-h-full _h-full flex-auto grow-1 shrink-0">
             {% block main %}{% endblock %}
         </div>
         
-        <footer class="_mx-auto mt-5 bg-neutral-500 text-white flex-auto grow-0 shrink-0">
+        <footer class="_mx-auto mt-5 px-2 bg-neutral-500 text-white flex-auto grow-0 shrink-0">
             <div class="container mx-auto px-1 flex flex-col">
                 {% block footer %}
                     <div class="text-center">
@@ -98,9 +103,9 @@
         {% endblock %}
     </body>
 
-    <script type="text/javascript" src="res/cmatrix/vendor/jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="res/cmatrix/vendor/jquery.com/jquery.md5.js"></script>
-    <script type="text/javascript" src="res/cmatrix/vendor/jquery.js"></script>
+    <script type="text/javascript" src="res/vendor/jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="res/vendor/jquery.com/jquery.md5.js"></script>
+    <script type="text/javascript" src="res/cmatrix/jquery.js"></script>
     {% block js %}
         <script type="module" src="res/cmatrix/common.js"></script>
     {% endblock js %}

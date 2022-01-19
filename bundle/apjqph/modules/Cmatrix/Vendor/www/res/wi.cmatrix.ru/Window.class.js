@@ -31,7 +31,7 @@ export default class Window extends Common {
         const Timeout = this.$Tag.data('timeout');
         if(Timeout) this.Timeout = Timeout;
         
-        this.$CloseButton.on('click',() => this.hide());
+        this.$CloseButton.on('click',() => setTimeout(() => this.hide(),100));
     }
     
     // --- --- --- --- ---
@@ -78,7 +78,7 @@ export default class Window extends Common {
         const Instance = this;
         
         // если форма не закрывемая, не закрывать
-        if(this.isHidable === false) return;
+        if(this.isHidable === false) return this;
         
         clearTimeout(this.Timer);
         

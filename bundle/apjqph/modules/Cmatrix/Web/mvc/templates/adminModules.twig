@@ -5,15 +5,15 @@
     <script type="module" src="res/cmatrix/adminModule.js"></script>
 {% endblock %}
 
-{% block title %}{{ parent() }} | Модули{% endblock %}
+{% block title %}{{ parent() }} | Admin`ка | Модули{% endblock %}
 
-{% block name %}
-    {{ parent() }}<span class="px-1 text-6xl leading-4 my-auto text-green-700">•</span><span class="text-2xl text-green-700 my-auto">Модули</span>
-{% endblock %}
+{% block logo2 %}</span><span class="text-2xl ml-2 text-green-700 my-auto">• Admin`ка</span>{% endblock %}
 
-{% block action %}
+{% block name %}<span class="text-2xl text-blue-700 my-auto">{{ name }}</span>{% endblock %}
+
+{% block actions %}
     {% if sysuser.code == 'admin' %}
-        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 cursor-pointer my-auto bg-gray-200 flex" title="Новый модуль">
+        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 cursor-pointer my-auto bg-green-200 flex" title="Новый модуль">
             <i class="m-auto fal fa-plus"></i>
         </a>
     {% endif %}
@@ -26,7 +26,7 @@
     {% else %}
         <div class="container mx-auto flex flex-wrap">
             {% for b in blocks %}
-                <a class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex m-2 flex-col border-2 border-white hover:border-2 hover:border-green-400 " href="{{ b.url }}">
+                <a class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex _m-2 flex-col border-2 border-white hover:border-2 hover:border-blue-400 " href="{{ b.url }}">
                     <span class="text-center font-bold bg-gray-400 p-2 text-white">{{ b.info }}</span>
                     <div class="grid grid-cols-2 px-2">
                         <div>Code</div>

@@ -12,6 +12,12 @@ class AdminModules extends CommonLogin {
             ],
             'name' => 'Модули',
             'blocks' => $this->getMyBlocks(),
+            'path' => [
+                'Home' => CM_WHOME,
+                'Admin`ка' => CM_WHOME .'/admin',
+                'Модули' => CM_WHOME .'/admin/modules',
+            ]
+
         ]);
     }
     

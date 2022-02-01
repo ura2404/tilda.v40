@@ -27,10 +27,9 @@
         <div class="container mx-auto flex flex-wrap">
             {% for b in blocks %}
                 <a class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex _m-2 flex-col border-2 border-white hover:border-2 hover:border-blue-400 " href="{{ b.url }}">
-                    <span class="text-center font-bold bg-gray-400 p-2 text-white">{{ b.info }}</span>
+                    <span class="text-center font-bold bg-gray-400 p-2 text-white">{{ b.name }}</span>
                     <div class="grid grid-cols-2 px-2">
-                        <div>Code</div>
-                        <div class="text-gray-700">{{ b.name }}</div>
+                        <div class="col-span-2 py-2 text-center text-gray-700">{{ b.info }}</div>
                         <div>Datamodels</div>
                         <div class="text-gray-700">{{ b.datamodels }}</div>
                     </div>

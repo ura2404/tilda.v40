@@ -8,6 +8,10 @@ class Admin extends CommonLogin {
         
         return arrayMergeReplace(parent::getData(),[
             'blocks' => $this->getMyBlocks(),
+            'path' => [
+                'Home' => CM_WHOME,
+                'Admin`ка' => CM_WHOME .'/admin'
+            ]
         ]);
     }
     

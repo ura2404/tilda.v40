@@ -35,7 +35,7 @@
     </head>
     <body class="flex flex-col h-full">
         <header class="mx-auto fixed inset-x-0 top-0 text-gray-700 bg-white _border-b-2 shadow-xl z-10">
-            <div class="container px-2 h-10 mx-auto flex">
+            <div class="container px-2 h-12 mx-auto flex">
                 <a href="{{ url.home }}" class="truncate flex" title="{% block nameTitle %}{{ app.name }} - {{ app.info|lower }}{% endblock %}">
                     {% block logo %}{{ _self.logo() }}{% endblock %}<span class="text-2xl text-green-700 ml-2 my-auto">{{ app.name }}{% block logo2 %}{% endblock %}</span>
                 </a>
@@ -56,7 +56,21 @@
             </div>
         </header>
         
-        <div class="container mx-auto px-2 mt-11 mb-1 flex">
+        <div class="container mx-auto px-2 py-4 mt-14 flex">
+            {% block path %}
+                <ul id="path" class="flex">
+                    {% for page,url in path %}
+                        {% if loop.last %}
+                            <span class="text-3xl">{{ page }}</span>
+                        {% else %}
+                            <a class="text-sky-600 underline underline-offset-1 align-text-bottom" href="{{ url }}">{{ page }}</a><span class="mx-1">></span>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endblock %}
+        </div>
+        
+        <div class="container mx-auto px-2 _py-4 _mt-14 mb-1 flex">
             <div class="_pl-2">{% block name %}{% endblock %}</div>
             <div class="ml-auto my-auto flex">{% block actions %}{% endblock %}</div>
         </div>

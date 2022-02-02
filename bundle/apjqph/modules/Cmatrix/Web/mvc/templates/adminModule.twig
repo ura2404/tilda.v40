@@ -1,19 +1,37 @@
 {% extends "/Cmatrix/Web/mvc/templates/commonLogin.twig" %}
 
-{% block title %}{{ parent() }} | Admin`ка | Модуль | {{ module.url }}{% endblock %}
+{% block title %}{{ parent() }} | Admin`ка | {% if module.url %}Модуль {{ module.url }}{% else %}Новый модуль{% endif %}{% endblock %}
 
-{% block logo2 %}</span><span class="text-2xl ml-2 text-green-700 my-auto">• Admin`ка</span>{% endblock %}
+{% block style %}
+    {{ parent() }}
+    <link rel="stylesheet/less" type="text/css" href="res/cmatrix/adminModule.less"/>
+{% endblock %}
 
-{% block name %}<span class="text-2xl text-blue-700 my-auto">{{ name }}</span>{% endblock %}
+{% block js %}
+    {{ parent() }}
+    <script type="module" src="res/cmatrix/adminModule.js"></script>
+{% endblock %}
 
 {% block actions %}
     {% if sysuser.code == 'admin' %}
-        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-200 flex" title="Изменить модуль">
-            <i class="m-auto fal fa-edit"></i>
-        </a>
-        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-red-200 flex" title="Удалить модуль">
-            <i class="m-auto fal fa-trash-alt"></i>
-        </a>
+        {% if module.url %}
+            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-300 flex" title="Изменить модуль">
+                <i class="m-auto fal fa-edit"></i>
+            </button>
+            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-red-300 flex" title="Удалить модуль">
+                <i class="m-auto fal fa-trash-alt"></i>
+            </button>
+            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-neutral-300 flex" onclick="history.back()" title="Отменить">
+                <i class="m-auto fal fa-backspace"></i>
+            </button>
+        {% else %}
+            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 flex" title="Создать модуль">
+                <i class="m-auto fal fa-save"></i>
+            </button>
+            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-neutral-300 flex" onclick="history.back()" title="Отменить">
+                <i class="m-auto fal fa-backspace"></i>
+            </button>
+        {% endif %}
     {% endif %}
 {% endblock %}
 
@@ -21,11 +39,102 @@
     {% if sysuser.code == 'guest' %}
         <div id="cm-need-login"></div>
     {% else %}
-        <div>
-            <ul>
-                <li>Datamodels</li>
-                <li>Datamodels</li>
+        <div id="cm-module-tabs" class="wi-tabs">
+            <ul class="wi-tabs-items gap-x-1 bg-gray-100 flex justify-center h-10">
+                <li class="wi-tabs-item wi-hover px-2 cursor-pointer text-green-700 h-full active:bg-zinc-200 flex items-center _wi-active" data-tag="#cm-module-info">Описание</li>
+                <li class="wi-tabs-item wi-hover px-2 cursor-pointer text-green-700 h-full active:bg-zinc-200 flex items-center" data-tag="#cm-module-code">Code</li>
+                <li class="wi-tabs-item wi-hover px-2 cursor-pointer text-green-700 h-full active:bg-zinc-200 flex items-center" data-tag="#cm-module-datamodel">Datamodels</li>
             </ul>
+            
+            <div id="cm-module-info" class="wi-tabs-content pt-5">
+                <form>
+                    <div class="grid grid-cols-2 _grid-cols-[max-content_minmax(0,1fr)] gap-y-3">
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Code</span>
+                            <div class="italic text-sm text-gray-700 pl-5">Уникальный код, однозначно определяющий модуль в репозитарии</div>
+                        </div>
+                        <div class="pt-1">
+                            <input class="px-1 py-1 w-full" name="code" value="{{ module.data.module.code }}" required="required"/>
+                        </div>
+                        
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Name</span>
+                            <div class="italic text-sm text-gray-700 pl-5">Наименование модуля</div>
+                        </div>
+                        <div class="pt-1">
+                            <input class="px-1 py-1 w-full" name="name" value="{{ module.data.module.name }}" required="required"/>
+                        </div>
+                        
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Prefix</span>
+                            <div class="italic text-sm text-gray-700 pl-5">Префикс, может использоваться для именование объёктов в базе данных</div>
+                        </div>
+                        <div class="pt-1">
+                            <input class="px-1 py-1 w-full" name="prefix" value="{{ module.data.module.prefix }}"/>
+                        </div>
+                        
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Author</span>
+                            <div class="italic text-sm text-gray-700 pl-5">e-mail, web-сайт, любые ссылки на автра модуля</div>
+                        </div>
+                        <div class="pt-1">
+                            <input class="px-1 py-1 w-full" name="author" value="{{ module.data.module.author|raw }}" required="required"/>
+                        </div>
+                        
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Url</span>
+                            <div class="italic text-sm text-gray-700 pl-5">url модуля в сети</div>
+                        </div>
+                        <div class="pt-1">
+                            <input class="px-1 py-1 w-full" name="url" value="{{ module.data.module.url }}"/>
+                        </div>
+                        
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Since</span>
+                            <div class="italic text-sm text-gray-700 pl-5">Дата запуска модуля</div>
+                        </div>
+                        <div class="pt-1">
+                            <input class="px-1 py-1 w-full" name="since" value="{{ module.data.module.since }}" required="required"/>
+                        </div>
+                        
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Major</span>
+                            <div class="italic text-sm text-gray-700 pl-5">Версия</div>
+                        </div>
+                        <div class="pt-1">
+                            <input class="px-1 py-1 w-full" name="major" value="{{ module.data.module.major }}" required="required"/>
+                        </div>
+                        
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Minor</span>
+                            <div class="italic text-sm text-gray-700 pl-5">Ревизия</div>
+                        </div>
+                        <div class="pt-1">
+                            <input class="px-1 py-1 w-full" name="minor" value="{{ module.data.module.minor }}" required="required"/>
+                        </div>
+                        
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Build</span>
+                            <div class="italic text-sm text-gray-700 pl-5">Номер сборки</div>
+                        </div>
+                        <div class="pt-1">
+                            <input class="px-1 py-1 w-full" name="build" value="{{ module.data.module.build }}" required="required"/>
+                        </div>
+                        
+                        <div class="hover:bg-green-100">
+                            <span class="font-bold">Info</span>
+                            <div class="italic text-sm text-gray-700 pl-5">Техническая информация о модуле</div>
+                        </div>
+                        <div class="pt-1">
+                            <textarea class="px-1 py-1 w-full" name="info">{{ module.data.module.info }}</textarea>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+            
+            <div id="cm-module-code" class="wi-tabs-content">235345345345</div>
+            <div id="cm-module-datamodel" class="wi-tabs-content">3wefwfwef</div>
         </div>
     {% endif %}
 {% endblock %}

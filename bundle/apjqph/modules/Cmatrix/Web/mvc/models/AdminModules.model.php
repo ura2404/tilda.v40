@@ -10,7 +10,6 @@ class AdminModules extends CommonLogin {
             'url' => [
                 'addmodule' => CM_WHOME .'/admin/module/add'
             ],
-            'name' => 'Модули',
             'blocks' => $this->getMyBlocks(),
             'path' => [
                 'Home' => CM_WHOME,

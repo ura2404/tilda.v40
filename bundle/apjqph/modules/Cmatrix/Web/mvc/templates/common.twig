@@ -37,7 +37,7 @@
         <header class="mx-auto fixed inset-x-0 top-0 text-gray-700 bg-white _border-b-2 shadow-xl z-10">
             <div class="container px-2 h-12 mx-auto flex">
                 <a href="{{ url.home }}" class="truncate flex" title="{% block nameTitle %}{{ app.name }} - {{ app.info|lower }}{% endblock %}">
-                    {% block logo %}{{ _self.logo() }}{% endblock %}<span class="text-2xl text-green-700 ml-2 my-auto">{{ app.name }}{% block logo2 %}{% endblock %}</span>
+                    {% block logo %}{{ _self.logo() }}{% endblock %}<span class="text-3xl text-green-700 ml-2 my-auto">{{ app.name }}</span>
                 </a>
                 
                 <div class="ml-3 mr-auto flex">
@@ -56,23 +56,22 @@
             </div>
         </header>
         
-        <div class="container mx-auto px-2 py-4 mt-14 flex">
+        <div class="container mx-auto px-2 pt-2 pb-4 mt-14 flex flex-wrap">
             {% block path %}
-                <ul id="path" class="flex">
+                <ul id="path" class="flex flex-wrap w-full truncate">
                     {% for page,url in path %}
                         {% if loop.last %}
-                            <span class="text-3xl">{{ page }}</span>
+                            <span class="text-3xl mt-auto">{{ page }}</span>
                         {% else %}
-                            <a class="text-sky-600 underline underline-offset-1 align-text-bottom" href="{{ url }}">{{ page }}</a><span class="mx-1">></span>
+                            <span class="flex">
+                                <a class="text-sky-600 underline underline-offset-1 flex" href="{{ url }}"><span class="mt-auto mb-0.5">{{ page }}</span></a>
+                                <span class="mx-1 mt-auto mb-0.5">></span>
+                            </span>
                         {% endif %}
                     {% endfor %}
+                    <div class="ml-auto my-auto mt-2 flex">{% block actions %}{% endblock %}</div>
                 </ul>
             {% endblock %}
-        </div>
-        
-        <div class="container mx-auto px-2 _py-4 _mt-14 mb-1 flex">
-            <div class="_pl-2">{% block name %}{% endblock %}</div>
-            <div class="ml-auto my-auto flex">{% block actions %}{% endblock %}</div>
         </div>
         
         <div class="container mx-auto px-2 _pt-10 _mb-20 w-full _min-h-full _h-full flex-auto grow-1 shrink-0">
@@ -83,13 +82,13 @@
             <div class="container mx-auto px-1 flex flex-col">
                 {% block footer %}
                     <div class="text-center">
-                        <a class="underline" href="{{ url.search }}" title="Поискова система">Поиск</a> •
-                        <a class="underline" href="{{ url.message }}" title="Форум/Чат/Блог">Сообщения</a> •
-                        <a class="underline" href="{{ url.session }}" title="Текущая сессия">Сессия</span></a> •
-                        <a class="underline" href="{{ url.browser }}" title="Проверка браузера на совместимость">Browser</a> •
-                        <a class="underline" href="{{ url.api }}"title="">API</a> •
-                        <a class="underline" href="{{ url.admin }}" title="Панель управления">Admin`ка</a> •
-                        <a class="underline" href="{{ url.profile }}" title="Профиль пользователя">Профиль</a>
+                        <a class="underline underline-offset-1" href="{{ url.search }}" title="Поискова система">Поиск</a> •
+                        <a class="underline underline-offset-1" href="{{ url.message }}" title="Форум/Чат/Блог">Сообщения</a> •
+                        <a class="underline underline-offset-1" href="{{ url.session }}" title="Текущая сессия">Сессия</span></a> •
+                        <a class="underline underline-offset-1" href="{{ url.browser }}" title="Проверка браузера на совместимость">Browser</a> •
+                        <a class="underline underline-offset-1" href="{{ url.api }}"title="">API</a> •
+                        <a class="underline underline-offset-1" href="{{ url.admin }}" title="Панель управления">Admin`ка</a> •
+                        <a class="underline underline-offset-1" href="{{ url.profile }}" title="Профиль пользователя">Профиль</a>
                     </div>
                     <div class="text-center mt-1">{{ app.name }} &copy; v{{ app.version }} // {{ app.since}}-{{ now|before('-') }}</div>
                 {% endblock %}

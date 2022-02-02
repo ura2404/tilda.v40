@@ -8,6 +8,9 @@ class AdminModule extends CommonLogin {
     public function getData(){
         $Action = $this->checkAction();
         $Url = $this->checkUrl($Action);
+        $Module = $Url ? kernel\Ide\Module::i($Url) : null;
+        
+        //dump($Module->Json);
         
         return arrayMergeReplace(parent::getData(),[
             'url' => [
@@ -16,10 +19,16 @@ class AdminModule extends CommonLogin {
                 'remove' => CM_WHOME .'/admin/module/add'
             ],
             'module' => [
-                'url' => $Action === 'add' ? null : kernel\Ide\Module::i($Url)->Url
+                'url' => $Url,
+                'data' => $Url ? $Module->Json : null
             ],
-            'name' => $Action === 'add' ? 'Новый модуль' : 'Модуль '. kernel\Ide\Module::i($Url)->Url,
-            'blocks' => $this->getMyBlocks(),
+            'path' => [
+                'Home' => CM_WHOME,
+                'Admin`ка' => CM_WHOME .'/admin',
+                'Модули' => CM_WHOME .'/admin/modules',
+                $Url ? 'Модуль '.$Url : 'Новый модуль' => null,
+            ]
+
         ]);
     }
 
@@ -43,18 +52,5 @@ class AdminModule extends CommonLogin {
         //return web\Page::i()->Params;
     }
     
-    // --- --- --- --- ---
-    private function getMyBlocks(){
-        return array_map(function($url){
-            $Model = kernel\Ide\Module::i($url);
-            return [
-                'url' => CM_WHOME .'/admin/module/'. str_replace('/','',$Model->Code). '/view',
-                'code' => $Model->Code,
-                'name' => $Model->Name,
-                'info'=> $Model->Baloon,
-                'datamodels' => count($Model->Datamodels)
-            ];
-        },kernel\App::i()->Modules);
-    }
 }
 ?>

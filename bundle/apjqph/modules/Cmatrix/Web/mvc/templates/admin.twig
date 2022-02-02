@@ -7,8 +7,6 @@
 
 {% block title %}{{ parent() }} | Admin`ка{% endblock %}
 
-{% block logo2 %}</span><span class="text-2xl ml-2 text-green-700 my-auto">• Admin`ка</span>{% endblock %}
-
 {% block main %}
     {% if sysuser.code == 'guest' %}
         <div id="cm-need-login"></div>

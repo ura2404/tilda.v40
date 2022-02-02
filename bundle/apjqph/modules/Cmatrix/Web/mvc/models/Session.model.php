@@ -23,7 +23,12 @@ class Session extends CommonLogin {
         
         
         return arrayMergeReplace(parent::getData(),[
-            'data' => $Arr
+            'data' => $Arr,
+            'path' => [
+                'Home' => CM_WHOME,
+                'Текущая сессия' => CM_WHOME .'/session'
+            ]
+
         ]);
     }
 

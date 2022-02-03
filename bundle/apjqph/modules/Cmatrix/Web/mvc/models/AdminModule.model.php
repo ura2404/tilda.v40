@@ -18,6 +18,7 @@ class AdminModule extends CommonLogin {
                 'copy' => CM_WHOME .'/admin/module/add',
                 'remove' => CM_WHOME .'/admin/module/add'
             ],
+            'mode' => $Action,
             'module' => [
                 'url' => $Url,
                 'data' => $Url ? $Module->Json : null

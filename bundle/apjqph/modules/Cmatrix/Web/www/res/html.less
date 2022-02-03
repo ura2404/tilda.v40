@@ -26,11 +26,11 @@ html {
 .wi-noscroll { overflow: hidden; }
 .wi-x-noscroll { overflow-x: hidden; }
 .wi-y-noscroll { overflow-y: hidden; }
-.wi-hidden { display: none; }
-.wi-novisible { opacity: 0; }
+.wi-hidden { display: none !important; }
+.wi-novisible { opacity: 0 !important; width: 0 !important; height: 0 !important; }
 
 .wi-hover {
-    transition: .03s linear;
+    transition: .1s linear;
     
     &:hover {
         opacity: 0.5;
@@ -152,7 +152,7 @@ textarea {
     min-height : 5rem;
 }
 
-input[required="required"] {
+input[required="required"]:not([disabled="disabled"]),textarea[required="required"]:not([disabled="disabled"]) {
     background-color : #ffffde !important;
     
     &.wi-invalid {
@@ -160,6 +160,11 @@ input[required="required"] {
         background-color: #ffecec
     }
 }
+
+input[disabled="disabled"],textarea[disabled="disabled"] {
+    color: darkslategray;
+}
+
 
 /*input:invalid {
     outline: 2px solid red;

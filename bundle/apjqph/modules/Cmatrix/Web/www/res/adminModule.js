@@ -15,6 +15,13 @@ const onError = function(data){
     document.cm.formError.content(data.message).show();
 };
 
+// --- --- --- --- ---
+const onSubmit = function(url,data){
+    new Ajax({
+        url : url
+    },onSuccess,onError).commitJson(data);
+};
+
 
 // --- --- --- --- ---
 const tabs = new Tabs($('#cm-module-tabs'));

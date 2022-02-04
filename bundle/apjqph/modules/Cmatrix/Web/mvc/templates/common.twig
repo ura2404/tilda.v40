@@ -79,7 +79,7 @@
         </div>
         
         <footer class="_mx-auto mt-5 px-2 bg-neutral-500 text-white flex-auto grow-0 shrink-0">
-            <div class="container mx-auto px-1 flex flex-col">
+            <div class="container mx-auto px-1 py-3 flex flex-col">
                 {% block footer %}
                     <div class="text-center">
                         <a class="underline underline-offset-1" href="{{ url.search }}" title="Поискова система">Поиск</a> •
@@ -90,14 +90,14 @@
                         <a class="underline underline-offset-1" href="{{ url.admin }}" title="Панель управления">Admin`ка</a> •
                         <a class="underline underline-offset-1" href="{{ url.profile }}" title="Профиль пользователя">Профиль</a>
                     </div>
-                    <div class="text-center mt-1">{{ app.name }} &copy; v{{ app.version }} // {{ app.since}}-{{ now|before('-') }}</div>
+                    <div class="text-center mt-5">{{ app.name }} &copy; v{{ app.version }} // {{ app.since}}-{{ now|before('-') }}</div>
                 {% endblock %}
             </div>
         </footer>
         
         {% block popup %}
             <div class="wi-back wi-behind wi-noselect z-50 bg-gray-800 bg-opacity-50 flex flex-col">
-                <div id="cm-alert-success" class="relative my-auto bg-green-400 bg-opacity-90 flex flex-col p-4">
+                <div id="cm-alert-success" class="relative my-auto bg-green-400 bg-opacity-90 flex flex-col p-10" data-timeout="2000">
                     <div class="wi-content container mx-auto text-white text-center"></div>
                     {#<div class="mx-auto flex">
                         <button type="button" class="wi-a-close wi-hover focus:ring-4 focus:ring-red-400 focus:ring-opacity-50 rounded mx-auto mt-5 px-3 py-1.5 bg-red-400">Закрыть</button>
@@ -106,13 +106,26 @@
             </div>
                     
             <div class="wi-back wi-behind wi-noselect z-50 bg-gray-800 bg-opacity-50 flex flex-col">
-                <div id="cm-alert-error" class="relative my-auto bg-red-300 bg-opacity-95 flex flex-col p-4">
+                <div id="cm-alert-error" class="relative my-auto bg-red-300 bg-opacity-95 flex flex-col p-10">
                     <div class="wi-content container mx-auto text-white text-center"></div>
                     <div class="mx-auto flex">
                         <button type="button" class="wi-a-close wi-hover focus:ring-4 focus:ring-red-400 focus:ring-opacity-50 rounded mx-auto mt-5 px-3 py-1.5 bg-red-400">Закрыть</button>
                     </div>
                 </div>
             </div>
+            
+            <div class="wi-back wi-behind wi-noselect z-40 bg-gray-800 bg-opacity-50 flex">
+                <span>111</span>
+                <form>222</form>
+                <form id="cm-form-confirm" class="relative rounded mx-auto my-auto flex flex-col pt-10 pb-3 px-8 sm:px-12 bg-blue-400 bg-opacity-90">
+                    <span class="wi-content text-white text-center _font-bold _absolute w-52 sm:w-72 _top-0 -mt-4 text-xl"></span>
+                    <div class="flex mt-5 mb-2">
+                        <button type="button" class="wi-a-submit wi-hover rounded w-20 mx-auto px-3 py-1.5 text-white bg-blue-500">Да</button>
+                        <button type="button" class="wi-a-close wi-hover rounded w-20 mx-auto px-3 py-1.5 text-white bg-red-500">Нет</button>
+                    </div>
+                </form>
+            </div>
+            
         {% endblock %}
     </body>
 

@@ -34,8 +34,8 @@
 
 {% block popup %}
     <div class="wi-back wi-behind wi-noselect z-40 bg-gray-800 bg-opacity-50 flex">
-        <form id="cm-form-login" class="relative rounded w-10/12 sm:w-96 mx-auto my-auto flex flex-col pt-10 pb-3 px-8 sm:px-12 bg-blue-400 bg-opacity-90 shadow-2xl"
-            _data-timeout="3000"
+        <form id="cm-form-login" class="wi-form relative rounded w-10/12 sm:w-96 mx-auto my-auto flex flex-col pt-10 pb-3 px-8 sm:px-12 bg-blue-400 bg-opacity-90 shadow-2xl"
+            _data-timeout="10000"
             method="post" action="{{ url.post }}"
         >
             <span class="wi-a-close wi-hover absolute p-3 top-0 right-0 cursor-pointer"><i class="text-white fas fa-times"></i></span>
@@ -81,11 +81,12 @@
     </div>
         
     {{ parent() }}
+    
     <div class="wi-back wi-behind wi-noselect z-40 bg-gray-800 bg-opacity-50 flex">
         <span>qwewq</span>
         <form></form>
         <form id="cm-form-logout" class="relative rounded mx-auto my-auto flex flex-col pt-10 pb-3 px-8 sm:px-12 bg-blue-400 bg-opacity-90"
-            data-timeout="10000"
+            _data-timeout="10000"
             method="post" action="{{ url.post }}"
         >
             <input name="m" type="hidden" value="lo"/>

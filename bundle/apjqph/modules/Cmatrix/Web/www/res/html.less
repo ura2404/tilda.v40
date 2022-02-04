@@ -3,6 +3,11 @@ html {
     font-family: Arsenal, Arial !important;
 }
 
+html,header {
+    width: 100vw;
+    overflow-x: hidden;
+}
+
 ::-webkit-calendar-picker-indicator {
   cursor: pointer;
   border-radius: 4px;
@@ -134,43 +139,47 @@ body {
     100% { opacity: 1; }
 }
 
-
 //input:not([required="required"]) {
 //    background-color : #bbe6ff
 //}
 
-input,textarea {
-    //border: 1px solid lightgrey;
-    border: none !important;
-    outline: 1px solid lightgrey !important;
-    &:focus {
-        outline: 1px solid darkgrey !important;
+.wi-form {
+    input,textarea {
+        //border: 1px solid lightgrey;
+        border: none !important;
+        outline: 1px solid lightgrey !important;
+        &:focus {
+            outline: 1px solid darkgrey !important;
+        }
     }
-}
-
-textarea {
-    min-height : 5rem;
-}
-
-input[required="required"]:not([disabled="disabled"]),textarea[required="required"]:not([disabled="disabled"]) {
-    background-color : #ffffde !important;
     
-    &.wi-invalid {
-        outline: 2px solid red;
-        background-color: #ffecec
+    textarea {
+        min-height : 5rem;
     }
+    
+    input[required="required"]:not([disabled="disabled"]),
+    textarea[required="required"]:not([disabled="disabled"]) {
+        background-color : #ffffde !important;
+        
+        &.wi-invalid {
+            outline: 2px solid red;
+            background-color: #ffecec !important;
+        }
+    }
+    
+    input[disabled="disabled"],
+    textarea[disabled="disabled"] {
+        color: darkslategray;
+        background-color: #ededed;
+    }
+    
+    /*input:invalid {
+        outline: 2px solid red;
+    }*/
 }
-
-input[disabled="disabled"],textarea[disabled="disabled"] {
-    color: darkslategray;
-    background-color: #ededed;
-}
-
-
-/*input:invalid {
-    outline: 2px solid red;
-}*/
-
+/**
+ * wi-tabs
+ */
 .wi-tabs-item {
     &.wi-active {
         background-color: rgb(212,212,216);
@@ -186,6 +195,8 @@ input[disabled="disabled"],textarea[disabled="disabled"] {
         //display: none;
         opacity: 0;
         height: 0;
+        & > * {
+            display : none;
+        }
     }
 }
-

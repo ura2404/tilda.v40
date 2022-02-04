@@ -5,13 +5,14 @@ import Ajax from '../vendor/wi.cmatrix.ru/Ajax.class.js';
 
 // --- --- --- --- ---
 const onSuccess = function(data){
-    //document.cm.formSuccess.content(data.message).show();
-    window.location.reload();
+    document.cm.winLogin.hide(true);
+    document.cm.winLogout.hide();
+    document.cm.winSuccess.content(data.message).show();
 };
 
 // --- --- --- --- ---
 const onError = function(data){
-    document.cm.formError.content(data.message).show();
+    document.cm.winError.content(data.message).show();
 };
 
 // --- --- --- --- ---
@@ -22,25 +23,40 @@ const onSubmit = function(url,data){
 };
 
 // --- --- --- --- ---
-document.cm.formSuccess = new Window($('#cm-alert-success'));
-document.cm.formSuccess.Timeout = 2000;
-
-document.cm.formError = new Window($('#cm-alert-error'));
-document.cm.formError.onShow = function(win){
-    win.$CloseButton.focus();
-};
-document.cm.formError.onHide = function(win){
-    setTimeout(() => document.cm.formLogin.focus(),100);    // для устранеия дребезга
+document.cm.winSuccess = new Window($('#cm-alert-success'));
+//document.cm.winSuccess.Timeout = 2000;
+document.cm.winSuccess.onHide = function(win){
+    window.location.reload();
 };
 
+// --- --- --- --- ---
+document.cm.winError = new Window($('#cm-alert-error'));
+document.cm.winError.onShow = win => win.$CloseButton.focus();
+document.cm.winError.onHide = win => setTimeout(() => document.cm.formLogin.focus(),100);    // для устранеия дребезга
+
+// --- --- --- --- ---
 document.cm.formLogin = new Form($('#cm-form-login'),onSubmit);
 document.cm.formLogout = new Form($('#cm-form-logout'),onSubmit);
-document.cm.menuSession = new Menu($('#cm-menu-session'),{
-    '.cm-a-logout' : e => document.cm.formLogout.show()
-});
 
-// 2. click по иконке пользователя
+// --- --- --- --- ---
+document.cm.winLogin = new Window($('#cm-form-login'));
+document.cm.winLogin.onShow = win => document.cm.formLogin.on();
+document.cm.winLogin.onHide = win => document.cm.formLogin.off();
+
+// --- --- --- --- ---
+document.cm.winLogout = new Window($('#cm-form-logout'));
+
+// --- --- --- --- ---
+document.cm.winSession = new Window($('#cm-menu-session'));
+
+// --- --- --- --- ---
+document.cm.menuSession = new Menu($('#cm-menu-session'),{
+    '.cm-a-logout' : e => document.cm.winLogout.show()
+});
+document.cm.menuSession.onClick = () => document.cm.winSession.hide();
+
+// --- click по иконке пользователя
 $('#cm-user').on('click',function(){
-    if($(this).attr('target') === 'login')document.cm.formLogin.show();
-    else document.cm.menuSession.show();
+    if($(this).attr('target') === 'login') document.cm.winLogin.show();
+    else document.cm.winSession.show();
 });

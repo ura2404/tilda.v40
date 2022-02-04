@@ -21,16 +21,13 @@ export default class Window extends Common {
         this.$Back = this.$Tag.closest('.wi-back');
         this.$CloseButton = this.$Tag.find('.wi-a-close');
         
-        this.Timeout = 0;
+        this.Timeout = this.$Tag.data('timeout') || 0;
         this.isHidable = true;
         
         this.onShow = undefined;
         this.onHide = undefined;
         
         // --- init --- --- --- ---
-        const Timeout = this.$Tag.data('timeout');
-        if(Timeout) this.Timeout = Timeout;
-        
         this.$CloseButton.on('click',() => setTimeout(() => this.hide(),100));
     }
     
@@ -73,12 +70,12 @@ export default class Window extends Common {
     }    
     
     // --- --- --- --- ---
-    hide(){
+    hide(force){
         //console.log('windows.hide()');
         const Instance = this;
         
         // если форма не закрывемая, не закрывать
-        if(this.isHidable === false) return this;
+        if(!force && this.isHidable === false) return this;
         
         clearTimeout(this.Timer);
         

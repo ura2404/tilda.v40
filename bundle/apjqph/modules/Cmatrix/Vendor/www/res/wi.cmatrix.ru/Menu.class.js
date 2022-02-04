@@ -4,35 +4,23 @@
 
 import Window from './Window.class.js';
 
-export default class Menu extends Window {
+export default class Menu{
     
     // --- --- --- --- ---
     constructor($tag,onClicks){
-        super($tag);
-        
         const Instance = this;
+        this.$Tag = $tag;
+        this.onClick = function(e){};
         
         onClicks = onClicks || {};
         
+        // --- init
         Object.keys(onClicks).forEach(function(key){
-            Instance.$Tag.find(key).on('click',e => this[key].call(e.target));
+            Instance.$Tag.find(key).on('click',e => {
+                this[key].call(e.target);
+                Instance.onClick(e);
+            });
         },onClicks);
     }
-    
-    // --- --- --- --- ---
-    init(){
-        const Instance = this;
-        
-        /*this.$Tag.find('li').on('click', e => {
-            console.log('click',e);
-            e.stopPropagation();
-        });*/
-        
-        Object.keys(this.onClicks).forEach(function(key){
-            Instance.$Tag.find(key).on('click',e => this[key].call(e.target));
-        },this.onClicks);
-        
-        return this;
-    }
-    
+
 }

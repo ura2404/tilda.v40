@@ -30,6 +30,9 @@ export default class Tabs {
     }
     
     // --- --- --- --- ---
+    /**
+     * Активация табы
+     */
     active(e,$tag){
         const OldDest = this.$Active.data('tag');
         const NewDest = $tag.data('tag');

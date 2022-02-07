@@ -12,6 +12,7 @@ export default class Form {
     // --- --- --- --- ---
     constructor($tag,onSubmit){
         const Instance = this;
+        
         this.$Tag = $tag;
         this.Url = undefined;
         this.onSubmit = onSubmit || function(url,data){};

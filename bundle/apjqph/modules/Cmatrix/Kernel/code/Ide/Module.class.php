@@ -16,6 +16,12 @@ class Module {
     
     private $P_Path;
     private $P_Json;
+    
+    private $Props = [
+        'code','name','prefix','baloon',
+        'author','url','since',
+        'major','minor','build','info'
+    ];
 
     // --- --- --- --- --- --- ---
     public function __construct($url){
@@ -28,10 +34,11 @@ class Module {
             case 'Url' : return $this->Url;
             case 'Path' : return $this->getMyPath();
             case 'Json' : return $this->getMyJson();
-            case 'Code' : return $this->Json['module']['code'];
-            case 'Name' : return $this->Json['module']['name'];
-            case 'Baloon' : return kernel\Lang::i()->str($this->Json['module']['baloon']);
+            case 'Code' : return $this->Json->Data['module']['code'];
+            case 'Name' : return $this->Json->Data['module']['name'];
+            case 'Baloon' : return kernel\Lang::i()->str($this->Json->Data['module']['baloon']);
             case 'Datamodels' : return $this->getMyDatamodels();
+            case 'isExists' : return $this->getMyIsExists();
             //case 'Data' : return $this->getMyData();
             default : throw new ex\Property($this,$name);
         }
@@ -51,7 +58,7 @@ class Module {
         if($this->P_Path) return $this->P_Path;
         
         $Path = CM_ROOT. '/modules' .$this->Url;
-        if(!file_exists($Path)) throw new ex('Module "'. $this->Url .'" is not found.');
+        //if(!file_exists($Path)) throw new ex('Module "'. $this->Url .'" is not found.'); // убрал для возможности создания
         return $this->P_Path = $Path;
     }
     
@@ -61,7 +68,7 @@ class Module {
         $Path = $this->Path.'/module.conf.json';
         if(!file_exists($Path)) throw new ex('Module "'. $this->Url .'" config file is not found.');
         
-        return $this->P_Json = kernel\Json::getFile($Path)->Data;
+        return $this->P_Json = kernel\Json::getFile($Path);
     }
     
     // --- --- --- --- ---
@@ -77,6 +84,11 @@ class Module {
     }
     
     // --- --- --- --- ---
+    private function getMyIsExists(){
+        return file_exists($this->Path);
+    }
+    
+    // --- --- --- --- ---
     // --- --- --- --- ---
     // --- --- --- --- ---
     static function instance($url){
@@ -88,6 +100,36 @@ class Module {
     // --- --- --- --- ---
     static function i($url){
         return self::instance($url);
+    }
+
+    // --- --- --- --- ---
+    static function update($url,$data){
+        $Module = new self($url);
+        $Data = arrayMergeReplace(
+            array_map(function($value){ return null; },array_flip($Module->Props)),
+            array_intersect_key(array_map(function($value){ return $value ? $value : null; },$data),array_flip($Module->Props))
+        );
+        if(is_array($Data['baloon'])){
+            $Arr = [];
+            $Value = $Data['baloon'];
+            for($i=0; $i<=count($Value)/2; $i=$i+2) $Arr[$Value[$i]] = $Value[$i+1];
+            $Data['baloon'] = $Arr;
+        }
+
+        if($Module->isExists){
+            $Json = $Module->Json;
+            $NewData = $Json->Data;
+            $NewData['module'] = $Data;
+            $Json->setData($NewData);
+        }
+        else{
+            $Json = kernel\Json::create(['module' => $Data, 'dependences' => []]);
+            $Umask = umask(0000);
+            mkdir($Module->Path,0770,true);
+            umask($Umask);
+            
+        }
+        $Json->putFile($Module->Path.'/module.conf.json');
     }
     
 }

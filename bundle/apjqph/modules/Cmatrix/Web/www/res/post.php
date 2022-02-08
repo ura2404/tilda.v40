@@ -8,16 +8,24 @@ require_once('../common.php');
 $Data = \Cmatrix\Web\Request::get()->Array;
 
 // --- --- --- --- ---
-$Messgae;
+$Message = null;
 try{
     switch($Data['m']){
-        case 'li' : \Cmatrix\Core\Session::instance()->login($Data['u'],$Data['p']);
-                    $Message = 'Вы успешно зарегистрированы.';
-                    break;
+        case 'li' :
+            \Cmatrix\Core\Session::instance()->login($Data['u'],$Data['p']);
+            $Message = 'Вы успешно зарегистрированы.';
+            break;
                     
-        case 'lo' : \Cmatrix\Core\Session::instance()->logout();
-                    $Message = 'Ваш сеанс успешно завершён.';
-                    break;
+        case 'lo' :
+            \Cmatrix\Core\Session::instance()->logout();
+            $Message = 'Ваш сеанс успешно завершён.';
+            break;
+                    
+        case 'module' :
+            \Cmatrix\Kernel\Ide\Module::update($Data['code'],$Data);
+            break;
+            
+            
                     
         default : throw new \Exception('Bad mode "' .$Data['m']. '"');
     }

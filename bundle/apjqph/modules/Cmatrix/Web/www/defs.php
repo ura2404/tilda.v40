@@ -1,6 +1,6 @@
 <?php
 define('CM_TOP',realpath(dirname(__FILE__).'/../../../../../..'));
-define('CM_ROOT',realpath(dirname(__FILE__)).'/../../../..');
+define('CM_ROOT',realpath(dirname(__FILE__).'/../../../..'));
 
 define('CM_MODE',PHP_SAPI === 'cli' ? 'development' :(isset($_SERVER['CM_MODE']) ? $_SERVER['CM_MODE'] : null));
 //define('CM_MODE','production');

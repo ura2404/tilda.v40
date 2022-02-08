@@ -21,7 +21,7 @@ class AdminModule extends CommonLogin {
             'mode' => $Action,
             'module' => [
                 'url' => $Url,
-                'data' => $Url ? $Module->Json : null
+                'data' => $Url ? $Module->Json->Data : null
             ],
             'path' => [
                 'Home' => CM_WHOME,

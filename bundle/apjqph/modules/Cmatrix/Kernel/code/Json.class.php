@@ -34,6 +34,12 @@ class Json {
     }
 
     // --- --- --- --- ---
+    public function setData($data){
+        $this->Data = $data;
+        return $this;
+    }
+    
+    // --- --- --- --- ---
     // --- --- --- --- ---
     // --- --- --- --- ---
     /**
@@ -47,6 +53,10 @@ class Json {
         );
     }
     
+    // --- --- --- --- ---
+    public function putFile($path){
+        file_put_contents($path,$this->encode());
+    }
     
     // --- --- --- --- ---
     /**

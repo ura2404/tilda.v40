@@ -50,11 +50,11 @@ spl_autoload_register(function($className){
     }
     elseif($Arr[0] === 'Dm'){
         array_shift($Arr);
-        $Path = $Folder .'/dm/'. implode('/',$Arr) .'.dm.php';
+        $Path = realpath($Folder .'/dm/'. implode('/',$Arr) .'.dm.php');
     }
     elseif($Arr[0] === 'Ds'){
         array_shift($Arr);
-        $Path = $Folder .'/dm/'. implode('/',$Arr) .'.ds.php';
+        $Path = $Folder .'/ds/'. implode('/',$Arr) .'.ds.php';
     }
     else{
         $Path = $Folder .'/code/'. implode('/',$Arr) .'.class.php';

@@ -7,12 +7,12 @@ import Ajax from '../vendor/wi.cmatrix.ru/Ajax.class.js';
 const onSuccess = function(data){
     document.cm.winLogin.hide(true);
     document.cm.winLogout.hide();
-    document.cm.winSuccess.content(data.message).show();
+    winSuccess.content(data.message).show();
 };
 
 // --- --- --- --- ---
 const onError = function(data){
-    document.cm.winError.content(data.message).show();
+    winError.content(data.message).show();
 };
 
 // --- --- --- --- ---
@@ -23,16 +23,16 @@ const onSubmit = function(url,data){
 };
 
 // --- --- --- --- ---
-document.cm.winSuccess = new Window($('#cm-alert-success'));
-//document.cm.winSuccess.Timeout = 2000;
-document.cm.winSuccess.onHide = function(win){
+const winSuccess = new Window($('#cm-alert-success'));
+winSuccess.Timeout = 2000;
+winSuccess.onHide = function(win){
     window.location.reload();
 };
 
 // --- --- --- --- ---
-document.cm.winError = new Window($('#cm-alert-error'));
-document.cm.winError.onShow = win => win.$CloseButton.focus();
-document.cm.winError.onHide = win => setTimeout(() => document.cm.formLogin.focus(),100);    // для устранеия дребезга
+const winError = new Window($('#cm-alert-error'));
+winError.onShow = win => win.$CloseButton.focus();
+winError.onHide = win => setTimeout(() => document.cm.formLogin.focus(),100);    // для устранеия дребезга
 
 // --- --- --- --- ---
 document.cm.formLogin = new Form($('#cm-form-login'),onSubmit);
@@ -47,7 +47,7 @@ document.cm.winLogin.onHide = win => document.cm.formLogin.off();
 document.cm.winLogout = new Window($('#cm-form-logout'));
 
 // --- --- --- --- ---
-document.cm.winSession = new Window($('#cm-menu-session'));
+const winSession = new Window($('#cm-menu-session'));
 
 // --- --- --- --- ---
 document.cm.menuSession = new Menu($('#cm-menu-session'),{
@@ -58,5 +58,5 @@ document.cm.menuSession.onClick = () => document.cm.winSession.hide();
 // --- click по иконке пользователя
 $('#cm-user').on('click',function(){
     if($(this).attr('target') === 'login') document.cm.winLogin.show();
-    else document.cm.winSession.show();
+    else winSession.show();
 });

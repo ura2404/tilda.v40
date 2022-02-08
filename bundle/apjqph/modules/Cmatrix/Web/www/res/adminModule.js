@@ -5,7 +5,6 @@ import Form from '../vendor/wi.cmatrix.ru/Form.class.js';
 
 if($('#cm-need-login').length) document.cm.winLogin.show(false);
 
-
 class Module {
     
     // --- --- --- --- ---
@@ -16,53 +15,25 @@ class Module {
         this.$FormInfo = $('#cm-form-info');
         this.$FormConfirm = $('#cm-form-confirm');
         this.$ButtonEdit = $('#cm-button-module-edit').on('click',() => this.enableEdit());
-        this.$ButtonSave = $('#cm-button-module-save').on('click',() => { this.disableEdit(); this.winConfirm.show(); });
-        this.$ButtonAddLang = this.$FormInfo.find('.cm-lang-add').on('click',() => this.addLang());
+        this.$ButtonSave = $('#cm-button-module-save').on('click',() => this.save());
+        this.$ButtonAddLang = this.$FormInfo.find('.cm-lang-add').on('click',function(){ Instance.addLang(this) });
         this.$ButtonRemoveLang = this.$FormInfo.find('.cm-lang-remove').on('click',function(){ Instance.removeLang(this) });
         
         this.tabs = new Tabs(this.$Tag);
-        this.formInfo = new Form(this.$FormInfo,() => this.submit);
+        this.formInfo = new Form(this.$FormInfo);
         
         this.winConfirm = new Window(this.$FormConfirm);
         this.winConfirm.content('Сохранить изменения?');
         
-        this.formConfirm = new Form(this.$FormConfirm,() => this.submit);
-    }
-    
-    
-    
-    /*
-    $('#cm-module-info')
-    .find('.cm-lang-remove').on('click',function(e){
-        if($(this).closest('form').attr('disabled') === 'disabled') return;
+        this.formConfirm = new Form(this.$FormConfirm,(url,data) => this.submit(url,data));
         
-        const $Button = $(this);
-        const $Baloon = $Button.prev();
-        const $Lang = $Baloon.prev();
+        this.winSuccess = new Window($('#cm-alert-success'));
+        this.winSuccess.onHide = function(win){
+            history.back();
+        };
         
-        $Button.remove();
-        $Baloon.remove();
-        $Lang.remove();
-    }).end()
-    .find('.cm-lang-add').on('click',function(e){
-        if($(this).closest('form').attr('disabled') === 'disabled') return;
-        
-        const $Parent = $(this).parent();
-        
-        const $Button = $Parent.find('button:not(.wi-hidden)').last();
-        const $Baloon = $Button.prev();
-        const $Lang = $Baloon.prev();
-        
-        // если есть поля ввода языка и они не заполненные поля, то игнор
-        if(($Baloon.find('input').length && $Lang.find('input').length) && (!$Baloon.find('input').val() || !$Lang.find('input').val())) return;
-        
-        $Parent.find('.wi-hidden').clone(true).removeClass('wi-hidden').appendTo($Parent);
-    });
-    */
-    
-    // --- --- --- --- ---
-    submit(){
-        alert(1);
+        this.winError = new Window($('#cm-alert-error'));
+
     }
     
     // --- --- --- --- ---
@@ -78,84 +49,13 @@ class Module {
     }
     
     // --- --- --- --- ---
-    addLang(){
-        if(this.$FormInfo.attr('disabled') === 'disabled') return;
-    }
-    
-    // --- --- --- --- ---
-    removeLang(button){
+    /**
+     * Реакция на кнопку "Добавить язык"
+     */
+    addLang(button){
         if(this.$FormInfo.attr('disabled') === 'disabled') return;
         
-        $(button).prevUntil('buttom','div').eq(1).remove().end().eq(2).remove();
-        
-    }
-    
-}
-
-// --- --- --- --- ---
-new Module();
-
-
-
-
-/*
-
-// --- --- --- --- ---
-const onSuccess = function(data){
-    //document.cm.formSuccess.content(data.message).show();
-    //window.location.reload();
-};
-
-// --- --- --- --- ---
-const onError = function(data){
-    document.cm.formError.content(data.message).show();
-};
-
-// --- --- --- --- ---
-const onSubmit = function(url,data){
-    alert(123);
-    new Ajax({
-        url : url
-    },onSuccess,onError).commitJson(data);
-};
-
-// --- --- --- --- ---
-const tabs = new Tabs($('#cm-module-tabs'));
-const formInfo = new Form($('#cm-form-module-info'),onSubmit);
-
-const winConfirm = new Window($('#cm-form-confirm'));
-winConfirm.content('Сохранить изменения?');
-
-const formConfirm = new Form($('#cm-form-confirm'),onSubmit);
-
-const enableEdit = function(){
-    $('#cm-form-module-info').removeAttr('disabled').find('input,textarea').removeAttr('disabled');
-    $(this).addClass('wi-hidden').next().removeClass('wi-hidden');
-};
-
-const disableEdit = function(){
-    $('#cm-form-module-info').attr('disabled','disabled').find('input,textarea').attr('disabled','disabled');
-    $(this).addClass('wi-hidden').prev().removeClass('wi-hidden');
-};
-
-// --- --- --- --- ---
-$(document).ready(function(){
-    $('#cm-module-info')
-    .find('.cm-lang-remove').on('click',function(e){
-        if($(this).closest('form').attr('disabled') === 'disabled') return;
-        
-        const $Button = $(this);
-        const $Baloon = $Button.prev();
-        const $Lang = $Baloon.prev();
-        
-        $Button.remove();
-        $Baloon.remove();
-        $Lang.remove();
-    }).end()
-    .find('.cm-lang-add').on('click',function(e){
-        if($(this).closest('form').attr('disabled') === 'disabled') return;
-        
-        const $Parent = $(this).parent();
+        const $Parent = $(button).parent();
         
         const $Button = $Parent.find('button:not(.wi-hidden)').last();
         const $Baloon = $Button.prev();
@@ -164,16 +64,64 @@ $(document).ready(function(){
         // если есть поля ввода языка и они не заполненные поля, то игнор
         if(($Baloon.find('input').length && $Lang.find('input').length) && (!$Baloon.find('input').val() || !$Lang.find('input').val())) return;
         
-        $Parent.find('.wi-hidden').clone(true).removeClass('wi-hidden').appendTo($Parent);
-    });
+        $Parent.find('.wi-hidden').clone(true).removeClass('wi-hidden').each((index,element) => {
+            const $Input = $(element).children('input');
+            $Input.attr('name',$Input.data('name'));
+        }).appendTo($Parent);
+    }
     
-    $('#cm-module-edit').on('click',function(){
-        enableEdit.call(this);
-    });
+    // --- --- --- --- ---
+    /**
+     * Реакция на кнопку "Удалить язык"
+     */
+    removeLang(button){
+        if(this.$FormInfo.attr('disabled') === 'disabled') return;
+        
+        const $Button = $(button);
+        const $Baloon = $Button.prev();
+        const $Lang = $Baloon.prev();
+        
+        $Button.remove();
+        $Baloon.remove();
+        $Lang.remove();
+    }
     
-    $('#cm-module-save').on('click',function(){
-        disableEdit.call(this);
-        winConfirm.show();
-    });
-});
-*/
+    // --- --- --- --- ---
+    /**
+     * Реакция на кнопку "Сохранить"
+     */
+    save(){
+        if(!this.formInfo.isRequired()) return;
+        this.winConfirm.show();
+        
+        
+        //this.disableEdit(); 
+        //this.winConfirm.show();
+    }
+    
+    // --- --- --- --- ---
+    submitSuccess(data){
+        this.winConfirm.hide();
+        //history.back();
+        window.location.href = document.referrer;
+        //this.winSuccess.content(data.message).show();
+    }
+        
+    // --- --- --- --- ---
+    submitError(data){
+        this.winError.content(data.message).show();
+    }
+    
+    // --- --- --- --- ---
+    submit(url,data){
+        const Data = this.formInfo.data();
+        
+        new Ajax({
+            url : url
+        },data => this.submitSuccess(data),data => this.submitError(data)).commitJson(Data);
+    }
+    
+}
+
+// --- --- --- --- ---
+new Module();

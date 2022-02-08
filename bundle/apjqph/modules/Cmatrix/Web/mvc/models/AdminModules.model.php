@@ -28,7 +28,7 @@ class AdminModules extends CommonLogin {
                 'url' => CM_WHOME .'/admin/module/'. str_replace('/','_',ltrim($Model->Code,'/')). '/view',
                 'code' => $Model->Code,
                 'name' => $Model->Name,
-                'info'=> $Model->Baloon,
+                'baloon'=> $Model->Baloon,
                 'datamodels' => count($Model->Datamodels)
             ];
         },kernel\App::i()->Modules);

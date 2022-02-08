@@ -72,10 +72,26 @@ export default class Form {
             if(!$(element).hasAttr('required')) return;
             
             $(element).removeClass('wi-invalid').next().text('');
-            if(! element.validity.valid) $(element).addClass('wi-invalid').next().text(element.validationMessage);
+            if(!element.validity.valid) $(element).addClass('wi-invalid').next().text(element.validationMessage);
             
             return element.validity.valid;
         }).get().every((current,index,array) => !!current);
+    }
+    
+    // --- --- --- --- ---
+    data(){
+        return this.$Tag.serializeArray();
+        
+        /*
+        let Data = {};
+        //this.$Tag.find(':input').filter((index, element) =>$(element).is('input')).map((index, element) => {
+        this.$Tag.find('input,textarea,select').map((index, element) => {
+            const Name = $(element).attr('name');
+            Data[Name] = $(element).attr('type') === 'password' ? $.md5($(element).val()) : $(element).val();
+        });
+        
+        return Data;
+        */
     }
     
     // --- --- --- --- ---

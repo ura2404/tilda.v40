@@ -38,7 +38,7 @@ html,header {
     transition: .1s linear;
     
     &:hover {
-        opacity: 0.5;
+        bg-opacity: 0.5;
     }
 }
 
@@ -157,18 +157,21 @@ body {
         min-height : 5rem;
     }
     
-    input[required="required"]:not([disabled="disabled"]),
-    textarea[required="required"]:not([disabled="disabled"]) {
-        background-color : #ffffde !important;
+    input:not([disabled="disabled"]),
+    textarea:not([disabled="disabled"]),
+    select:not([disabled="disabled"]), {
+        //background-color : #ffffde !important;
         
-        &.wi-invalid {
-            outline: 2px solid red;
+        //&.wi-invalid {
+        &:invalid {
+            outline: 1px solid #ffd4d4 !important;
             background-color: #ffecec !important;
         }
     }
     
     input[disabled="disabled"],
-    textarea[disabled="disabled"] {
+    textarea[disabled="disabled"],
+    select[disabled="disabled"] {
         color: darkslategray;
         background-color: #ededed;
     }
@@ -177,12 +180,13 @@ body {
         outline: 2px solid red;
     }*/
 }
-/**
- * wi-tabs
- */
+
+/** --------------------------------------------------- */
+/** * wi-tabs  */
 .wi-tabs-item {
     &.wi-active {
-        background-color: rgb(212,212,216);
+        //background-color: rgb(212,212,216);
+        border-bottom: 2px solid;
     }
 }
 

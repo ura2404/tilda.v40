@@ -20,16 +20,19 @@
     {% if sysuser.code == 'guest' %}
         <div id="cm-need-login"></div>
     {% else %}
-        <div class="container mx-auto flex flex-wrap">
+        <div class="container mx-auto flex flex-wrap gap-4 justify-center">
             {% for b in blocks %}
-                <a class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex _m-2 flex-col border-2 border-white hover:border-2 hover:border-blue-400 " href="{{ b.url }}">
-                    <span class="text-center font-bold bg-gray-400 p-2 text-white">{{ b.name }}</span>
+                <div class="_md:mx-2 _mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex _m-2 flex-col _border-2 _border-white _hover:border-2 _hover:border-blue-400 ">
+                    <div class="bg-gray-400 h-10 flex">
+                        <span class="m-auto text-center text-white text-lg font-bold">{{ b.code }}</span><span class="my-auto mr-2 text-sm text-white">v{{ b.version }}</span>
+                        <a class="wi-hover w-10 bg-cyan-300 text-white active:opacity-70 flex"  href="{{ b.url }}" title="Изменить"><i class="m-auto fas fa-ellipsis-v"></i></a>
+                    </div>
                     <div class="grid grid-cols-2 px-2">
                         <div class="col-span-2 h-10 _py-3 _text-center text-gray-700 flex"><span class="m-auto">{{ b.baloon }}</span></div>
-                        <div>Datamodels</div>
-                        <div class="text-gray-700">{{ b.datamodels }}</div>
+                        <div class="h-8 flex"><span class="mt-auto">Datamodels</span></div>
+                        <div class="h-8 {% if b.datamodels%}text-2xl{% else %}text-gray-500{% endif %} flex"><span class="mt-auto">{{ b.datamodels }}</span></div>
                     </div>
-                </a>
+                </div>
             {% endfor %}
         </div>
     {% endif %}

@@ -64,7 +64,7 @@ class Datamodel implements iDatamodel{
     
     // --- --- --- --- ---
     protected function getMyParent(){
-        $ParentUrl = $this->Json['parent'];
+        $ParentUrl = $this->Json->Data['parent'];
         return $ParentUrl ? self::instance($ParentUrl) : null;
     }
 
@@ -86,7 +86,7 @@ class Datamodel implements iDatamodel{
     // --- --- --- --- ---
     protected function getMyJson(){
         if($this->P_Json !== null) return $this->P_Json;
-        return $this->P_Json = kernel\Json::getFile($this->Path)->Data;
+        return $this->P_Json = kernel\Json::getFile($this->Path);//->Data;
     }
     
     // --- --- --- --- ---
@@ -102,7 +102,7 @@ class Datamodel implements iDatamodel{
         $Props = array_map(function($prop){
             if($prop['code'] !== 'systype') $prop['own'] = true;
             return $prop;
-        },$this->Json['props']);
+        },$this->Json->Data['props']);
         
         return $this->P_Props = arrayMergeReplace($ParentProps,$Props);
     }

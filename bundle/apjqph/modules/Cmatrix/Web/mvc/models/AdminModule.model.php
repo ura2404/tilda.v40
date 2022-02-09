@@ -21,7 +21,8 @@ class AdminModule extends CommonLogin {
             'mode' => $Action,
             'module' => [
                 'url' => $Url,
-                'data' => $Url ? $Module->Json->Data : null
+                'info' => $Url ? $Module->Json->Data : null,
+                'datamodels' => $this->getMyDatamodels($Module)
             ],
             'path' => [
                 'Home' => CM_WHOME,
@@ -46,11 +47,20 @@ class AdminModule extends CommonLogin {
     }
 
     // --- --- --- --- ---
+    /*
     private function getMyTitle(){
-        
         dump(web\Page::i()->Page);
         dump(web\Page::i()->Params);
         //return web\Page::i()->Params;
+    }
+    */
+    
+    // --- --- --- --- ---
+    private function getMyDatamodels($module){
+        if(!$module) return [];
+        return array_map(function($datamodel){
+            return kernel\Ide\Datamodel::i($datamodel)->Json->Data;
+        },$module->Datamodels);
     }
     
 }

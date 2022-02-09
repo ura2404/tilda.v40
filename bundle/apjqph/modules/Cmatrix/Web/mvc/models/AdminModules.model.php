@@ -29,6 +29,7 @@ class AdminModules extends CommonLogin {
                 'code' => $Model->Code,
                 'name' => $Model->Name,
                 'baloon'=> $Model->Baloon,
+                'version' => $Model->Version,
                 'datamodels' => count($Model->Datamodels)
             ];
         },kernel\App::i()->Modules);

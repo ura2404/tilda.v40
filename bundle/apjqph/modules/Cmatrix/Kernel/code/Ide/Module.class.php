@@ -37,6 +37,7 @@ class Module {
             case 'Code' : return $this->Json->Data['module']['code'];
             case 'Name' : return $this->Json->Data['module']['name'];
             case 'Baloon' : return kernel\Lang::i()->str($this->Json->Data['module']['baloon']);
+            case 'Version' : return $this->Json->Data['module']['major'] .'.'. $this->Json->Data['module']['minor'] .'.'. $this->Json->Data['module']['build'];
             case 'Datamodels' : return $this->getMyDatamodels();
             case 'isExists' : return $this->getMyIsExists();
             //case 'Data' : return $this->getMyData();
@@ -107,7 +108,7 @@ class Module {
         $Module = new self($url);
         $Data = arrayMergeReplace(
             array_map(function($value){ return null; },array_flip($Module->Props)),
-            array_intersect_key(array_map(function($value){ return $value ? $value : null; },$data),array_flip($Module->Props))
+            array_intersect_key(array_map(function($value){ return $value!=='' ? $value : null; },$data),array_flip($Module->Props))
         );
         if(is_array($Data['baloon'])){
             $Arr = [];
@@ -115,12 +116,15 @@ class Module {
             for($i=0; $i<=count($Value)/2; $i=$i+2) $Arr[$Value[$i]] = $Value[$i+1];
             $Data['baloon'] = $Arr;
         }
-
+            
+        $FilePath = $Module->Path.'/module.conf.json';
         if($Module->isExists){
             $Json = $Module->Json;
             $NewData = $Json->Data;
             $NewData['module'] = $Data;
             $Json->setData($NewData);
+            copy($FilePath,$FilePath.'.backup');
+            chmod($FilePath.'.backup',0660);
         }
         else{
             $Json = kernel\Json::create(['module' => $Data, 'dependences' => []]);
@@ -129,7 +133,8 @@ class Module {
             umask($Umask);
             
         }
-        $Json->putFile($Module->Path.'/module.conf.json');
+        $Json->putFile($FilePath);
+        chmod($FilePath,0660);
     }
     
 }

@@ -55,7 +55,10 @@ class Json {
     
     // --- --- --- --- ---
     public function putFile($path){
+        $Umask = umask(0000);
         file_put_contents($path,$this->encode());
+        chmod($path,0770);
+        umask($Umask);
     }
     
     // --- --- --- --- ---

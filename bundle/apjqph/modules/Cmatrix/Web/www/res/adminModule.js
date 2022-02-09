@@ -18,6 +18,11 @@ class Module {
         this.$ButtonSave = $('#cm-button-module-save').on('click',() => this.save());
         this.$ButtonAddLang = this.$FormInfo.find('.cm-lang-add').on('click',function(){ Instance.addLang(this) });
         this.$ButtonRemoveLang = this.$FormInfo.find('.cm-lang-remove').on('click',function(){ Instance.removeLang(this) });
+        this.$ButtonBack = $('#cm-button-back').on('click',() => {
+            console.log(this.Mode);
+            if(this.Mode === 'view') history.back();
+            else this.disableEdit();
+        });
         
         this.tabs = new Tabs(this.$Tag);
         this.formInfo = new Form(this.$FormInfo);
@@ -27,23 +32,27 @@ class Module {
         
         this.formConfirm = new Form(this.$FormConfirm,(url,data) => this.submit(url,data));
         
-        this.winSuccess = new Window($('#cm-alert-success'));
-        this.winSuccess.onHide = function(win){
-            history.back();
-        };
+        //this.winSuccess = new Window($('#cm-alert-success'));
+        //this.winSuccess.onHide = function(win){
+        //    window.location.href = document.referrer;
+        //};
         
         this.winError = new Window($('#cm-alert-error'));
+        
+        this.Mode = this.$Tag.data('mode');
 
     }
     
     // --- --- --- --- ---
     enableEdit(){
+        this.Mode = 'edit';
         this.$FormInfo.removeAttr('disabled').find('input,textarea').removeAttr('disabled');
         this.$ButtonEdit.addClass('wi-hidden').next().removeClass('wi-hidden');
     }
 
     // --- --- --- --- ---
     disableEdit(){
+        this.Mode = 'view';
         this.$FormInfo.attr('disabled','disabled').find('input,textarea').attr('disabled','disabled');
         this.$ButtonSave.addClass('wi-hidden').prev().removeClass('wi-hidden');
     }
@@ -102,9 +111,10 @@ class Module {
     // --- --- --- --- ---
     submitSuccess(data){
         this.winConfirm.hide();
+        //this.winSuccess.content(data.message).show();
+        
         //history.back();
         window.location.href = document.referrer;
-        //this.winSuccess.content(data.message).show();
     }
         
     // --- --- --- --- ---

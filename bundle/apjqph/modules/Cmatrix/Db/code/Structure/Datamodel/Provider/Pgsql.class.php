@@ -316,7 +316,7 @@ class Pgsql extends db\Structure\Datamodel\Provider implements db\Structure\Data
      * @return string - sql name of table
      */
     public function sqlTableName(){
-        return $this->Prefix . str_replace('/','_',ltrim($this->Datamodel->Json['code'],'/'));
+        return $this->Prefix . str_replace('/','_',ltrim($this->Datamodel->Json->Data['code'],'/'));
     }
 
     // --- --- --- --- ---

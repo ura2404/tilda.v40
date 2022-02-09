@@ -1,17 +1,18 @@
 {
-    "module" : {
-        "code" : "/Tilda/Web",
-        "name" : "/Tilda/Web",
-        "prefix" : "tdTool",
-        "baloon" : "Tilda Web подсистема",
-        "author" : "ura@itx.ru",
-        "url" : null,
-        "since" : 2012,
-        "major" : 0,
-        "minor" : 1,
-        "build" : 1,
-        "info" : null
+    "module": {
+        "code": "/Tilda/Web",
+        "name": "/Tilda/Web",
+        "prefix": "tdTool",
+        "baloon": {
+            "_def": "Tilda web подсистема"
+        },
+        "author": "ura@itx.ru",
+        "url": null,
+        "since": "2012-04",
+        "major": "0",
+        "minor": "1",
+        "build": "1",
+        "info": null
     },
-	"dependences" : [
-	]
+    "dependences": []
 }

@@ -68,11 +68,11 @@ export default class Form {
     
     // --- --- --- --- ---
     isRequired(){
-        return this.$Tag.find(':input').map(function(index, element){
-            if(!$(element).hasAttr('required')) return;
+        return this.$Tag.find(':input:not(.wi-hidden)').map(function(index, element){
+            //if(!$(element).hasAttr('required')) return;
             
-            $(element).removeClass('wi-invalid').next().text('');
-            if(!element.validity.valid) $(element).addClass('wi-invalid').next().text(element.validationMessage);
+            $(element).next('.wi-err').text('');
+            if(!element.validity.valid) $(element)/*.addClass('wi-invalid')*/.next('.wi-err').text(element.validationMessage);
             
             return element.validity.valid;
         }).get().every((current,index,array) => !!current);

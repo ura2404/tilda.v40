@@ -15,49 +15,25 @@
 {% block actions %}
     {% if sysuser.code == 'admin' %}
         {% if mode == 'add' %}
-            <button id="cm-button-module-save" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 flex" title="Создать модуль">
+            <button id="cm-button-module-save" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 active:opacity-70 flex" title="Создать модуль">
                 <i class="m-auto fal fa-save"></i>
             </button>
         {% endif %}
         {% if mode == 'view' %}
-            <button id="cm-button-module-edit" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-300 flex" title="Изменить модуль">
+            <button id="cm-button-module-edit" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-300 active:opacity-70 flex" title="Изменить модуль">
                 <i class="m-auto fal fa-edit"></i>
             </button>
-            <button id="cm-button-module-save" class="wi-hidden wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 flex" title="Сохранить модуль">
+            <button id="cm-button-module-save" class="wi-hidden wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 active:opacity-70 flex" title="Сохранить модуль">
                 <i class="m-auto fal fa-save"></i>
             </button>
-            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-red-300 flex" title="Удалить модуль">
+            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-red-300 active:opacity-70 flex" title="Удалить модуль">
                 <i class="m-auto fal fa-trash-alt"></i>
             </button>
         {% endif %}
         
-        <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-neutral-300 flex" onclick="history.back()" title="Отменить">
+        <button id="cm-button-back" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-neutral-300 active:opacity-70 flex" {#onclick="history.back()"#} title="Отменить">
             <i class="m-auto fal fa-backspace"></i>
         </button>
-    
-        {#
-        {% if module.url %}
-            <button id="cm-module-edit" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-300 flex" title="Изменить модуль">
-                <i class="m-auto fal fa-edit"></i>
-            </button>
-            <button id="cm-module-save" class="wi-hidden wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 flex" title="Сохранить модуль">
-                <i class="m-auto fal fa-save"></i>
-            </button>
-            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-red-300 flex" title="Удалить модуль">
-                <i class="m-auto fal fa-trash-alt"></i>
-            </button>
-            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-neutral-300 flex" onclick="history.back()" title="Отменить">
-                <i class="m-auto fal fa-backspace"></i>
-            </button>
-        {% else %}
-            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 flex" title="Создать модуль">
-                <i class="m-auto fal fa-save"></i>
-            </button>
-            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-neutral-300 flex" onclick="history.back()" title="Отменить">
-                <i class="m-auto fal fa-backspace"></i>
-            </button>
-        {% endif %}
-        #}
     {% endif %}
 {% endblock %}
 
@@ -67,11 +43,11 @@
     {% if sysuser.code == 'guest' %}
         <div id="cm-need-login"></div>
     {% else %}
-        <div id="cm-module-tabs" class="wi-tabs">
-            <ul class="wi-tabs-items gap-x-1 bg-gray-100 flex justify-center h-10">
-                <li class="wi-tabs-item wi-hover px-2 cursor-pointer text-green-700 h-full active:bg-zinc-200 flex items-center _wi-active" data-tag="#cm-tab-info">Описание</li>
-                <li class="wi-tabs-item wi-hover px-2 cursor-pointer text-green-700 h-full active:bg-zinc-200 flex items-center" data-tag="#cm-tab-code">Code</li>
-                <li class="wi-tabs-item wi-hover px-2 cursor-pointer text-green-700 h-full active:bg-zinc-200 flex items-center" data-tag="#cm-tab-datamodel">Datamodels</li>
+        <div id="cm-module-tabs" class="wi-tabs" data-mode="{{ mode }}">
+            <ul class="wi-tabs-items bg-gray-100 flex flex-wrap justify-center">
+                <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center _wi-active" data-tag="#cm-tab-info">Описание</li>
+                <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center" data-tag="#cm-tab-code">Code</li>
+                <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center" data-tag="#cm-tab-datamodel">Datamodels <span class="ml-2 px-2 bg-green-300 rounded-full empty:hidden">{% if module.datamodels|length > 0 %}{{ module.datamodels|length }}{% endif %}</span></li>
             </ul>
             
             <div id="cm-tab-info" class="wi-tab-content pt-5">
@@ -83,7 +59,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">Уникальный код, однозначно определяющий модуль в репозитарии</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="code" value="{{ module.data.module.code }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 w-full" name="code" value="{{ module.info.module.code }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -92,7 +68,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">Наименование модуля</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="name" value="{{ module.data.module.name }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 w-full" name="name" value="{{ module.info.module.name }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -110,7 +86,7 @@
                                 
                                 {{ _own.baloon(lang,baloon,mode,true) }}
                                 
-                                {% for lang,baloon in module.data.module.baloon%}
+                                {% for lang,baloon in module.info.module.baloon%}
                                     {{ _own.baloon(lang,baloon,mode) }}
                                 {% endfor %}
                             </div>
@@ -121,7 +97,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">Префикс, может использоваться для именование объёктов в базе данных</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="prefix" value="{{ module.data.module.prefix }}" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 w-full" name="prefix" value="{{ module.info.module.prefix }}" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -130,7 +106,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">e-mail, web-сайт, любые ссылки на автра модуля</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="author" value="{{ module.data.module.author|raw }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 w-full" name="author" value="{{ module.info.module.author|raw }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -139,7 +115,9 @@
                             <div class="italic text-sm text-gray-700 pl-5">url модуля в сети</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="url" value="{{ module.data.module.url }}" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 w-full" type="url" name="url" value="{{ module.info.module.url }}" {% if mode == 'view' %}disabled="disabled"{% endif %}
+                                _pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"
+                            />
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -148,7 +126,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">Дата запуска модуля</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="since" value="{{ module.data.module.since }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 w-full" type="month" name="since" value="{{ module.info.module.since }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -157,7 +135,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">Версия</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="major" value="{{ module.data.module.major }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 w-full" name="major" value="{{ module.info.module.major }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -166,7 +144,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">Ревизия</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="minor" value="{{ module.data.module.minor }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 w-full" name="minor" value="{{ module.info.module.minor }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -175,7 +153,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">Номер сборки</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="build" value="{{ module.data.module.build }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 w-full" name="build" value="{{ module.info.module.build }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -184,7 +162,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">Техническая информация о модуле</div>
                         </div>
                         <div class="pt-1">
-                            <textarea class="px-1 py-1 w-full" name="info" {% if mode == 'view' %}disabled="disabled"{% endif %}>{{ module.data.module.info }}</textarea>
+                            <textarea class="px-1 py-1 w-full" name="info" {% if mode == 'view' %}disabled="disabled"{% endif %}>{{ module.info.module.info }}</textarea>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                     </div>
@@ -193,7 +171,16 @@
             </div>
             
             <div id="cm-tab-code" class="wi-tab-content">235345345345</div>
-            <div id="cm-tab-datamodel" class="wi-tab-content">3wefwfwef</div>
+            <div id="cm-tab-datamodel" class="wi-tab-content flex">
+                <ul>
+                    {% for datamodel in module.datamodels %}
+                        <li>
+                            {{ datamodel.code }}
+                        </li>
+                    {% endfor %}
+                    
+                </ul>
+            </div>
         </div>
     {% endif %}
 {% endblock %}

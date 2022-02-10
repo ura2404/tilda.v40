@@ -18,11 +18,19 @@
                 
                 {% if _context.visible %}
                     {% if _context.enable %}
-                        <a class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex m-2 flex-col border-2 border-white hover:border-2 hover:border-green-400 " href="{{ block.url }}">
+                        {#<a class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex m-2 flex-col border-2 border-white hover:border-2 hover:border-green-400 " href="{{ block.url }}">
                             <span class="text-center font-bold bg-gray-400 p-2 text-white">{{ block.name }}</span>
                             <i class="p-1 text-center fa-3x text-gray-700 {{ block.icon }}"></i>
                             <span class="text-center mb-1 mt-auto mx-2 h-20 overflow-y-auto">{{ block.info }}</span>
-                        </a>
+                        </a>#}
+                        <div class="wi-noselect md:mx-2 mx-auto m-2 rounded overflow-hidden bg-gray-200 w-80 h-44 flex flex-col _border-2 _border-white _hover:border-2 _hover:border-green-400">
+                            <div class="bg-gray-400 h-10 flex divide-x">
+                                <span class="pl-2 mr-auto my-auto text-center text-white font-bold bg-gray-400">{{ block.name }}</span>
+                                <a class="wi-hover w-10 text-white hover:opacity-70 active:bg-gray-300 flex"  href="{{ block.url }}" title="Изменить"><i class="m-auto fas fa-ellipsis-v"></i></a>
+                            </div>
+                            <i class="p-1 text-center fa-3x text-gray-700 {{ block.icon }}"></i>
+                            <span class="text-center mb-1 mt-auto mx-2 h-20 overflow-y-auto">{{ block.info }}</span>
+                        </div>
                     {% else %}
                         <div class="md:mx-2 mx-auto rounded overflow-hidden bg-gray-200 w-80 h-44 flex m-2 flex-col opacity-30 border-2 border-white">
                             <span class="text-center font-bold bg-gray-300 p-2">{{ block.name }}</span>

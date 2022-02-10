@@ -92,7 +92,6 @@ body {
     border-top : 1px solid;
 }
 
-
 .cm-menu {
     .cm-menu-item {
         span {
@@ -139,10 +138,6 @@ body {
     100% { opacity: 1; }
 }
 
-//input:not([required="required"]) {
-//    background-color : #bbe6ff
-//}
-
 .wi-form {
     input,textarea {
         //border: 1px solid lightgrey;
@@ -160,7 +155,9 @@ body {
     input:not([disabled="disabled"]),
     textarea:not([disabled="disabled"]),
     select:not([disabled="disabled"]), {
-        //background-color : #ffffde !important;
+        &[required="required"] {
+            background-color : #ffffde !important;
+        }
         
         //&.wi-invalid {
         &:invalid {

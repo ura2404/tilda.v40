@@ -12,6 +12,8 @@ use \Cmatrix\Kernel\Exception as ex;
  * @version 1.0 2021-11-29
  */
 class Datamodel implements iDatamodel{
+    static $INSTANCES = [];
+    
     private $P_Url = null;
     private $P_Name = null;
     private $P_Path = null;
@@ -179,13 +181,15 @@ class Datamodel implements iDatamodel{
     // --- --- --- --- ---
     // --- --- --- --- ---
     static function instance($url){
+        $Key = $url;
+        if(array_key_exists($Key,self::$INSTANCES)) return self::$INSTANCES[$Key];
         $Cl = self::cl($url);
         return new $Cl();
     }
     
     // --- --- --- --- ---
     static function i($url){
-        return  self::instance($url);
+        return self::instance($url);
     }
     
     // --- --- --- --- ---

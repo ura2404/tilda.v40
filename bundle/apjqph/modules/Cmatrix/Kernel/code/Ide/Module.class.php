@@ -39,6 +39,7 @@ class Module {
             case 'Baloon' : return kernel\Lang::i()->str($this->Json->Data['module']['baloon']);
             case 'Version' : return $this->Json->Data['module']['major'] .'.'. $this->Json->Data['module']['minor'] .'.'. $this->Json->Data['module']['build'];
             case 'Datamodels' : return $this->getMyDatamodels();
+            case 'DatamodelsTree' : return $this->getMyDatamodelsTree();
             case 'isExists' : return $this->getMyIsExists();
             //case 'Data' : return $this->getMyData();
             default : throw new ex\Property($this,$name);
@@ -79,6 +80,23 @@ class Module {
         
         return array_map(function($value){
             return $Url = $this->Url. '/' .strBefore($value,'.dm.php');
+        },array_filter(scandir($Root),function($value){
+            return $value !== '.' && $value !== '..' && strpos($value,'.dm.php') && $value[0]!=='_';
+        }));
+    }
+
+    // --- --- --- --- ---
+    private function getMyDatamodelsTree(){
+        $Root = $this->Path .'/dm';
+        if(!file_exists($Root)) return [];
+        
+        return array_map(function($value){
+            $Url = $this->Url. '/' .strBefore($value,'.dm.php');
+            $Datamodel = Datamodel::i($Url);
+            return [
+                'name' => $Datamodel->Url,
+                'parent' => $Datamodel->Parent ? $Datamodel->Parent->Url : null
+            ];
         },array_filter(scandir($Root),function($value){
             return $value !== '.' && $value !== '..' && strpos($value,'.dm.php') && $value[0]!=='_';
         }));

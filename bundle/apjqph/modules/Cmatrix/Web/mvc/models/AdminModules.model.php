@@ -23,16 +23,50 @@ class AdminModules extends CommonLogin {
     // --- --- --- --- ---
     private function getMyBlocks(){
         return array_map(function($url){
-            $Model = kernel\Ide\Module::i($url);
+            $Module = kernel\Ide\Module::i($url);
             return [
-                'url' => CM_WHOME .'/admin/module/'. str_replace('/','_',ltrim($Model->Code,'/')). '/view',
-                'code' => $Model->Code,
-                'name' => $Model->Name,
-                'baloon'=> $Model->Baloon,
-                'version' => $Model->Version,
-                'datamodels' => count($Model->Datamodels)
+                'url' => CM_WHOME .'/admin/module/'. str_replace('/','_',ltrim($Module->Code,'/')). '/view',
+                'code' => $Module->Code,
+                'name' => $Module->Name,
+                'baloon'=> $Module->Baloon,
+                'version' => $Module->Version,
+                'datamodels' => count($Module->Datamodels),
+                'codes' => $this->getMyCodes($Module)
             ];
         },kernel\App::i()->Modules);
     }
+    
+    // --- --- --- --- ---
+    private function getMyCodes($module){
+        $Root = $module->Path . '/code';
+        
+        $_rec = function($path,&$count=0) use(&$_rec){
+            if(!file_exists($path)) return;
+            $Dir = scandir($path);
+            $Dir = array_filter($Dir,function($file){ return $file!=='.' && $file!=='..' && $file[0] !== '.'; });
+            
+            $CountFiles = count(array_filter($Dir,function($file) use($path) { return !is_dir($path.'/'.$file) && strpos($file,'.class.php') !== false; }));
+            $CountFolder = count(array_map(function($file) use($path,&$_rec){
+                $_rec($path.'/'.$file);
+            },array_filter($Dir,function($file) use($path) { return is_dir($path.'/'.$file); })));
+            
+            $Arr = array_reduce(
+                array_map(
+                    function($file) use($path,&$_rec){
+                        return $_rec($path.'/'.$file);
+                    },
+                    array_filter($Dir,function($file) use($path){
+                        return is_dir($path.'/'.$file);
+                    })
+                ),
+                function($sum,$count){
+                    return $sum + $count;
+                }
+            );
+            return $CountFiles + $CountFolder;
+        };
+        return $Count = $_rec($Root);
+    }
+    
 }
 ?>

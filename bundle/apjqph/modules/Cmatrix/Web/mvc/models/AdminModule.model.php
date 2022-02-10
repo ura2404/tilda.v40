@@ -58,9 +58,12 @@ class AdminModule extends CommonLogin {
     // --- --- --- --- ---
     private function getMyDatamodels($module){
         if(!$module) return [];
+        return kernel\Tree::instance($module->DatamodelsTree)->Tree;
+        /*
         return array_map(function($datamodel){
             return kernel\Ide\Datamodel::i($datamodel)->Json->Data;
         },$module->Datamodels);
+        */
     }
     
 }

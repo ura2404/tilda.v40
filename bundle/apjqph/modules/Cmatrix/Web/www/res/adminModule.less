@@ -1,0 +1,34 @@
+#cm-module-tabs {
+    &[data-mode='add']{
+        #cm-tab-info {
+            .cm-direct {
+                .cm-button-info-edit,
+                .cm-button-info-cancel {
+                    display: none;
+                }
+            }
+        }
+    }
+    
+    &[data-mode='edit'] {
+        #cm-tab-info {
+            .cm-direct {
+                .cm-button-info-edit {
+                    display: none;
+                }
+            }
+        }
+    }
+    
+    &[data-mode='view'] {
+        #cm-tab-info {
+            .cm-direct {
+                .cm-button-info-save,
+                .cm-button-info-cancel {
+                    display: none;
+                }
+            }
+        }
+        
+    }
+}

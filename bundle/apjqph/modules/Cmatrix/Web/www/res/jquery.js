@@ -31,3 +31,15 @@ $.fn.setCursorPosition = function(pos){
     });
     return this;
 };
+
+jQuery.extend(jQuery.expr[':'], {
+    invalid : function(elem, index, match){
+        return elem.validity !== undefined && elem.validity.valid === false;
+    },
+
+    valid : function(elem, index, match){
+        return elem.validity !== undefined && elem.validity.valid === true;
+    }
+
+
+});

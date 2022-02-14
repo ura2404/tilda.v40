@@ -12,10 +12,26 @@ class Module {
         const Instance = this;
         
         this.$Tag = $('#cm-module-tabs');
+        this.$TabInfo = $('#cm-tab-info');
         this.$FormInfo = $('#cm-form-info');
         this.$FormConfirm = $('#cm-form-confirm');
-        this.$ButtonEdit = $('#cm-button-module-edit').on('click',() => this.enableEdit());
-        this.$ButtonSave = $('#cm-button-module-save').on('click',() => this.save());
+        
+        this.$TabInfo.find('.cm-direct')
+            .children('.cm-button-info-edit').on('click',() => {
+                this.Mode = 'edit';
+                this.$Tag.attr('data-mode',this.Mode);
+                this.$FormInfo.removeAttr('disabled').find('input,textarea').removeAttr('disabled');
+            }).end()
+            .children('.cm-button-info-cancel').on('click',() => {
+                this.Mode = 'view';
+                this.$Tag.attr('data-mode',this.Mode);
+                this.$FormInfo.attr('disabled','disabled').find('input,textarea').attr('disabled','disabled');
+            }).end()
+            .children('.cm-button-info-save').on('click',() => {
+                if(!this.formInfo.isRequired()) return;
+                this.winConfirm.show();
+            });
+        
         this.$ButtonAddLang = this.$FormInfo.find('.cm-lang-add').on('click',function(){ Instance.addLang(this) });
         this.$ButtonRemoveLang = this.$FormInfo.find('.cm-lang-remove').on('click',function(){ Instance.removeLang(this) });
         this.$ButtonBack = $('#cm-button-back').on('click',() => {
@@ -40,29 +56,15 @@ class Module {
         this.winError = new Window($('#cm-alert-error'));
         
         this.Mode = this.$Tag.data('mode');
-
     }
     
-    // --- --- --- --- ---
-    enableEdit(){
-        this.Mode = 'edit';
-        this.$FormInfo.removeAttr('disabled').find('input,textarea').removeAttr('disabled');
-        this.$ButtonEdit.addClass('wi-hidden').next().removeClass('wi-hidden');
-    }
 
-    // --- --- --- --- ---
-    disableEdit(){
-        this.Mode = 'view';
-        this.$FormInfo.attr('disabled','disabled').find('input,textarea').attr('disabled','disabled');
-        this.$ButtonSave.addClass('wi-hidden').prev().removeClass('wi-hidden');
-    }
-    
     // --- --- --- --- ---
     /**
      * Реакция на кнопку "Добавить язык"
      */
     addLang(button){
-        if(this.$FormInfo.attr('disabled') === 'disabled') return;
+        if(this.Mode !== 'edit') return;
         
         const $Parent = $(button).parent();
         
@@ -84,7 +86,7 @@ class Module {
      * Реакция на кнопку "Удалить язык"
      */
     removeLang(button){
-        if(this.$FormInfo.attr('disabled') === 'disabled') return;
+        if(this.Mode !== 'edit') return;
         
         const $Button = $(button);
         const $Baloon = $Button.prev();
@@ -99,6 +101,7 @@ class Module {
     /**
      * Реакция на кнопку "Сохранить"
      */
+    /*
     save(){
         if(!this.formInfo.isRequired()) return;
         this.winConfirm.show();
@@ -106,7 +109,7 @@ class Module {
         
         //this.disableEdit(); 
         //this.winConfirm.show();
-    }
+    }*/
     
     // --- --- --- --- ---
     submitSuccess(data){

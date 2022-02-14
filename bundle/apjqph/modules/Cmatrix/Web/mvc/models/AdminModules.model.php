@@ -38,34 +38,20 @@ class AdminModules extends CommonLogin {
     
     // --- --- --- --- ---
     private function getMyCodes($module){
-        $Root = $module->Path . '/code';
-        
-        $_rec = function($path,&$count=0) use(&$_rec){
-            if(!file_exists($path)) return;
+        $_rec = function($path,$count=0) use(&$_rec){
+            if(!file_exists($path)) return 0;
             $Dir = scandir($path);
             $Dir = array_filter($Dir,function($file){ return $file!=='.' && $file!=='..' && $file[0] !== '.'; });
             
             $CountFiles = count(array_filter($Dir,function($file) use($path) { return !is_dir($path.'/'.$file) && strpos($file,'.class.php') !== false; }));
-            $CountFolder = count(array_map(function($file) use($path,&$_rec){
-                $_rec($path.'/'.$file);
+            
+            $CountChildren = array_sum(array_map(function($file) use($path,$CountFiles,$count,&$_rec){
+                return $_rec($path.'/'.$file,$count+$CountFiles);
             },array_filter($Dir,function($file) use($path) { return is_dir($path.'/'.$file); })));
             
-            $Arr = array_reduce(
-                array_map(
-                    function($file) use($path,&$_rec){
-                        return $_rec($path.'/'.$file);
-                    },
-                    array_filter($Dir,function($file) use($path){
-                        return is_dir($path.'/'.$file);
-                    })
-                ),
-                function($sum,$count){
-                    return $sum + $count;
-                }
-            );
-            return $CountFiles + $CountFolder;
+            return $CountFiles + $CountChildren;
         };
-        return $Count = $_rec($Root);
+        return $Count = $_rec($module->Path . '/code');
     }
     
 }

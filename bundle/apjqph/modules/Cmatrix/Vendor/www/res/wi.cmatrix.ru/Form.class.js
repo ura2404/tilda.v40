@@ -68,7 +68,7 @@ export default class Form {
     
     // --- --- --- --- ---
     isRequired(){
-        return this.$Tag.find(':input:not(.wi-hidden)').map(function(index, element){
+        const Flag = this.$Tag.find(':input:not(.wi-hidden)').map(function(index, element){
             //if(!$(element).hasAttr('required')) return;
             
             $(element).next('.wi-err').text('');
@@ -76,6 +76,10 @@ export default class Form {
             
             return element.validity.valid;
         }).get().every((current,index,array) => !!current);
+        
+        if(!Flag) this.$Tag.find(':input:not(.wi-hidden):invalid').eq(0).focus();
+        
+        return Flag;
     }
     
     // --- --- --- --- ---

@@ -20,12 +20,12 @@
             </button>
         {% endif %}
         {% if mode == 'view' %}
-            <button id="cm-button-module-edit" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-300 active:opacity-70 flex" title="Изменить модуль">
+            {#<button id="cm-button-module-edit" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-300 active:opacity-70 flex" title="Изменить модуль">
                 <i class="m-auto fal fa-edit"></i>
             </button>
             <button id="cm-button-module-save" class="wi-hidden wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 active:opacity-70 flex" title="Сохранить модуль">
                 <i class="m-auto fal fa-save"></i>
-            </button>
+            </button>#}
             <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-red-300 active:opacity-70 flex" title="Удалить модуль">
                 <i class="m-auto fal fa-trash-alt"></i>
             </button>
@@ -43,15 +43,27 @@
     {% if sysuser.code == 'guest' %}
         <div id="cm-need-login"></div>
     {% else %}
-        <div id="cm-module-tabs" class="wi-tabs" data-mode="{{ mode }}">
+        <div id="cm-module-tabs" class="wi-tabs rounded-sm" data-mode="{{ mode }}">
             <ul class="wi-tabs-items bg-gray-100 flex flex-wrap justify-center">
                 <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center _wi-active" data-tag="#cm-tab-info">Описание</li>
                 <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center" data-tag="#cm-tab-code">Code</li>
                 <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center" data-tag="#cm-tab-datamodel">Datamodels <span class="ml-2 px-2 bg-green-300 rounded-full empty:hidden">{% if module.datamodels|length > 0 %}{{ module.datamodels|length }}{% endif %}</span></li>
             </ul>
             
-            <div id="cm-tab-info" class="wi-tab-content pt-5">
-                <form id="cm-form-info" class="wi-form" {% if mode == 'view' %}disabled="disabled"{% endif %} method="post" action="{{ url.post }}">
+            <div id="cm-tab-info" class="wi-tab-content">
+                <div class="cm-direct pt-3 flex justify-end">
+                    <button class="cm-button-info-edit wi-hover px-3 h-9 text-white rounded-sm cursor-pointer bg-blue-400 active:opacity-70 hover:bg-blue-500 flex" title="Разрешить изменения">
+                        <i class="my-auto fal fa-edit"></i><span class="hidden md:block ml-2 my-auto">Изменить</span>
+                    </button>
+                    <button class="cm-button-info-save wi-hover px-3 h-9 text-white rounded-sm cursor-pointer bg-green-400 active:opacity-70 hover:bg-green-500 flex" title="Сохранить">
+                        <i class="my-auto fal fa-save"></i><span class="hidden md:block ml-2 my-auto">Сохранить</span>
+                    </button>
+                    <button class="cm-button-info-cancel wi-hover ml-2 px-3 h-9 text-white rounded-sm cursor-pointer bg-orange-400 active:opacity-70 hover:bg-orange-500 flex" title="Отменить">
+                        <i class="my-auto fal fa-undo"></i><span class="hidden md:block ml-2 my-auto">Отменить</span>
+                    </button>
+                </div>
+                
+                <form id="cm-form-info" class="wi-form pt-3" {% if mode == 'view' %}disabled="disabled"{% endif %} method="post" action="{{ url.post }}">
                     <input name="m" type="hidden" value="ma"/>
                     <div class="grid grid-cols-2 _grid-cols-[max-content_minmax(0,1fr)] gap-y-3">
                         <div class="hover:bg-green-100">
@@ -76,7 +88,7 @@
                             <span class="font-bold">Baloon</span>
                             <div class="italic text-sm text-gray-700 pl-5">Краткое описание модуля, используется во всплывающих сообшениях</div>
                         </div>
-                        <div class="pt-1">
+                        <div class="pt-1 bg-stone-200 p-3">
                             <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_min-content] gap-2">
                                 <div class="font-bold">Язык</div>
                                 <div class="font-bold">Значение</div>
@@ -126,7 +138,11 @@
                             <div class="italic text-sm text-gray-700 pl-5">Дата запуска модуля</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" type="month" name="since" value="{{ module.info.module.since }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 md:w-56 w-full" type="month" name="since" value="{{ module.info.module.since }}" 
+                                pattern="[0-9]{4}-[0-9]{2}"
+                                required="required" 
+                                {% if mode == 'view' %}disabled="disabled"{% endif %}
+                            />
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         
@@ -135,7 +151,7 @@
                             <div class="italic text-sm text-gray-700 pl-5">Версия</div>
                         </div>
                         <div class="pt-1">
-                            <input class="px-1 py-1 w-full" name="major" value="{{ module.info.module.major }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
+                            <input class="px-1 py-1 md:w-40 w-full" name="major" value="{{ module.info.module.major }}" required="required" {% if mode == 'view' %}disabled="disabled"{% endif %}/>
                             <span class="wi-err mb-3 h-4 text-red-600 text-sm"></span>
                         </div>
                         

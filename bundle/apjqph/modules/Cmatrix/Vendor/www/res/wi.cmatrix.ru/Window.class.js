@@ -27,13 +27,15 @@ export default class Window extends Common {
         this.onShow = undefined;
         this.onHide = undefined;
         
+        this.Content = undefined;
+        
         // --- init --- --- --- ---
         this.$CloseButton.on('click',() => setTimeout(() => this.hide(),100));
     }
     
     // --- --- --- --- ---
     content(value){
-        this.$Tag.find('.wi-content').html(value);
+        this.Content = value;
         return this;
     }
     
@@ -44,7 +46,10 @@ export default class Window extends Common {
         
         this.isHidable = isHidable;
         
-        // --- --- --- --- ---        
+        // --- --- --- --- ---
+        this.$Tag.find('.wi-content').html(this.Content);
+        
+        // --- --- --- --- ---
         // если форма не закрывемая, удалить кнопку закрытия
         if(this.isHidable === false) this.$CloseButton.hide();
         

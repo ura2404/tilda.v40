@@ -96,7 +96,7 @@
         </footer>
         
         {% block popup %}
-            <div class="wi-back wi-behind wi-noselect z-50 bg-gray-800 bg-opacity-50 flex flex-col">
+            <div class="wi-back wi-behind wi-noselect z-50 bg-gray-800 bg-opacity-20 flex flex-col">
                 <div id="cm-alert-success" class="relative my-auto bg-green-400 bg-opacity-90 flex flex-col p-10" data-timeout="2000">
                     <div class="wi-content container mx-auto text-white text-center"></div>
                     {#<div class="mx-auto flex">
@@ -105,19 +105,22 @@
                 </div>
             </div>
                     
-            <div class="wi-back wi-behind wi-noselect z-50 bg-gray-800 bg-opacity-50 flex flex-col">
-                <div id="cm-alert-error" class="relative my-auto bg-red-300 bg-opacity-95 flex flex-col p-10">
-                    <div class="wi-content container mx-auto text-white text-center"></div>
-                    <div class="mx-auto flex">
-                        <button type="button" class="wi-a-close wi-hover focus:ring-4 focus:ring-red-400 focus:ring-opacity-50 rounded mx-auto mt-5 px-3 py-1.5 bg-red-400">Закрыть</button>
+            <div class="wi-back wi-behind wi-noselect z-50 bg-gray-800 bg-opacity-20 flex flex-col">
+                <div id="cm-alert-error" class="relative my-auto bg-red-400 bg-opacity-95 flex flex-col p-8">
+                    <div class="container mx-auto flex justify-center gap-4">
+                        <i class="fal fa-exclamation-circle text-white text-2xl"></i>
+                        <span class="wi-content text-white text-lg"></span>
+                    </div>
+                    <div class="container mx-auto flex">
+                        <button type="button" class="wi-a-close wi-hover text-white mx-auto mt-5 px-3 py-1.5 bg-red-500 focus:ring-4 focus:ring-red-400 focus:ring-opacity-50 rounded">Закрыть</button>
                     </div>
                 </div>
             </div>
             
-            <div class="wi-back wi-behind wi-noselect z-40 bg-gray-800 bg-opacity-50 flex">
+            <div class="wi-back wi-behind wi-noselect z-40 bg-gray-800 bg-opacity-20 flex">
                 <span>111</span>
                 <form>222</form>
-                <form id="cm-form-confirm" class="relative rounded mx-auto my-auto flex flex-col pt-10 pb-3 px-8 sm:px-12 bg-blue-400 bg-opacity-90" action="{{ url.post }}">
+                <form id="cm-form-confirm" class="relative rounded-sm mx-auto my-auto flex flex-col pt-10 pb-3 px-8 sm:px-12 bg-blue-400 bg-opacity-90" action="{{ url.post }}">
                     <span class="wi-content text-white text-center _font-bold _absolute w-52 sm:w-72 _top-0 -mt-4 text-xl"></span>
                     <div class="flex mt-5 mb-2">
                         <button type="button" class="wi-a-submit wi-hover rounded w-20 mx-auto px-3 py-1.5 text-white bg-blue-500">Да</button>

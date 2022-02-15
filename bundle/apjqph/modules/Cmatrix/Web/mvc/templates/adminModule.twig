@@ -14,26 +14,11 @@
 
 {% block actions %}
     {% if sysuser.code == 'admin' %}
-        {% if mode == 'add' %}
-            <button id="cm-button-module-save" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 active:opacity-70 flex" title="Создать модуль">
-                <i class="m-auto fal fa-save"></i>
-            </button>
-        {% endif %}
         {% if mode == 'view' %}
-            {#<button id="cm-button-module-edit" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-blue-300 active:opacity-70 flex" title="Изменить модуль">
-                <i class="m-auto fal fa-edit"></i>
-            </button>
-            <button id="cm-button-module-save" class="wi-hidden wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-green-300 active:opacity-70 flex" title="Сохранить модуль">
-                <i class="m-auto fal fa-save"></i>
-            </button>#}
-            <button class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-red-300 active:opacity-70 flex" title="Удалить модуль">
-                <i class="m-auto fal fa-trash-alt"></i>
+            <button class="cm-button-remove wi-hover px-3 h-9 text-white rounded-sm cursor-pointer bg-red-400 active:opacity-70 hover:bg-red-500 flex" title="Удалить модуль">
+                <i class="my-auto fal fa-trash-alt"></i><span class="hidden md:block ml-2 my-auto">Удалить</span>
             </button>
         {% endif %}
-        
-        <button id="cm-button-back" class="wi-hover h-9 w-9 ml-1 cursor-pointer my-auto bg-neutral-300 active:opacity-70 flex" {#onclick="history.back()"#} title="Отменить">
-            <i class="m-auto fal fa-backspace"></i>
-        </button>
     {% endif %}
 {% endblock %}
 
@@ -55,7 +40,7 @@
                     <button class="cm-button-info-edit wi-hover px-3 h-9 text-white rounded-sm cursor-pointer bg-blue-400 active:opacity-70 hover:bg-blue-500 flex" title="Разрешить изменения">
                         <i class="my-auto fal fa-edit"></i><span class="hidden md:block ml-2 my-auto">Изменить</span>
                     </button>
-                    <button class="cm-button-info-save wi-hover px-3 h-9 text-white rounded-sm cursor-pointer bg-green-400 active:opacity-70 hover:bg-green-500 flex" title="Сохранить">
+                    <button class="cm-button-info-save wi-hover px-3 h-9 text-white rounded-sm cursor-pointer bg-green-500 active:opacity-70 hover:bg-green-600 flex" title="Сохранить">
                         <i class="my-auto fal fa-save"></i><span class="hidden md:block ml-2 my-auto">Сохранить</span>
                     </button>
                     <button class="cm-button-info-cancel wi-hover ml-2 px-3 h-9 text-white rounded-sm cursor-pointer bg-orange-400 active:opacity-70 hover:bg-orange-500 flex" title="Отменить">
@@ -200,6 +185,13 @@
         </div>
     {% endif %}
 {% endblock %}
+
+{% block popup %}
+    <form id="cm-module-remove" class="wi-hidden">
+        qdqqwqwqwqwdqw
+    </form>
+{% endblock %}
+
 
 {% macro baloon(lang,baloon,mode,isHidden) %}
     <div class="{% if isHidden %}wi-hidden{% endif %}">

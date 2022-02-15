@@ -35,6 +35,36 @@ export default class Form {
     }
     
     // --- --- --- --- ---
+    enable(){
+        const Instance = this;
+        
+        // 1. убрать атрибут disabled, очистить поля, назначить enter
+        this.$Tag.removeAttr('disabled').find('input,textarea,select').removeAttr('disabled');
+        
+        // 2. очистить поля
+        //this.$Tag.find(':input').filter((index, element) => $(element).is('input:not(:hidden)')).map((index, element) => $(element).removeClass('cm-invalid').next().text('').end().val(''));
+        
+        // 3. назначить enter на все поля
+        this.$Tag.find(':input:not(:hidden)').on('keyup',function(e){
+            if(e.keyCode == 13) Instance.$Tag.submit();
+        });
+        
+        // 4. фокус на первое поле
+        this.focus();
+    }
+    
+    // --- --- --- --- ---
+    disable(){
+        // 1. установить атрибут disabled
+        this.$Tag.attr('disabled','disabled').find('input,textarea,select').attr('disabled','disabled').off('keyup');
+        
+        // 2.отменить enter на все поля
+        this.$Tag.find(':input:not(:hidden)').off('keyup');
+    }
+    
+    
+    // --- --- --- --- ---
+    /*
     on(){
         const Instance = this;
         
@@ -59,6 +89,7 @@ export default class Form {
         
         return this;
     }
+    */
     
     // --- --- --- --- ---
     focus(){

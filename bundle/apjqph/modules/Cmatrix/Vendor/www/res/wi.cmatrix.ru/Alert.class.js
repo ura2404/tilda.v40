@@ -24,13 +24,13 @@ export default class Alert extends Window {
     
     // --- --- --- --- ---
     show(message){
-        this.$Tag.find('.cm-text').html(message);
+        this.$Tag.find('.wi-content').html(message);
         super.show();
     }
     
     // --- --- --- --- ---
     hide(){
-        this.$Tag.find('.cm-text').text('');
+        this.$Tag.find('.wi-content').text('');
         super.hide();
     }
     

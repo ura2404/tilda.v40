@@ -1,9 +1,11 @@
-import Tabs from '../vendor/wi.cmatrix.ru/Tabs.class.js';
-import Ajax from '../vendor/wi.cmatrix.ru/Ajax.class.js';
+import Tabs   from '../vendor/wi.cmatrix.ru/Tabs.class.js';
+import Ajax   from '../vendor/wi.cmatrix.ru/Ajax.class.js';
 import Window from '../vendor/wi.cmatrix.ru/Window.class.js';
-import Form from '../vendor/wi.cmatrix.ru/Form.class.js';
+import Form   from '../vendor/wi.cmatrix.ru/Form.class.js';
+import Alert  from '../vendor/wi.cmatrix.ru/Alert.class.js';
 
-if($('#cm-need-login').length) document.cm.winLogin.show(false);
+console.log(document.cm.login);
+if($('#cm-need-login').length) document.cm.login.winLogin.show(false);
 
 class Module {
     
@@ -11,59 +13,74 @@ class Module {
     constructor(){
         const Instance = this;
         
-        this.$Tag = $('#cm-module-tabs');
-        this.$TabInfo = $('#cm-tab-info');
-        this.$FormInfo = $('#cm-form-info');
-        this.$FormConfirm = $('#cm-form-confirm');
+        this.$Tabs = $('#cm-module-tabs');
         
-        this.$TabInfo.find('.cm-direct')
-            .children('.cm-button-info-edit').on('click',() => {
-                this.Mode = 'edit';
-                this.$Tag.attr('data-mode',this.Mode);
-                this.$FormInfo.removeAttr('disabled').find('input,textarea').removeAttr('disabled');
-            }).end()
-            .children('.cm-button-info-cancel').on('click',() => {
-                this.Mode = 'view';
-                this.$Tag.attr('data-mode',this.Mode);
-                this.$FormInfo.attr('disabled','disabled').find('input,textarea').attr('disabled','disabled');
-            }).end()
-            .children('.cm-button-info-save').on('click',() => {
-                if(!this.formInfo.isRequired()) return;
-                this.winConfirm.show();
-            });
+        $('.cm-button-remove').on('click',() => this.buttonRemove());
         
-        this.$ButtonAddLang = this.$FormInfo.find('.cm-lang-add').on('click',function(){ Instance.addLang(this) });
-        this.$ButtonRemoveLang = this.$FormInfo.find('.cm-lang-remove').on('click',function(){ Instance.removeLang(this) });
-        this.$ButtonBack = $('#cm-button-back').on('click',() => {
-            console.log(this.Mode);
-            if(this.Mode === 'view') history.back();
-            else this.disableEdit();
-        });
+        $('#cm-tab-info').find('.cm-direct')
+            .children('.cm-button-info-edit').on('click',() => this.buttonEdit()).end()
+            .children('.cm-button-info-cancel').on('click',() => this.buttonCancel()).end()
+            .children('.cm-button-info-save').on('click',() => this.buttonSave()).end();
         
-        this.tabs = new Tabs(this.$Tag);
-        this.formInfo = new Form(this.$FormInfo);
+        this.formInfo = new Form($('#cm-form-info')
+            .find('.cm-lang-add').on('click',function(){ Instance.buttonAddLang(this) }).end()
+            .find('.cm-lang-remove').on('click',function(){ Instance.buttonRemoveLang(this) }).end()
+        );
         
-        this.winConfirm = new Window(this.$FormConfirm);
-        this.winConfirm.content('Сохранить изменения?');
+        this.formConfirmSave = new Form($('#cm-form-confirm'),(url,data) => this.submitInfo(url,data));
+        this.winConfirmSave = new Window($('#cm-form-confirm'));
+        this.winConfirmSave.content('Сохранить изменения?');
         
-        this.formConfirm = new Form(this.$FormConfirm,(url,data) => this.submit(url,data));
+        this.tabs = new Tabs(this.$Tabs);
         
         //this.winSuccess = new Window($('#cm-alert-success'));
         //this.winSuccess.onHide = function(win){
         //    window.location.href = document.referrer;
         //};
         
-        this.winError = new Window($('#cm-alert-error'));
+        this.alertError = new Alert($('#cm-alert-error'));
         
-        this.Mode = this.$Tag.data('mode');
+        this.winConfirmRemove = new Window($('#cm-form-confirm'));
+        this.winConfirmRemove.content('Действительно удалить модуль?');
+        
+        this.Mode = this.$Tabs.data('mode');
     }
     
-
+    // --- --- --- --- ---
+    buttonEdit(){
+        this.Mode = 'edit';
+        this.$Tabs.attr('data-mode',this.Mode);
+        this.formInfo.enable();
+    }
+    
+    // --- --- --- --- ---
+    buttonCancel(){
+        if(this.Mode === 'add') history.back();
+        else if(this.Mode === 'edit') {
+            this.Mode = 'view';
+            this.$Tabs.attr('data-mode',this.Mode);
+            this.formInfo.disable();
+        }
+    }
+    
+    // --- --- --- --- ---
+    buttonSave(){
+        if(!this.formInfo.isRequired()){
+            this.alertError.show('Заполните правильно все поля');
+        }
+        else this.winConfirmSave.show();
+    }
+    
+    // --- --- --- --- ---
+    buttonRemove(){
+        this.winConfirmRemove.show();
+    }
+    
     // --- --- --- --- ---
     /**
      * Реакция на кнопку "Добавить язык"
      */
-    addLang(button){
+    buttonAddLang(button){
         if(this.Mode !== 'edit') return;
         
         const $Parent = $(button).parent();
@@ -85,7 +102,7 @@ class Module {
     /**
      * Реакция на кнопку "Удалить язык"
      */
-    removeLang(button){
+    buttonRemoveLang(button){
         if(this.Mode !== 'edit') return;
         
         const $Button = $(button);
@@ -98,42 +115,17 @@ class Module {
     }
     
     // --- --- --- --- ---
-    /**
-     * Реакция на кнопку "Сохранить"
-     */
-    /*
-    save(){
-        if(!this.formInfo.isRequired()) return;
-        this.winConfirm.show();
-        
-        
-        //this.disableEdit(); 
-        //this.winConfirm.show();
-    }*/
-    
-    // --- --- --- --- ---
-    submitSuccess(data){
-        this.winConfirm.hide();
-        //this.winSuccess.content(data.message).show();
-        
-        //history.back();
-        window.location.href = document.referrer;
+    submitInfo(url,data){
+        new Ajax(
+            {url : url},
+            data => {
+                this.winConfirmSave.hide();
+                window.location.href = document.referrer;
+                //history.back();
+            },
+            data => this.alertError.content(data.message).show()
+        ).commitJson(this.formInfo.data());
     }
-        
-    // --- --- --- --- ---
-    submitError(data){
-        this.winError.content(data.message).show();
-    }
-    
-    // --- --- --- --- ---
-    submit(url,data){
-        const Data = this.formInfo.data();
-        
-        new Ajax({
-            url : url
-        },data => this.submitSuccess(data),data => this.submitError(data)).commitJson(Data);
-    }
-    
 }
 
 // --- --- --- --- ---

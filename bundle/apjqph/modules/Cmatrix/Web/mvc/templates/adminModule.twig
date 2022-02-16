@@ -15,8 +15,8 @@
 {% block actions %}
     {% if sysuser.code == 'admin' %}
         {% if mode == 'view' %}
-            <button class="cm-button-remove wi-hover px-3 h-9 text-white rounded-sm cursor-pointer bg-red-400 active:opacity-70 hover:bg-red-500 flex" title="Удалить модуль">
-                <i class="my-auto fal fa-trash-alt"></i><span class="hidden md:block ml-2 my-auto">Удалить</span>
+            <button class="cm-button-remove wi-hover h-9 w-36 text-white rounded-sm cursor-pointer bg-red-400 active:opacity-70 hover:bg-red-500 flex justify-center items-center" title="Удалить модуль">
+                <i class="fal fa-trash-alt"></i><span class="ml-2">Удалить</span>
             </button>
         {% endif %}
     {% endif %}
@@ -36,21 +36,21 @@
             </ul>
             
             <div id="cm-tab-info" class="wi-tab-content">
-                <div class="cm-direct pt-3 flex justify-end">
-                    <button class="cm-button-info-edit wi-hover px-3 h-9 text-white rounded-sm cursor-pointer bg-blue-400 active:opacity-70 hover:bg-blue-500 flex" title="Разрешить изменения">
-                        <i class="my-auto fal fa-edit"></i><span class="hidden md:block ml-2 my-auto">Изменить</span>
+                <div class="cm-direct pt-3 flex flex-wrap justify-center md:justify-end gap-2 ">
+                    <button class="cm-button-info-edit wi-hover px-3 h-9 w-36 text-white rounded-sm cursor-pointer bg-blue-400 active:opacity-70 hover:bg-blue-500 flex justify-center items-center" title="Разрешить изменения">
+                        <i class="fal fa-edit"></i><span class="_hidden _md:block ml-2">Изменить</span>
                     </button>
-                    <button class="cm-button-info-save wi-hover px-3 h-9 text-white rounded-sm cursor-pointer bg-green-500 active:opacity-70 hover:bg-green-600 flex" title="Сохранить">
-                        <i class="my-auto fal fa-save"></i><span class="hidden md:block ml-2 my-auto">Сохранить</span>
+                    <button class="cm-button-info-save wi-hover px-3 h-9 w-36 text-white rounded-sm cursor-pointer bg-green-500 active:opacity-70 hover:bg-green-600 flex justify-center items-center" title="Сохранить">
+                        <i class="fal fa-save"></i><span class="_hidden _md:block ml-2">Сохранить</span>
                     </button>
-                    <button class="cm-button-info-cancel wi-hover ml-2 px-3 h-9 text-white rounded-sm cursor-pointer bg-orange-400 active:opacity-70 hover:bg-orange-500 flex" title="Отменить">
-                        <i class="my-auto fal fa-undo"></i><span class="hidden md:block ml-2 my-auto">Отменить</span>
+                    <button class="cm-button-info-cancel wi-hover px-3 h-9 w-36 text-white rounded-sm cursor-pointer bg-orange-400 active:opacity-70 hover:bg-orange-500 flex justify-center items-center" title="Отменить">
+                        <i class="fal fa-undo"></i><span class="_hidden _md:block ml-2">Отменить</span>
                     </button>
                 </div>
                 
                 <form id="cm-form-info" class="wi-form pt-3" {% if mode == 'view' %}disabled="disabled"{% endif %} method="post" action="{{ url.post }}">
                     <input name="m" type="hidden" value="ma"/>
-                    <div class="grid grid-cols-2 _grid-cols-[max-content_minmax(0,1fr)] gap-y-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 _grid-cols-[max-content_minmax(0,1fr)] gap-y-5">
                         <div class="hover:bg-green-100">
                             <span class="font-bold">Code</span>
                             <div class="italic text-sm text-gray-700 pl-5">Уникальный код, однозначно определяющий модуль в репозитарии</div>
@@ -187,6 +187,7 @@
 {% endblock %}
 
 {% block popup %}
+    {{ parent() }}
     <form id="cm-module-remove" class="wi-hidden">
         qdqqwqwqwqwdqw
     </form>

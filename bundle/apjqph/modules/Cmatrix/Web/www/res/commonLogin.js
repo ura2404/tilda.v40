@@ -26,7 +26,7 @@ class Login{
         
         this.alertError = new Alert($('#cm-alert-error'));
         this.alertError.onShow = win => win.$CloseButton.focus();
-        this.alertError.onHide = win => setTimeout(() => this.formLogin.focus(),100);    // для устранеия дребезга
+        this.alertError.onHide = win => setTimeout(() => this.formLogin.focus(),100);    // для устранения дребезга
         
         this.winSession = new Window($('#cm-menu-session'));
         this.menuSession = new Menu($('#cm-menu-session'),{
@@ -55,12 +55,12 @@ class Login{
         this.winLogin.hide(true);
         this.winLogout.hide();
         this.alertSuccess.content(data.message).show();
-    };
+    }
     
     // --- --- --- --- ---
     onError(data){
         this.alertError.content(data.message).show();
-    };
+    }
 }
 
 // --- --- --- --- ---

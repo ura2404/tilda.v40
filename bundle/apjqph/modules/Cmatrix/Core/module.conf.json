@@ -1,19 +1,18 @@
 {
-    "module" : {
-        "code" : "/Cmatrix/Core",
-        "name" : "/Cmatrix/Core",
-        "prefix" : "cmCore",
-        "baloon" : {
-            "_def" : "Ядро SystemData подсистемы"
+    "module": {
+        "code": "/Cmatrix/Core",
+        "name": "/Cmatrix/Core",
+        "prefix": "cmCore",
+        "baloon": {
+            "_def": "Ядро SystemData подсистемы"
         },
-        "author" : "ura@itx.ru",
-        "url" : null,
-        "since" : "2012-01",
-        "major" : 0,
-        "minor" : 1,
-        "build" : 1,
-        "info" : null
+        "author": "ura@itx.ru",
+        "url": null,
+        "since": "2012-01",
+        "major": "0",
+        "minor": "1",
+        "build": "1",
+        "info": null
     },
-	"dependences" : [
-	]
+    "dependences": []
 }

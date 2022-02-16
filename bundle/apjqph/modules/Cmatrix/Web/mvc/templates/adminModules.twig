@@ -9,12 +9,11 @@
 
 {% block actions %}
     {% if sysuser.code == 'admin' %}
-        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-9 cursor-pointer my-auto bg-green-300 flex" title="Новый модуль">
-            <i class="m-auto fal fa-plus"></i>
+        <a href="{{ url.addmodule }}" class="wi-hover h-9 w-40 text-white rounded-sm cursor-pointer bg-green-500 active:opacity-70 hover:bg-green-600 flex justify-center items-center" title="Добавить новый модуль">
+            <i class="fal fa-plus"></i><span class="ml-2">Создать модуль</span>
         </a>
     {% endif %}
 {% endblock %}
-
 
 {% block main %}
     {% if sysuser.code == 'guest' %}

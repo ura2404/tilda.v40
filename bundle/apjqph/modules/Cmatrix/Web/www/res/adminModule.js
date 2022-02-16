@@ -4,9 +4,6 @@ import Window from '../vendor/wi.cmatrix.ru/Window.class.js';
 import Form   from '../vendor/wi.cmatrix.ru/Form.class.js';
 import Alert  from '../vendor/wi.cmatrix.ru/Alert.class.js';
 
-console.log(document.cm.login);
-if($('#cm-need-login').length) document.cm.login.winLogin.show(false);
-
 class Module {
     
     // --- --- --- --- ---
@@ -81,7 +78,7 @@ class Module {
      * Реакция на кнопку "Добавить язык"
      */
     buttonAddLang(button){
-        if(this.Mode !== 'edit') return;
+        if(this.Mode === 'view') return;
         
         const $Parent = $(button).parent();
         
@@ -129,4 +126,5 @@ class Module {
 }
 
 // --- --- --- --- ---
-new Module();
+if($('#cm-need-login').length) document.cm.login.winLogin.show(false);
+else new Module();

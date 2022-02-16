@@ -71,6 +71,7 @@ export default class Window extends Common {
         // --- --- --- --- ---        
         Esc.push(function(){ Instance.hide() });
         if(typeof this.onShow === 'function') this.onShow(Instance);
+        
         return this;
     }    
     
@@ -93,6 +94,7 @@ export default class Window extends Common {
         // --- --- --- --- ---        
         Esc.pop();
         if(typeof this.onHide === 'function') this.onHide(Instance);
+        
         return this;
     }
 }

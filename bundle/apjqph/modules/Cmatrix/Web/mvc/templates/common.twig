@@ -58,18 +58,18 @@
         
         <div class="container mx-auto px-2 pt-2 pb-4 mt-14 flex flex-wrap">
             {% block path %}
-                <ul id="path" class="flex flex-wrap w-full truncate">
+                <ul id="path" class="w-full flex flex-wrap gap-1 _truncate">
                     {% for page,url in path %}
                         {% if loop.last %}
                             <span class="text-3xl mt-auto">{{ page }}</span>
                         {% else %}
                             <span class="flex">
                                 <a class="text-sky-600 underline underline-offset-1 flex" href="{{ url }}"><span class="mt-auto mb-0.5">{{ page }}</span></a>
-                                <span class="mx-1 mt-auto mb-0.5">></span>
+                                <span class="ml-1 mt-auto mb-0.5">></span>
                             </span>
                         {% endif %}
                     {% endfor %}
-                    <div class="ml-auto my-auto mt-2 flex">{% block actions %}{% endblock %}</div>
+                    <div class="ml-auto mr-auto md:ml-auto md:mr-0 my-auto flex">{% block actions %}{% endblock %}</div>
                 </ul>
             {% endblock %}
         </div>

@@ -161,22 +161,9 @@ class Module {
         
         $Folder = kernel\Folder::i($Module->Path);
         $ParentFolder = $Folder->Parent;
-        dump($Folder->Path);
-        dump($Folder->isEmpty);
-        dump($ParentFolder->Path);
-        dump($ParentFolder->isEmpty);
         
-        $ParentPath = strRBefore($Module->Path,'/');
-        
-        $_rec = function($path) use(&$_rec){
-            $Dir = opendir($path);
-            while(($Entry = readdir($Dir)) !== false){
-                if($Entry === '.' || $Entry === '..') continue;
-                $Path = $path .'/'. $Entry;
-                if(is_dir($Path)) $_rec($Path);
-                else unlink($Path);
-            }
-        };
+        $Folder->delete();
+        if($ParentFolder->isEmpty) $ParentFolder->delete();
     }
   
 }

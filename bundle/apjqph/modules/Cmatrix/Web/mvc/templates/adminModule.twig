@@ -33,7 +33,7 @@
                 <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center _wi-active" data-tag="#cm-tab-info">Описание</li>
                 {% if mode != 'add' %}
                     <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center" data-tag="#cm-tab-code">Code</li>
-                    <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center" data-tag="#cm-tab-datamodel">Datamodels <span class="ml-2 px-2 bg-green-300 rounded-full empty:hidden">{% if module.datamodels|length > 0 %}{{ module.datamodels|length }}{% endif %}</span></li>
+                    <li class="wi-tabs-item wi-hover h-10 px-3 cursor-pointer text-green-700 active:text-green-800 active:bg-green-200 border-b-2 flex items-center" data-tag="#cm-tab-datamodel">Datamodels <span class="ml-2 px-3 bg-green-300 rounded-full empty:hidden">{% if module.datamodels|length > 0 %}{{ module.datamodels|length }}{% endif %}</span></li>
                 {% endif %}
             </ul>
             

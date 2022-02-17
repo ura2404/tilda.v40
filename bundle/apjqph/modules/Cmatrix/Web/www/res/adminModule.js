@@ -55,7 +55,7 @@ class Module {
         else if(this.Mode === 'edit') {
             this.Mode = 'view';
             this.$Tabs.attr('data-mode',this.Mode);
-            this.formInfo.disable();
+            this.formInfo.rollback().disable();
         }
     }
     

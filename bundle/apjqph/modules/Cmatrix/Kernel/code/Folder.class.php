@@ -47,10 +47,11 @@ class Folder {
         $Dir = opendir($this->Path);
         while(($Entry = readdir($Dir)) !== false){
             if($Entry === '.' || $Entry === '..') continue;
-            $Path = $path .'/'. $Entry;
+            $Path = $this->Path .'/'. $Entry;
             if(is_dir($Path)) self::i($Path)->delete();
             else unlink($Path);
         }
+        rmdir($this->Path);
     }
     
     // --- --- --- --- ---

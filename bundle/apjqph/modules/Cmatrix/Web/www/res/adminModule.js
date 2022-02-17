@@ -12,7 +12,7 @@ class Module {
         
         this.$Tabs = $('#cm-module-tabs');
         
-        $('.cm-button-remove').on('click',() => this.buttonRemove());
+        $('.cm-button-remove').on('click',() => this.winConfirmRemove.show());
         
         $('#cm-tab-info').find('.cm-direct')
             .children('.cm-button-info-edit').on('click',() => this.buttonEdit()).end()
@@ -24,9 +24,8 @@ class Module {
             .find('.cm-lang-remove').on('click',function(){ Instance.buttonRemoveLang(this) }).end()
         );
         
-        this.formConfirmSave = new Form($('#cm-form-confirm'),(url,data) => this.submitInfo(url,data));
-        this.winConfirmSave = new Window($('#cm-form-confirm'));
-        this.winConfirmSave.content('Сохранить изменения?');
+        this.winConfirmSave = new Window($('#cm-form-save'));
+        this.formConfirmSave = new Form($('#cm-form-save'),(url,data) => this.submitInfo(url,data));
         
         this.tabs = new Tabs(this.$Tabs);
         
@@ -37,8 +36,8 @@ class Module {
         
         this.alertError = new Alert($('#cm-alert-error'));
         
-        this.winConfirmRemove = new Window($('#cm-form-confirm'));
-        this.winConfirmRemove.content('Действительно удалить модуль?');
+        this.winConfirmRemove = new Window($('#cm-form-remove'));
+        this.formConfirmRemove = new Form($('#cm-form-remove'),(url,data) => this.submitRemove(url,data));
         
         this.Mode = this.$Tabs.data('mode');
     }
@@ -66,11 +65,6 @@ class Module {
             this.alertError.show('Заполните правильно все поля');
         }
         else this.winConfirmSave.show();
-    }
-    
-    // --- --- --- --- ---
-    buttonRemove(){
-        this.winConfirmRemove.show();
     }
     
     // --- --- --- --- ---
@@ -117,12 +111,28 @@ class Module {
             {url : url},
             data => {
                 this.winConfirmSave.hide();
+                this.Mode === 'add' ? window.location.href = document.referrer : window.location.reload();
+                //history.back();
+            },
+            data => this.alertError.show(data.message)
+        ).commitJson(this.formInfo.data());
+    }
+    
+    // --- --- --- --- ---
+    submitRemove(url,data){
+        new Ajax(
+            {url : url},
+            data => {
+                this.winConfirmRemove.hide();
+                //window.location.reload();
                 window.location.href = document.referrer;
                 //history.back();
             },
-            data => this.alertError.content(data.message).show()
-        ).commitJson(this.formInfo.data());
+            data => this.alertError.show(data.message)
+        ).commitJson(this.formConfirmRemove.data());
     }
+
+    
 }
 
 // --- --- --- --- ---

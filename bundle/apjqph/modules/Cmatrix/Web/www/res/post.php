@@ -6,7 +6,7 @@ require_once('../defs.php');
 require_once('../common.php');
 
 $Data = \Cmatrix\Web\Request::get()->Array;
-$Mode = $Data['m'];
+$Mode = array_key_exists('m',$Data) ? $Data['m'] : null;
 
 // --- --- --- --- ---
 $Message = null;
@@ -22,25 +22,25 @@ try{
             $Message = 'Ваш сеанс успешно завершён.';
             break;
                 
-        case 'ma' : // --- добавить модуль
+        case 'ms' : // --- добавить модуль
             \Cmatrix\Kernel\Ide\Module::update($Data['code'],$Data);
             break;
             
-        case 'md' : // --- удалить модуль
+        case 'mr' : // --- удалить модуль
             \Cmatrix\Kernel\Ide\Module::delete($Data['code']);
             break;
             
-        case 'dma' : // --- добавить модуль
+        case 'dma' : // --- добавить datamodel
             \Cmatrix\Kernel\Ide\Datamodel::update($Data['code'],$Data);
             break;
             
-        case 'dmd' : // --- удалить модуль
+        case 'dmd' : // --- удалить datamodel
             \Cmatrix\Kernel\Ide\Datamodel::delete($Data['code']);
             break;
             
             
                     
-        default : throw new \Exception('Bad mode "' .$Data['m']. '"');
+        default : throw new \Exception('Bad mode "' .$Mode. '"');
     }
     
     echo \Cmatrix\Web\Request::create([

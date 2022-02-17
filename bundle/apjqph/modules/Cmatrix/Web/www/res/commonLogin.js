@@ -21,7 +21,6 @@ class Login{
         
         this.alertSuccess = new Alert($('#cm-alert-success'));
         this.alertSuccess.Timeout = 2000;
-        this.alertSuccess.content('qaz');
         this.alertSuccess.onHide = win => window.location.reload();
         
         this.alertError = new Alert($('#cm-alert-error'));
@@ -54,12 +53,12 @@ class Login{
     onSuccess(data){
         this.winLogin.hide(true);
         this.winLogout.hide();
-        this.alertSuccess.content(data.message).show();
+        this.alertSuccess.show(data.message);
     }
     
     // --- --- --- --- ---
     onError(data){
-        this.alertError.content(data.message).show();
+        this.alertError.show(data.message);
     }
 }
 

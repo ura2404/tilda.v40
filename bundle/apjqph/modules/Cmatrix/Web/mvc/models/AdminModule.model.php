@@ -43,7 +43,7 @@ class AdminModule extends CommonLogin {
     private function checkUrl($action){
         if($action === 'add') return null;
         $Arr = explode('/',web\Page::i()->Page);
-        return '/'.str_replace('_','/',array_pop($Arr));
+        return '/'.str_replace('+','/',array_pop($Arr));
     }
 
     // --- --- --- --- ---

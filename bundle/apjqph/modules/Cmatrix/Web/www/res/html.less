@@ -20,31 +20,6 @@ html,header {
   opacity: 1
 }
 
-
-.wi-noselect {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.wi-noscroll { overflow: hidden; }
-.wi-x-noscroll { overflow-x: hidden; }
-.wi-y-noscroll { overflow-y: hidden; }
-.wi-hidden { display: none !important; }
-.wi-novisible { opacity: 0 !important; width: 0 !important; height: 0 !important; }
-
-.wi-hover {
-    transition: .1s linear;
-    
-    &:hover {
-        bg-opacity: 0.5;
-    }
-}
-
-.wi-behind {
-    z-index : -100 !important;
-}
 /*
 .cm-error {
     display: none;
@@ -70,35 +45,6 @@ button,a {
     }
 }
 
-
-/* подложка на весь экран */
-.wi-back {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    opacity: 1;
-    transition: .05s;
-    
-    & > * {
-        transition: .05s;
-    }
-    
-    &:not(.wi-opend) {
-        opacity: 0;
-        //z-index: -100;
-        
-        & > * {
-            transform: translate(0,50px);
-        }
-    }
-}
-
-/* горизонтальный разделитель */
-.wi-h-devider-1 {
-    border-top : 1px solid;
-}
 
 .cm-menu {
     .cm-menu-item {
@@ -144,68 +90,4 @@ button,a {
 @keyframes alert-show {
       0% { opacity: 0; }
     100% { opacity: 1; }
-}
-
-.wi-form {
-    input,textarea {
-        //border: 1px solid lightgrey;
-        border: none !important;
-        outline: 1px solid lightgrey !important;
-        &:focus {
-            outline: 1px solid darkgrey !important;
-        }
-    }
-    
-    textarea {
-        min-height : 5rem;
-    }
-    
-    input:not([disabled="disabled"]),
-    textarea:not([disabled="disabled"]),
-    select:not([disabled="disabled"]), {
-        &[required="required"] {
-            background-color : #ffffde !important;
-        }
-        
-        //&.wi-invalid {
-        &:invalid {
-            outline: 1px solid #ffd4d4 !important;
-            background-color: #ffecec !important;
-        }
-    }
-    
-    input[disabled="disabled"],
-    textarea[disabled="disabled"],
-    select[disabled="disabled"] {
-        color: darkslategray;
-        background-color: #ededed;
-    }
-    
-    /*input:invalid {
-        outline: 2px solid red;
-    }*/
-}
-
-/** --------------------------------------------------- */
-/** * wi-tabs  */
-.wi-tabs-item {
-    &.wi-active {
-        //background-color: rgb(212,212,216);
-        border-bottom: 2px solid;
-    }
-}
-
-.wi-tab-content {
-    &.wi-active {
-        transition: .2s;
-    }
-    
-    &:not(.wi-active) {
-        //display: none;
-        opacity: 0;
-        height: 0;
-        & > * {
-            display : none;
-        }
-    }
 }

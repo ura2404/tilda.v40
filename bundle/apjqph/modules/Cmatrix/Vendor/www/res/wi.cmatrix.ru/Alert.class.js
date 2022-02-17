@@ -17,12 +17,6 @@ export default class Alert extends Window {
     }
     
     // --- --- --- --- ---
-    init(message){
-        super.init();
-        return this;
-    }
-    
-    // --- --- --- --- ---
     show(message){
         this.$Tag.find('.wi-content').html(message);
         super.show();

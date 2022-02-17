@@ -25,7 +25,7 @@ class AdminModules extends CommonLogin {
         return array_map(function($url){
             $Module = kernel\Ide\Module::i($url);
             return [
-                'url' => CM_WHOME .'/admin/module/'. str_replace('/','_',ltrim($Module->Code,'/')). '/view',
+                'url' => CM_WHOME .'/admin/module/'. str_replace('/','+',ltrim($Module->Code,'/')). '/view',
                 'code' => $Module->Code,
                 'name' => $Module->Name,
                 'baloon'=> $Module->Baloon,

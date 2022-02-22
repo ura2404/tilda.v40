@@ -81,6 +81,8 @@ export default class Form {
             const $Element = $(element);
             if($Element.data('val')) $(element).val($Element.data('val'));
         });
+        
+        return this;
     }
 
     // --- --- --- --- ---

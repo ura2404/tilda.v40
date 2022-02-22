@@ -4,7 +4,8 @@
         "name": "/Cmatrix/Core",
         "prefix": "cmCore",
         "baloon": {
-            "_def": "Ядро SystemData подсистемы"
+            "_def": "Ядро SystemData подсистемы",
+            "": ""
         },
         "author": "ura@itx.ru",
         "url": null,
